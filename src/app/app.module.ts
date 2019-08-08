@@ -3,14 +3,32 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { NavbarComponent } from './navbar/navbar.component';
+import { HoursRecordComponent } from './hours-record/hours-record.component';
+import { CandiesComponent } from './candies/candies.component';
+import { WorksComponent } from './works/works.component';
+import { SummaryComponent } from './summary/summary.component';
+import { StockComponent } from './stock/stock.component';
+import { PricesComponent } from './prices/prices.component';
+import { HourRegisterComponent } from './hour-register/hour-register.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    HoursRecordComponent,
+    CandiesComponent,
+    WorksComponent,
+    SummaryComponent,
+    StockComponent,
+    PricesComponent,
+    HourRegisterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
