@@ -11,7 +11,7 @@ import { WorksComponent } from './works/works.component';
 import { SummaryComponent } from './summary/summary.component';
 import { StockComponent } from './stock/stock.component';
 import { PricesComponent } from './prices/prices.component';
-import { HourRegisterComponent } from './hour-register/hour-register.component';
+import { RecordComponent } from './record/record.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { HourRegisterComponent } from './hour-register/hour-register.component';
     SummaryComponent,
     StockComponent,
     PricesComponent,
-    HourRegisterComponent
+    RecordComponent
   ],
   imports: [
     BrowserModule,

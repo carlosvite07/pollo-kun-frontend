@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col text-center">
+        {{record.selectedConsole.id + ' ' + record.selectedConsole.name}}
+    </div>
+    <div class="col text-center">
+        {{record.startDate | date:"h:mm a" }} - {{record.endDate | date:"h:mm a" }}<br>
+        {{record.selectedHour.name}} {{record.price | currency}}
+    </div>
+    <div class="col text-center">
+        <!-- <button (click)="createRecord()" type="button" class="btn btn-success">Terminar</button> -->
+        <div class="row">
+            <div class="col">
+                <button (click)="endRecord(record)" type="button" class="btn btn-success mr-3 mb-2">Terminar</button>
+                <button type="button" class="btn btn-success mr-3 mb-2">Agregar</button>
+                <button type="button" class="btn btn-success mr-3 mb-2">Cambiar</button>
+            </div>
+        </div>
+    </div>
+</div>

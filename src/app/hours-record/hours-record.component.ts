@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CONSOLES } from '../mock-console';
+import { RecordService } from '../record.service';
 import { HOURS } from '../mock-hours';
 import { Console } from '../console';
 import { Hour } from '../hour';
-import { Register } from '../register';
-import { endianness } from 'os';
+import { Record } from '../record';
 
 @Component({
   selector: 'app-hours-record',
@@ -13,43 +12,76 @@ import { endianness } from 'os';
 })
 export class HoursRecordComponent implements OnInit {
 
-  constructor() { }
+  constructor(private recordService: RecordService) { }
 
-  ngOnInit() {
-  }
-
-  consoles = CONSOLES;
+  avaliableConsoles: Console[];
   hours = HOURS;
+  avaliableHours = this.hours;
 
   selectedConsole: Console;
   selectedHour: Hour;
+  errorConsole: Boolean = false;
+  errorHour: Boolean = false;
 
-  registers: Register[] = [];
+  records: Record[] = [];
 
-  createRegister() {
+  ngOnInit() {
+    this.getConsoles();
+  }
+
+  getConsoles(): void {
+    this.recordService.getConsoles().
+      subscribe(consoles => this.avaliableConsoles = consoles.filter(object => object.available === true));
+  }
+
+  createRecord() {
+    this.errorConsole = (this.selectedConsole) ? false : true;
+    this.errorHour = (this.selectedHour) ? false : true;
+    if (this.errorConsole || this.errorHour) {
+      return;
+    }
     let now = new Date();
     let endDate = this.getEndDate(now);
-    this.getPrice(now,endDate);
-    // this.registers.push(
-    //   {
-    //     startDate: now,
-    //     endDate: endDate,
-    //     selectedConsole: this.selectedConsole.id,
-    //     selectedHour: this.selectedHour.id,
-    //     price: this.getPrice(now,endDate),
-    //   }
-    // )
-    // console.log(this.registers);
+    this.records.push(
+      {
+        startDate: now,
+        endDate: endDate,
+        selectedConsole: this.selectedConsole,
+        selectedHour: this.selectedHour,
+        price: this.getPrice(now, endDate),
+      }
+    );
+    this.busyConsole(this.selectedConsole.id);
+    // this.avaliableConsoles = this.avaliableConsoles.filter(value => value.id !== this.selectedConsole.id);
+    this.selectedConsole = undefined;
+    this.selectedHour = undefined;
   }
 
-  getEndDate(now: Date){
-    return new Date(now.getMilliseconds()+this.selectedHour.hoursValue*60*60*1000);
+  getEndDate(now: Date): Date {
+    return new Date(now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000);
   }
 
-  getPrice(start: Date, end: Date) {
-    let hours = start.getHours()-end.getHours();
-    console.log(hours)
+  getPrice(start: Date, end: Date): number {
+    let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
+    let hours: number = Math.floor(difference);
+    let minutes: number = difference - hours;
+    let total: number = 0;
+    if (minutes != 0) {
+      total += this.selectedConsole.halfHourPrice;
+    }
+    if (hours >= 1) {
+      if (hours % 2 === 0) {
+        total += hours * this.selectedConsole.promoPrice;
+      } else {
+        total += ((hours - 1) * this.selectedConsole.promoPrice) + this.selectedConsole.price;
+      }
+    }
+    return total;
   }
 
+  busyConsole(id: number): void{
+    this.recordService.busyConsole(id).
+      subscribe(consoles => this.avaliableConsoles = consoles.filter(object => object.available === true));
+  }
 
 }
