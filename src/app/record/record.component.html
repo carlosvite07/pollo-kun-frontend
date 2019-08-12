@@ -10,9 +10,9 @@
         <!-- <button (click)="createRecord()" type="button" class="btn btn-success">Terminar</button> -->
         <div class="row">
             <div class="col">
-                <button (click)="endRecord(record)" type="button" class="btn btn-success mr-3 mb-2">Terminar</button>
-                <button type="button" class="btn btn-success mr-3 mb-2">Agregar</button>
-                <button type="button" class="btn btn-success mr-3 mb-2">Cambiar</button>
+                <button (click)="end(record.id)" type="button" class="btn btn-success mr-3 mb-2">Terminar</button>
+                <button (click)="vote(true)" type="button" class="btn btn-success mr-3 mb-2">Vote True</button>
+                <button (click)="vote(false)" type="button" class="btn btn-success mr-3 mb-2">Vote False</button>
             </div>
         </div>
     </div>

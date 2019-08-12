@@ -12,10 +12,12 @@
         <div *ngIf="errorHour">Selecciona una hora</div>
     </div>
     <div class="col text-center">
-        <button (click)="createRecord()" type="button" class="btn btn-success">Registrar</button>
+        <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar</button>
     </div>
 </div>
 
 <div class="mt-5">
-    <app-record *ngFor="let record of records" [record]="record"></app-record>
+    <app-record *ngFor="let record of records" [record]="record" (voted)="onVoted($event)" (endRecord)="endRecord($event)"></app-record>
 </div>
+
+<h3>Agree: {{agreed}}, Disagree: {{disagreed}}</h3>

@@ -3,6 +3,5 @@ export class Console {
     name: string;
     available: boolean;
     price: number;
-    promoPrice: number;
     halfHourPrice: number;
 };

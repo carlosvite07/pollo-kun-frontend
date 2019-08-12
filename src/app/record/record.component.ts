@@ -9,15 +9,24 @@ import { RecordService } from '../record.service';
 })
 export class RecordComponent implements OnInit {
   @Input() record: Record;
+  @Output() voted = new EventEmitter<boolean>();
+  @Output() endRecord = new EventEmitter<number>();
+
+  didVote = false;
+
+  vote(agreed: boolean) {
+    this.voted.emit(agreed);
+    this.didVote = true;
+  }
 
   constructor(private recordService: RecordService) { }
 
   ngOnInit() {
   }
 
-  endRecord(record: Record): void{
-    console.log(record)
-    this.recordService.endRecord(record.selectedConsole.id);
+  end(idRecord: number): void {
+    console.log('end')
+    this.endRecord.emit(idRecord);
   }
 
 }

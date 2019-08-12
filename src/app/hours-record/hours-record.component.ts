@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordService } from '../record.service';
+// import { RecordService } from '../record.service';
 import { HOURS } from '../mock-hours';
 import { Console } from '../console';
+import { CONSOLES } from '../mock-console';
 import { Hour } from '../hour';
 import { Record } from '../record';
 
@@ -11,30 +12,36 @@ import { Record } from '../record';
   styleUrls: ['./hours-record.component.scss']
 })
 export class HoursRecordComponent implements OnInit {
+  constructor() { }
 
-  constructor(private recordService: RecordService) { }
-
-  avaliableConsoles: Console[];
-  hours = HOURS;
-  avaliableHours = this.hours;
+  allConsoles = CONSOLES;
+  avaliableHours = HOURS;
+  avaliableConsoles: Console[] = [];
+  records: Record[] = [];
 
   selectedConsole: Console;
   selectedHour: Hour;
   errorConsole: Boolean = false;
   errorHour: Boolean = false;
 
-  records: Record[] = [];
+  idCounter = 0;
+
+  agreed = 0;
+  disagreed = 0;
 
   ngOnInit() {
-    this.getConsoles();
+    this.avaliableConsoles = this.getAvaliableConsoles()
   }
 
-  getConsoles(): void {
-    this.recordService.getConsoles().
-      subscribe(consoles => this.avaliableConsoles = consoles.filter(object => object.available === true));
+  getAvaliableConsoles(): Console[] {
+    return this.allConsoles.filter(object => object.available === true);
   }
 
-  createRecord() {
+  onVoted(agreed: boolean) {
+    agreed ? this.agreed++ : this.disagreed++;
+  }
+
+  makeARecord() {
     this.errorConsole = (this.selectedConsole) ? false : true;
     this.errorHour = (this.selectedHour) ? false : true;
     if (this.errorConsole || this.errorHour) {
@@ -42,17 +49,8 @@ export class HoursRecordComponent implements OnInit {
     }
     let now = new Date();
     let endDate = this.getEndDate(now);
-    this.records.push(
-      {
-        startDate: now,
-        endDate: endDate,
-        selectedConsole: this.selectedConsole,
-        selectedHour: this.selectedHour,
-        price: this.getPrice(now, endDate),
-      }
-    );
-    this.busyConsole(this.selectedConsole.id);
-    // this.avaliableConsoles = this.avaliableConsoles.filter(value => value.id !== this.selectedConsole.id);
+    this.setRecord(now, endDate);
+    this.updateAvaliableConsoles(this.selectedConsole.id);
     this.selectedConsole = undefined;
     this.selectedHour = undefined;
   }
@@ -70,18 +68,63 @@ export class HoursRecordComponent implements OnInit {
       total += this.selectedConsole.halfHourPrice;
     }
     if (hours >= 1) {
-      if (hours % 2 === 0) {
-        total += hours * this.selectedConsole.promoPrice;
-      } else {
-        total += ((hours - 1) * this.selectedConsole.promoPrice) + this.selectedConsole.price;
-      }
+      total += hours * this.selectedConsole.price;
     }
     return total;
   }
 
-  busyConsole(id: number): void{
-    this.recordService.busyConsole(id).
-      subscribe(consoles => this.avaliableConsoles = consoles.filter(object => object.available === true));
+  setRecord(now: Date, endDate: Date): void {
+    this.records.push(
+      {
+        id: this.idCounter++,
+        startDate: now,
+        endDate: endDate,
+        idConsole: this.selectedConsole.id,
+        price: this.getPrice(now, endDate),
+        selectedConsole: this.selectedConsole,
+        selectedHour: this.selectedHour
+      }
+    );
   }
+
+  updateAvaliableConsoles(idConsole: number): void {
+    let index = this.allConsoles.findIndex(object => object.id === idConsole);
+    this.allConsoles[index].available = false;
+    this.avaliableConsoles = this.getAvaliableConsoles();
+  }
+
+  endRecord(idRecord: number): void {
+    let index = this.records.findIndex(object => object.id == idRecord);
+    this.records.splice(index, 1);
+  }
+
+  // constructor(private recordService: RecordService) { }
+  // ngOnInit() {
+  //   this.getConsoles();
+  //   this.getRecords();
+  // }
+
+  // getConsoles(): void {
+  //   this.recordService.getConsoles().
+  //     subscribe(consoles =>
+  //       this.avaliableConsoles = consoles.filter(object => object.available === true));
+  // }
+
+  // getRecords(): void {
+  //   this.recordService.getRecords().
+  //     subscribe(records => this.records = records);
+  // }
+
+  // makeARecord(idConsole: number, record: Record): void {
+  // this.recordService.makeARecord(idConsole, record)
+  //   .subscribe();
+  // }
+
+  // onEndRecord(idConsole: number): void {
+  //   console.log('endParent');
+  // this.recordService.endRecord(idConsole).
+  //   subscribe(consoles => this.avaliableConsoles = consoles.filter(object => object.available === true));
+  // }
+
 
 }
