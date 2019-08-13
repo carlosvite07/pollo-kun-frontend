@@ -1,23 +1,21 @@
 <div class="row">
     <div class="col text-center">
         <select [(ngModel)]="selectedConsole" class="custom-select">
-            <option *ngFor="let console of avaliableConsoles" [ngValue]="console">{{console.id+" "+console.name}}</option>
+            <option *ngFor="let console of allConsoles | async" [ngValue]="console">{{console.name}}</option>
         </select>
-        <div *ngIf="errorConsole">Selecciona una consola</div>
+        <div *ngIf="errorConsole" class="text-danger">Selecciona una consola</div>
     </div>
     <div class="col text-center">
         <select [(ngModel)]="selectedHour" class="custom-select">
             <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
         </select>
-        <div *ngIf="errorHour">Selecciona una hora</div>
+        <div *ngIf="errorHour" class="text-danger">Selecciona una hora</div>
     </div>
     <div class="col text-center">
-        <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar</button>
+        <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar Tiempo</button>
     </div>
 </div>
 
 <div class="mt-5">
-    <app-record *ngFor="let record of records" [record]="record" (voted)="onVoted($event)" (endRecord)="endRecord($event)"></app-record>
+    <app-record *ngFor="let record of records" [record]="record" (endRecord)="endRecord($event)" (updateRecords)=updateRecords($event)></app-record>
 </div>
-
-<h3>Agree: {{agreed}}, Disagree: {{disagreed}}</h3>

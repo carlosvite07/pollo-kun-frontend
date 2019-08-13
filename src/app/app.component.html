@@ -1,3 +1,6 @@
+<li *ngFor="let item of items | async">
+    {{ item.name }}
+</li>
 <div class="container">
     <app-navbar></app-navbar>
     <div class="mt-5">

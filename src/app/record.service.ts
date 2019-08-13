@@ -37,20 +37,4 @@ export class RecordService {
     return of(CONSOLES.sort((a, b) => a.id - b.id));
   }
 
-
-  private subject = new Subject<any>();
-
-  sendMessage(message: string) {
-    console.log('send');
-    this.subject.next({ text: message });
-  }
-
-  clearMessages() {
-    this.subject.next();
-  }
-
-  getMessage(): Observable<any> {
-    return this.subject.asObservable();
-  }
-
 }

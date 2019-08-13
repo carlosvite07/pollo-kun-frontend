@@ -3,17 +3,60 @@
         {{record.selectedConsole.id + ' ' + record.selectedConsole.name}}
     </div>
     <div class="col text-center">
-        {{record.startDate | date:"h:mm a" }} - {{record.endDate | date:"h:mm a" }}<br>
+        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a"}}<br>
+        <!-- | date:"h:mm a" -->
         {{record.selectedHour.name}} {{record.price | currency}}
     </div>
     <div class="col text-center">
-        <!-- <button (click)="createRecord()" type="button" class="btn btn-success">Terminar</button> -->
         <div class="row">
             <div class="col">
-                <button (click)="end(record.id)" type="button" class="btn btn-success mr-3 mb-2">Terminar</button>
-                <button (click)="vote(true)" type="button" class="btn btn-success mr-3 mb-2">Vote True</button>
-                <button (click)="vote(false)" type="button" class="btn btn-success mr-3 mb-2">Vote False</button>
+                <button (click)="endConfirm(record,content)" type="button"
+                    class="btn btn-danger mr-3 mb-2">Terminar</button>
+                <button (click)="addTimeConfirm(record,contentSelect)" type="button" class="btn btn-warning mr-3 mb-2">Agregar
+                    Tiempo</button>
+                <!-- <button (click)="chageConsole(record)" type="button" class="btn btn-success mr-3 mb-2">Cambiar de consola</button> -->
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{record.selectedConsole.id + ' ' + record.selectedConsole.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.close('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-danger">
+        <p class="font-weight-bold">{{modalBody}}</p>
+    </div>
+    <div class="modal-footer">
+        <div class="mx-auto">
+            <button type="button" class="btn btn-success mr-2" (click)="end(record,content)">Aceptar</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel click')">Cancelar</button>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #contentSelect let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{record.selectedConsole.id + ' ' + record.selectedConsole.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.close('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center font-weight-bold text-info">
+        <p>{{modalBody}}</p>
+        <select [(ngModel)]="selectedHour" class="custom-select">
+            <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
+        </select>
+        <div *ngIf="errorHour" class="text-danger font-weight-bold">Selecciona una hora</div>
+    </div>
+    <div class="modal-footer">
+        <div class="mx-auto">
+            <button type="button" class="btn btn-success mr-2" (click)="addTime(record,contentSelect)">Aceptar</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel click')">Cancelar</button>
+        </div>
+    </div>
+</ng-template>
