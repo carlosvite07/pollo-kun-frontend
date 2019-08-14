@@ -1,11 +1,10 @@
 <div class="row">
     <div class="col text-center">
-        {{record.selectedConsole.id + ' ' + record.selectedConsole.name}}
+        {{record.console.name}}
     </div>
     <div class="col text-center">
         {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a"}}<br>
-        <!-- | date:"h:mm a" -->
-        {{record.selectedHour.name}} {{record.price | currency}}
+        {{record.price | currency}}
     </div>
     <div class="col text-center">
         <div class="row">
@@ -22,7 +21,7 @@
 
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">{{record.selectedConsole.id + ' ' + record.selectedConsole.name}}</h4>
+        <h4 class="modal-title">{{record.console.name}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.close('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -32,7 +31,7 @@
     </div>
     <div class="modal-footer">
         <div class="mx-auto">
-            <button type="button" class="btn btn-success mr-2" (click)="end(record,content)">Aceptar</button>
+            <button type="button" class="btn btn-success mr-2" (click)="endRecord(record)">Aceptar</button>
             <button type="button" class="btn btn-secondary" (click)="modal.close('Cancel click')">Cancelar</button>
         </div>
     </div>
@@ -41,7 +40,7 @@
 
 <ng-template #contentSelect let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">{{record.selectedConsole.id + ' ' + record.selectedConsole.name}}</h4>
+        <h4 class="modal-title">{{record.console.name}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.close('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>

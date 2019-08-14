@@ -33,6 +33,9 @@ import { ModalComponentComponent } from './modal-component/modal-component.compo
     RecordComponent,
     ModalComponentComponent
   ],
+  entryComponents: [
+    ModalComponentComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

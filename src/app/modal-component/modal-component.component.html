@@ -5,8 +5,15 @@
     </button>
 </div>
 <div class="modal-body">
-    <p>{{body}}!</p>
+    <p class="text-center text-danger font-weight-bold">{{body}}</p>
+    <div *ngIf="hourSelection">
+        <select [(ngModel)]="selectedHour" class="custom-select">
+            <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
+        </select>
+        <div *ngIf="errorHour" class="text-danger font-weight-bold">Selecciona una hora</div>
+    </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')" *ngIf="!hourSelection">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="updateHour()" *ngIf="hourSelection">Aceptar</button>
 </div>

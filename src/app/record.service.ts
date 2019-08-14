@@ -1,40 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Console } from './console';
-import { Record } from './record';
+import { Console } from './console.model';
+import { Record } from './record.model';
 import { CONSOLES } from './mock-console';
 import { Observable, of, Subject, EMPTY } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService {
 
-  private records : Array<Record> = []
-  // availiableConsoles$ = this.availiableConsoles.asObservable();
+  constructor(private firestore: AngularFirestore) { }
 
-  constructor() { }
-
-  /* Implement when the endpoint is finished */
-  getConsoles(): Observable<Console[]> {
-    return of(CONSOLES.sort((a, b) => a.id - b.id));
+  getConsoles(): any {
+    return this.firestore.collection('consoles', ref => ref.where('available', '==', true).orderBy('name')).snapshotChanges();
   }
 
-  getRecords(): Observable<Record[]>{
-    return of(this.records);
+  updateConsole(consoleModel: Console) {
+    this.firestore.doc('consoles/' + consoleModel.id).update(consoleModel);
   }
 
-  /* TODO Send the record with flag ended = false and make busy on the backend */
-  makeARecord(id: number, record : Record): Observable<Console[]> {
-    let index = CONSOLES.findIndex(object => object.id === id);
-    CONSOLES[index].available = false;
-    return this.getConsoles();
+  getRecords(): any {
+    let now = new Date();
+    return this.firestore.collection('records', ref => ref.where('finished', '==', false)).snapshotChanges();
   }
 
-  /* TODO Send the record with flag ended = true and free the console*/
-  endRecord(id: number):  Observable<Console[]> {
-    let index = CONSOLES.findIndex(object => object.id === id);
-    CONSOLES[index].available = true;
-    return of(CONSOLES.sort((a, b) => a.id - b.id));
+  createRecord(record: Record, consoleModel: Console): any {
+    this.updateConsole(consoleModel);
+    return this.firestore.collection('records').add(record);
+  }
+
+  endRecord(record: Record) {
+    record.console.available = true;
+    this.updateConsole(record.console);
+    record.finished = true;
+    this.firestore.doc('records/' + record.id).update(record);
   }
 
 }

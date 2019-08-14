@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Record } from '../record';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Record } from '../record.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HOURS } from '../mock-hours';
 import { Hour } from '../hour';
+import { RecordService } from '../record.service';
+import { ModalComponentComponent } from '../modal-component/modal-component.component';
 
 // import { RecordService } from '../record.service';
 
@@ -13,11 +15,8 @@ import { Hour } from '../hour';
 })
 export class RecordComponent implements OnInit {
   @Input() record: Record;
-  @Output() endRecord = new EventEmitter<Record>();
-  @Output() updateRecords = new EventEmitter<Record>();
-  @ViewChild('content', { static: false }) private childContent;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private recordService: RecordService) { }
   // constructor(private recordService: RecordService) { }
 
   modalBody: String = '';
@@ -27,16 +26,30 @@ export class RecordComponent implements OnInit {
   errorHour = false;
 
   ngOnInit() {
+    // TODO modal implementations
+    
+    let now = new Date();
+    
     setTimeout(() => {
-      let message = `El ${this.record.selectedConsole.id} ${this.record.selectedConsole.name} terminara en 10 min pregunta al cliente si desea más tiempo`;
-      this.modalReference = this.showModal(message, this.childContent);
-    }, 10 * 60 * 1000);
+      this.modalReference = this.modalService.open(ModalComponentComponent, { centered: true });
+      this.modalReference.componentInstance.title = this.record.console.name;
+      this.modalReference.componentInstance.body = 'Le quedan menos de 10 minutos para que termine el '+this.record.console.name;
+    }, this.record.endDate.getTime() - (now.getTime() + 59 * 60 * 1000));
 
     setTimeout(() => {
-      this.modalService.dismissAll();
-      this.endRecord.emit(this.record);
-    }, 20 * 60 * 1000);
-    // }, this.record.endDate.getTime() - this.record.startDate.getTime());
+      this.endRecord(this.record);
+    }, this.record.endDate.getTime() - now.getTime());
+
+  }
+
+  endRecord(record: Record): void {
+    this.modalService.dismissAll();
+    this.recordService.endRecord(record);
+  }
+
+  endConfirm(record: Record, content): void {
+    let text = '¿Estas seguro que quieres terminar el tiempo de ' + record.console.name + '?';
+    this.showModal(text, content);
   }
 
   showModal(modalBody: String, content): void {
@@ -44,31 +57,19 @@ export class RecordComponent implements OnInit {
     this.modalReference = this.modalService.open(content);
   }
 
-  endConfirm(record: Record, content): void {
-    let text = '¿Estas seguro que quieres terminar el tiempo de ' + record.selectedConsole.id + ' ' + record.selectedConsole.name + '?';
-    this.showModal(text, content);
-  }
-
-  end(record: Record, content): void {
-    // this.modalService.dismissAll();
-    this.modalReference.close();
-    this.endRecord.emit(record);
-  }
-
   addTimeConfirm(record: Record, content): void {
-    let text = '¿Cuanto tiempo quieres agregar al ' + record.selectedConsole.id + ' ' + record.selectedConsole.name + '?';
+    let text = '¿Cuanto tiempo quieres agregar al ' + record.console.name + '?';
     this.showModal(text, content);
   }
 
-  addTime(record: Record): void{
+  addTime(record: Record): void {
     this.errorHour = (this.selectedHour) ? false : true;
     if (this.errorHour) {
       return;
     }
     this.modalService.dismissAll();
-    record.endDate = new Date(record.endDate.getTime()+this.selectedHour.hoursValue*60*60*1000);
+    record.endDate = new Date(record.endDate.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000);
     this.selectedHour = undefined;
-    this.updateRecords.emit(record);
   }
 
 }
