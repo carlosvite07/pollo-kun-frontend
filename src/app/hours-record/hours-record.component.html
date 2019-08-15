@@ -17,5 +17,5 @@
 </div>
 
 <div class="mt-5">
-    <app-record *ngFor="let record of records" [record]="record"></app-record>
+    <app-record *ngFor="let record of records; trackBy: trackByItems" [record]="record"></app-record>
 </div>

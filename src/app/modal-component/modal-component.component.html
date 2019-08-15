@@ -5,8 +5,10 @@
     </button>
 </div>
 <div class="modal-body">
-    <p class="text-center text-danger font-weight-bold">{{body}}</p>
-    <div *ngIf="hourSelection">
+    <p class="text-center font-weight-bold" [ngClass]="{'text-info' : isAddTime, 'text-danger' :  !isAddTime}">    
+        {{body}}
+    </p>
+    <div *ngIf="isAddTime">
         <select [(ngModel)]="selectedHour" class="custom-select">
             <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
         </select>
@@ -14,6 +16,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')" *ngIf="!hourSelection">Aceptar</button>
-    <button type="button" class="btn btn-danger" (click)="updateHour()" *ngIf="hourSelection">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')" *ngIf="!isAddTime && !isEndRecord">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="confirmAddTime()" *ngIf="isAddTime">Aceptar</button>
+    <button type="button" class="btn btn-danger" (click)="confirmEndRecord()" *ngIf="isEndRecord">Aceptar</button>
 </div>

@@ -21,7 +21,6 @@ export class RecordService {
   }
 
   getRecords(): any {
-    let now = new Date();
     return this.firestore.collection('records', ref => ref.where('finished', '==', false)).snapshotChanges();
   }
 
@@ -30,11 +29,34 @@ export class RecordService {
     return this.firestore.collection('records').add(record);
   }
 
+  getRecordPrice(start: Date, end: Date, hourPrice: number, halfHourPrice: number, ): number {
+    let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
+    let hours: number = Math.floor(difference);
+    let minutes: number = difference - hours;
+    let total: number = 0;
+    if (minutes != 0) {
+      total += halfHourPrice;
+    }
+    if (hours >= 1) {
+      total += hours * hourPrice;
+    }
+    return total;
+  }
+
   endRecord(record: Record) {
     record.console.available = true;
     this.updateConsole(record.console);
     record.finished = true;
     this.firestore.doc('records/' + record.id).update(record);
+  }
+
+  addTime(record: Record) {
+    record.price = this.getRecordPrice(record.startDate,record.endDate,record.console.hourPrice,record.console.halfHourPrice);
+    this.firestore.doc('records/' + record.id).update(record);
+  }
+
+  timeVerify(){
+    console.log("less than a minute");
   }
 
 }

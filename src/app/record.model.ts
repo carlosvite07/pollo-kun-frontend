@@ -1,7 +1,7 @@
 import { Console } from './console.model';
 
 export class Record{
-    id: number;
+    id: string;
     startDate: Date;
     endDate: Date;
     console: Console; 
