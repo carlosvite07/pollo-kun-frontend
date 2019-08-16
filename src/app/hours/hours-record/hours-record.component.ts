@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordService } from '../record.service';
-import { HOURS } from '../mock-hours';
-import { Console } from '../console.model';
-import { Hour } from '../hour';
-import { Record } from '../record.model';
-
+import { RecordService } from '../shared/record.service';
+import { HOURS } from '../shared/mock-hours';
+import { Console } from '../shared/console.model';
+import { Hour } from '../shared/hour.model';
+import { Record } from '../shared/record.model';
 
 @Component({
   selector: 'app-hours-record',
@@ -12,7 +11,6 @@ import { Record } from '../record.model';
   styleUrls: ['./hours-record.component.scss']
 })
 export class HoursRecordComponent implements OnInit {
-
   allConsoles: Console[] = [];
   records: Record[] = [];
   avaliableHours = HOURS;
@@ -83,4 +81,9 @@ export class HoursRecordComponent implements OnInit {
   updateAvaliableConsoles(): void {
     this.recordService.updateConsole(this.selectedConsole);
   }
+
+  // ngOnDestroy(){
+  //   this.recordService.getConsoles().unsubscribe();
+  //   this.recordService.getRecords().unsubscribe();
+  // }
 }

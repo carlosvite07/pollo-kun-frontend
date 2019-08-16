@@ -1,4 +1,4 @@
-import { Hour } from './hour';
+import { Hour } from './hour.model';
 
 export const HOURS: Hour[] = [
   { id: 1, name: '30 min', hoursValue: .5 },

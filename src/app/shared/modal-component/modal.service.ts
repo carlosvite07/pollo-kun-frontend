@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Hour } from './hour';
+import { Hour } from '../../hours/shared/hour.model';
 
 @Injectable({
   providedIn: 'root'

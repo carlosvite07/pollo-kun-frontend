@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { HOURS } from '../mock-hours';
-import { Hour } from '../hour';
-import { ModalService } from '../modal.service';
+import { HOURS } from '../../hours/shared/mock-hours';
+import { Hour } from '../../hours/shared/hour.model';
+import { ModalService } from './modal.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

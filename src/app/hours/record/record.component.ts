@@ -1,10 +1,10 @@
 import { Component, OnChanges, Input } from '@angular/core';
-import { Record } from '../record.model';
+import { Record } from '../shared/record.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RecordService } from '../record.service';
-import { ModalService } from '../modal.service';
-import { ModalComponentComponent } from '../modal-component/modal-component.component';
-import { Hour } from '../hour';
+import { RecordService } from '../shared/record.service';
+import { ModalService } from '../../shared/modal-component/modal.service';
+import { ModalComponentComponent } from '../../shared/modal-component/modal-component.component';
+import { Hour } from '../shared/hour.model';
 
 @Component({
   selector: 'app-record',
