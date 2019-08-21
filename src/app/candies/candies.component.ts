@@ -15,8 +15,6 @@ export class CandiesComponent implements OnInit {
   selectedQuantity: number = 1;
   errorCandie: boolean = false;
   errorQuantity: boolean = false;
-
-  modalReference;
   successPurchase = false;
 
   constructor(private candiesService: CandiesService) { }
@@ -30,7 +28,6 @@ export class CandiesComponent implements OnInit {
         } as Console;
       });
     });
-
   }
 
   onChangeSelection(): void {
@@ -50,7 +47,7 @@ export class CandiesComponent implements OnInit {
     }
     let newPurchase = {
       date: new Date(),
-      candieName: this.selectedCandie.name,
+      name: this.selectedCandie.name,
       quantity: this.selectedQuantity,
       price: this.selectedQuantity * this.selectedPrice
     } as CandiePurchase;

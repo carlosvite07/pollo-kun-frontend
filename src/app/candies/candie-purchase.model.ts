@@ -1,7 +1,7 @@
 export class CandiePurchase {
     id: string;
     date: Date;
-    candieName: string;
+    name: string;
     quantity: number;
     price: number;
 }
