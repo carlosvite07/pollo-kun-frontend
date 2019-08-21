@@ -54,7 +54,7 @@ export class HoursRecordComponent implements OnInit {
     if (this.errorConsole || this.errorHour) {
       return;
     }
-    let now = new Date()
+    let now = new Date();
     let endDate = this.getEndDate(now);
     let newRecord = {
       startDate: now,

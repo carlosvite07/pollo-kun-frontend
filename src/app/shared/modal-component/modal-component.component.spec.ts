@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalComponentComponent } from './modal-component.component';
 
@@ -8,9 +10,11 @@ describe('ModalComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalComponentComponent ]
+      declarations: [ModalComponentComponent],
+      imports: [FormsModule],
+      providers: [NgbActiveModal]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

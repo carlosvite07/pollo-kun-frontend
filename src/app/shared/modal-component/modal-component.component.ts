@@ -3,6 +3,7 @@ import { HOURS } from '../../hours/shared/mock-hours';
 import { Hour } from '../../hours/shared/hour.model';
 import { ModalService } from './modal.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CandiesService } from 'src/app/candies/candies.service';
 
 @Component({
   selector: 'app-modal-component',
@@ -17,22 +18,25 @@ export class ModalComponentComponent {
 
   @Input() isAddTime;
   @Input() isEndRecord;
+  @Input() candiePurchase;
 
-  avaliableHours : Hour[] = HOURS;
-  selectedHour : Hour;
-  errorHour : boolean = false;
+  avaliableHours: Hour[] = HOURS;
+  selectedHour: Hour;
+  errorHour: boolean = false;
 
   constructor(
     private modalService: ModalService,
-    public activeModal: NgbActiveModal) { }
+    public activeModal: NgbActiveModal,
+    private CandiesService: CandiesService
+  ) { }
 
   confirmEndRecord(): void {
     this.modalService.confirmEndRecord(this.recordId);
   }
 
-  confirmAddTime(): void{
+  confirmAddTime(): void {
     this.errorHour = (this.selectedHour) ? false : true;
-    if(this.errorHour){
+    if (this.errorHour) {
       return;
     }
     let object = {
@@ -40,6 +44,10 @@ export class ModalComponentComponent {
       'recordId': this.recordId,
     }
     this.modalService.confirmAddTime(object);
+  }
+
+  confirmCandiePurchase(): void {
+    this.CandiesService.candiePurchase(this.candiePurchase);
   }
 
 }

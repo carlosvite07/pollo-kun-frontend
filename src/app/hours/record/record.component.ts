@@ -17,6 +17,7 @@ export class RecordComponent implements OnChanges {
   modalReference;
   warningAlert;
   endInitially;
+  beforeFinishedMinutesAlert: number = 10;
 
   constructor(
     private externalModal: NgbModal,
@@ -46,16 +47,14 @@ export class RecordComponent implements OnChanges {
     let now = new Date();
 
     this.warningAlert = setTimeout(() => {
-      this.modalReference = this.externalModal.open(ModalComponentComponent, { centered: true });
-      this.modalReference.componentInstance.title = this.record.console.name;
-      this.modalReference.componentInstance.body = 'Le quedan menos de 10 minutos para que termine el ' + this.record.console.name;
-    }, this.record.endDate.getTime() - (now.getTime() + 10 * 60 * 1000));
+      this.showExternalModal(this.record.console.name,
+        'Le quedan menos de ' + this.beforeFinishedMinutesAlert +' minutos para que termine el ' + this.record.console.name,false,false);
+    }, this.record.endDate.getTime() - (now.getTime() + this.beforeFinishedMinutesAlert * 60 * 1000));
 
     this.endInitially = setTimeout(() => {
       this.endRecord(this.record);
     }, this.record.endDate.getTime() - now.getTime());
   }
-
 
   endRecord(record: Record): void {
     this.externalModal.dismissAll();
@@ -64,20 +63,12 @@ export class RecordComponent implements OnChanges {
     this.recordService.endRecord(record);
   }
 
-  endConfirm(record: Record): void {
-    this.modalReference = this.externalModal.open(ModalComponentComponent, { centered: true });
-    this.modalReference.componentInstance.title = this.record.console.name;
-    this.modalReference.componentInstance.body = '¿Estas seguro que quieres terminar el tiempo de ' + record.console.name + '?';
-    this.modalReference.componentInstance.recordId = this.record.id;
-    this.modalReference.componentInstance.isEndRecord = true;
+  endConfirm(): void {
+    this.showExternalModal(this.record.console.name,'¿Estas seguro que quieres terminar el tiempo de ' + this.record.console.name + '?',true,false);
   }
 
-  addTimeConfirm(record: Record): void {
-    this.modalReference = this.externalModal.open(ModalComponentComponent, { centered: true });
-    this.modalReference.componentInstance.title = this.record.console.name;
-    this.modalReference.componentInstance.body = '¿Cuanto tiempo quieres agregar al ' + record.console.name + '?';
-    this.modalReference.componentInstance.recordId = this.record.id;
-    this.modalReference.componentInstance.isAddTime = true;
+  addTimeConfirm(): void {
+    this.showExternalModal(this.record.console.name,'¿Cuanto tiempo quieres agregar al ' + this.record.console.name + '?',false,true);
   }
 
   addTime(hour: Hour): void {
@@ -88,8 +79,17 @@ export class RecordComponent implements OnChanges {
     this.recordService.addTime(this.record);
   }
 
-  showExternalModal(title:string,body:string):void{
-
+  showExternalModal(title:string,body:string, isEndRecord: boolean, isAddTime: boolean):void{
+    this.modalReference = this.externalModal.open(ModalComponentComponent, { centered: true });
+    this.modalReference.componentInstance.title = title;
+    this.modalReference.componentInstance.body = body;
+    this.modalReference.componentInstance.recordId = this.record.id;
+    if(isEndRecord){
+      this.modalReference.componentInstance.isEndRecord = true;
+    }
+    if(isAddTime){
+      this.modalReference.componentInstance.isAddTime = true;
+    }
   }
 
 }

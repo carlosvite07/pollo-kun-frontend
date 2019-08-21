@@ -1,1 +1,32 @@
-<p>candies works!</p>
+<div class="row">
+    <div class="col text-center">
+        <label>Dulce</label>
+        <select [(ngModel)]="selectedCandie" class="custom-select" (change)="onChangeSelection($event)">
+            <option *ngFor="let candie of allCandies" [ngValue]="candie">{{candie.name}}</option>
+        </select>
+        <div *ngIf="errorCandie" class="text-danger">Selecciona un dulce</div>
+    </div>
+    <div class="col text-center" >
+        <label>Precio</label>
+        <select *ngIf="!selectedCandie" class="custom-select"></select>
+        <select *ngIf="selectedCandie" [(ngModel)]="selectedPrice" class="custom-select">
+            <option [ngValue]="selectedCandie.price" selected>{{selectedCandie.price}}</option>
+            <option [ngValue]="selectedCandie.price2" *ngIf="selectedCandie.price2">{{selectedCandie.price2}}</option>
+        </select>
+    </div>
+    <div class="col text-center">
+            <label>Cantidad</label>
+            <input [(ngModel)]="selectedQuantity" type="number" class="form-control" (ngModelChange)="onChangeQuantity($event)"/>
+            <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
+        </div>
+    <div class="col text-center">
+        <label>Acciones</label><br>
+        <button (click)="candiePurchaseConfirm()" type="button" class="btn btn-success">Registrar Compra</button>
+    </div>
+</div>
+
+<div class="row mt-5" *ngIf="successPurchase">
+    <div class="col text-center">
+        <span class="text-success">Dulce registrado ve a Resumen para ver tu registro</span>
+    </div>
+</div>
