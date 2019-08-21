@@ -14,7 +14,7 @@ export class WorksService {
   }
 
   workRecord(workRecord: WorkRecord): any{
-    return this.firestore.collection('workRecord').add(workRecord);
+    return this.firestore.collection('worksRecords').add(workRecord);
   }
     
   works = [

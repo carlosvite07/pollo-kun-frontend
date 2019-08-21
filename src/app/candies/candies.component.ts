@@ -25,7 +25,7 @@ export class CandiesComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
-        } as Console;
+        } as Candie;
       });
     });
   }

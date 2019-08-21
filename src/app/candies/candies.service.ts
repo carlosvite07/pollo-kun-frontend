@@ -13,8 +13,12 @@ export class CandiesService {
     return this.firestore.collection('candies', ref => ref.where('stock','>',0)).snapshotChanges();
   }
 
+  getCandiesByRange(): any{
+    return this.firestore.collection('candiesPurchases').snapshotChanges();
+  }
+
   candiePurchase(candiePurchase: CandiePurchase): any{
-    return this.firestore.collection('candiePurchase').add(candiePurchase);
+    return this.firestore.collection('candiesPurchases').add(candiePurchase);
   }
 
   // dulces = [
