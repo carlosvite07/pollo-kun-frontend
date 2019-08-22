@@ -76,6 +76,7 @@ export class RecordComponent implements OnChanges {
     clearTimeout(this.warningAlert);
     clearTimeout(this.endInitially);
     this.record.endDate = new Date(this.record.endDate.getTime() + hour.hoursValue * 60 * 60 * 1000);
+    this.record.hours += hour.hoursValue;
     this.recordService.addTime(this.record);
   }
 

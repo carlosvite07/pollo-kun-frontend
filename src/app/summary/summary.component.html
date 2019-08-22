@@ -1,25 +1,149 @@
-
 <div class="row">
-    <div class="col text-center">
-        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
-        </ngb-datepicker>
-        
-        <ng-template #t let-date let-focused="focused">
-          <span class="custom-day"
-                [class.focused]="focused"
-                [class.range]="isRange(date)"
-                [class.faded]="isHovered(date) || isInside(date)"
-                (mouseenter)="hoveredDate = date"
-                (mouseleave)="hoveredDate = null">
-            {{ date.day }}
-          </span>
-        </ng-template>
-    </div>
+  <div class="col text-center">
+    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+    </ngb-datepicker>
+
+    <ng-template #t let-date let-focused="focused">
+      <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null">
+        {{ date.day }}
+      </span>
+    </ng-template>
+  </div>
 </div>
 
-<hr>
+<div class="row mt-3">
+  <div class="col">
 
-{{allCandies.name}}
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Consolas</h3>
+      </div>
+    </div>
 
-<pre>From: {{ fromDate | json }} </pre>
-<pre>To: {{ toDate | json }} </pre>
+    <div class="row text-center cyan">
+      <div class="col"><strong>Número de consola</strong></div>
+      <div class="col"><strong>Horas</strong></div>
+      <div class="col"><strong>Fecha de uso</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let record of allRecords">
+      <div class="col">
+        {{record.console.name}}
+      </div>
+      <div class="col">
+        {{record.hours}}
+      </div>
+      <div class="col">
+        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{record.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{recordsTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Dulces</h3>
+      </div>
+    </div>
+
+    <div class="row text-center cyan">
+      <div class="col"><strong>Dulce</strong></div>
+      <div class="col"><strong>Cantidad</strong></div>
+      <div class="col"><strong>Fecha de compra</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let candie of allCandies">
+      <div class="col">
+        {{candie.name}}
+      </div>
+      <div class="col">
+        {{candie.quantity}}
+      </div>
+      <div class="col">
+        {{candie.date | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{candie.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{candiesTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Trabajos</h3>
+      </div>
+    </div>
+
+    <div class="row text-center cyan">
+      <div class="col"><strong>Nombre del trabajo</strong></div>
+      <div class="col"><strong>Cantidad</strong></div>
+      <div class="col"><strong>Fecha de realizacion</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let work of allWorks">
+      <div class="col">
+        {{work.name}}
+      </div>
+      <div class="col">
+        {{work.quantity}}
+      </div>
+      <div class="col">
+        {{work.date | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{work.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{worksTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="row m-3 text-center">
+  <div class="col"></div>
+  <div class="col"></div>
+  <div class="col">
+    <h3>Total</h3>
+  </div>
+  <div class="col">
+    <h3>{{this.recordsTotal + this.candiesTotal + this.worksTotal | currency}}</h3>
+  </div>
+</div>

@@ -61,7 +61,8 @@ export class HoursRecordComponent implements OnInit {
       endDate: endDate,
       console: this.selectedConsole,
       price: this.recordService.getRecordPrice(now, endDate, this.selectedConsole.hourPrice, this.selectedConsole.halfHourPrice),
-      finished: false
+      finished: false,
+      hours: this.selectedHour.hoursValue
     } as Record;
     this.createRecord(newRecord);
     this.updateAvaliableConsoles();

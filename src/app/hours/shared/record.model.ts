@@ -7,4 +7,5 @@ export class Record{
     console: Console; 
     price: number;
     finished: boolean;
+    hours: number;
 }

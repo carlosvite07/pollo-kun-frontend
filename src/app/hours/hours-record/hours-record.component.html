@@ -1,17 +1,20 @@
 <div class="row">
     <div class="col text-center">
+        <label><strong>Consola</strong></label>
         <select [(ngModel)]="selectedConsole" class="custom-select">
             <option *ngFor="let console of allConsoles" [ngValue]="console">{{console.name}}</option>
         </select>
         <div *ngIf="errorConsole" class="text-danger">Selecciona una consola</div>
     </div>
     <div class="col text-center">
+        <label><strong>Tiempo</strong></label>
         <select [(ngModel)]="selectedHour" class="custom-select">
             <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
         </select>
         <div *ngIf="errorHour" class="text-danger">Selecciona una hora</div>
     </div>
     <div class="col text-center">
+        <label><strong>Acciones</strong></label><br>
         <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar Tiempo</button>
     </div>
 </div>

@@ -1,18 +1,26 @@
 <div class="row">
     <div class="col text-center">
-        {{record.console.name}}
+        <label><strong>Número de Consola</strong></label><br>
+        <span>{{record.console.name}}</span>
     </div>
     <div class="col text-center">
-        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a"}}<br>
-        {{record.price | currency}}
+        <label><strong>Número de Horas</strong></label><br>
+        <span>{{record.hours}}</span>
     </div>
     <div class="col text-center">
+        <label><strong>Tiempo Inicio Fin y Precio</strong></label><br>
+        <div>
+            {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a"}}<br>
+            {{record.price | currency}}
+        </div>
+    </div>
+    <div class="col-5 text-center">
         <div class="row">
             <div class="col">
+                <label><strong>Acciones</strong></label><br>
                 <button (click)="addTimeConfirm()" type="button" class="btn btn-warning mr-3 mb-2">Agregar
                     Tiempo</button>
-                <button (click)="endConfirm()" type="button"
-                    class="btn btn-danger mr-3 mb-2">Terminar</button>
+                <button (click)="endConfirm()" type="button" class="btn btn-danger mr-3 mb-2">Terminar</button>
             </div>
         </div>
     </div>

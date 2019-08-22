@@ -8,12 +8,17 @@ export class SummaryService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  // getCandiesByRange(start: Date, end: Date): any {
-  //   return this.firestore.collection('candies', ref => ref.where('stock', '>', 0)).snapshotChanges();
-  // }
+  getRecordsByRange(start:Date,end:Date): any{
+    return this.firestore.collection('records', ref => ref.where('startDate','>=',start).where('startDate','<',end)).snapshotChanges();
+  }
 
   getCandiesByRange(start:Date,end:Date): any{
     return this.firestore.collection('candiesPurchases', ref => ref.where('date','>=',start).where('date','<',end)).snapshotChanges();
   }
+  
+  getWorksByRange(start:Date,end:Date): any{
+    return this.firestore.collection('worksRecords', ref => ref.where('date','>=',start).where('date','<',end)).snapshotChanges();
+  }
+
 }
 
