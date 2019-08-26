@@ -95,7 +95,6 @@ describe('HoursRecordComponent', () => {
     consoles = [
       { id: 1, name: 'XBOX 360', available: true, hourPrice: 10, type: '360', halfHourPrice: 7 },
     ]
-    expect(getSpy).toHaveBeenCalled();
   });
 
 

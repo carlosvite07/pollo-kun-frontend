@@ -122,3 +122,26 @@ export class SummaryComponent implements OnInit {
   }
 
 }
+
+/*
+
+Crear cliente
+
+Cliente 1 (btnFinalizar TOtal -> Modal Total Cliente 1){
+
+  Multiselect de lo que se va agregar
+  
+  Dashboard de lo que lleva
+
+
+}
+
+Cliente 
+  - Consola (agregar tiempo)
+  - PC (Iniciar un conteo)
+  - Dulces
+  - Trabajo, Impresiones
+  - Papeleria
+
+
+*/

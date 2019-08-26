@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RecordService } from './record.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 describe('RecordService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [RecordService, AngularFirestore]
+    providers: [RecordService],
+    imports: [AngularFirestoreModule]
   }));
 
   it('should be created', () => {
