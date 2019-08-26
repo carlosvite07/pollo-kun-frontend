@@ -14,8 +14,16 @@ export class RecordService {
     return this.firestore.collection('consoles', ref => ref.where('available', '==', true).orderBy('name')).snapshotChanges();
   }
 
+  createConsole(consoleModel: Console): any{
+    return this.firestore.collection('consoles').add(consoleModel);
+  }
+
   updateConsole(consoleModel: Console) {
     this.firestore.doc('consoles/' + consoleModel.id).update(consoleModel);
+  }
+
+  deleteConsole(consoleModel: Console) {
+    this.firestore.collection('consoles').doc(consoleModel.id).delete();
   }
 
   getRecords(): any {

@@ -22,6 +22,8 @@ import { ModalComponentComponent } from './shared/modal-component/modal-componen
 
 import { HoursModule } from './hours/hours.module';
 import { StationeryComponent } from './stationery/stationery.component';
+import { ConsoleComponent } from './prices/console/console.component';
+import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { StationeryComponent } from './stationery/stationery.component';
     StockComponent,
     PricesComponent,
     ModalComponentComponent,
-    StationeryComponent
+    StationeryComponent,
+    ConsoleComponent,
+    CandiesPricesComponent
   ],
   entryComponents: [
     ModalComponentComponent

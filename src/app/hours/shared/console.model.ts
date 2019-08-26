@@ -1,5 +1,5 @@
 export class Console {
-    id: number;
+    id: string;
     name: string;
     available: boolean;
     hourPrice: number;
