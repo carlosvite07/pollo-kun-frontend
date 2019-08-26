@@ -20,5 +20,9 @@ export class SummaryService {
     return this.firestore.collection('worksRecords', ref => ref.where('date','>=',start).where('date','<',end)).snapshotChanges();
   }
 
+  getArticlesByRange(start:Date,end:Date): any{
+    return this.firestore.collection('articlesPurchases', ref => ref.where('date','>=',start).where('date','<',end)).snapshotChanges();
+  }
+
 }
 

@@ -30,7 +30,7 @@
     </div>
 
     <div class="row text-center green">
-      <div class="col">Registros de 360</div>
+      <div class="col">Registros de XBOX 360</div>
     </div>
 
     <div class="row text-center" *ngFor="let record of threeSixtyRecords">
@@ -56,7 +56,7 @@
     </div>
 
     <div class="row text-center green">
-      <div class="col">Registros de one</div>
+      <div class="col">Registros de XBOX ONE</div>
     </div>
 
     <div class="row text-center" *ngFor="let record of oneRecords">
@@ -86,12 +86,12 @@
     </div>
 
     <div class="row text-center">
-        <div class="col"><strong>SubTotal de Horas</strong></div>
-        <div class="col"><strong>{{totalHours}}</strong></div>
-        <div class="col"><strong>SubTotal</strong></div>
-        <div class="col"><strong>{{recordsTotal | currency}}</strong></div>
-      </div>
-    
+      <div class="col"><strong>SubTotal de Horas</strong></div>
+      <div class="col"><strong>{{totalHours}}</strong></div>
+      <div class="col"><strong>SubTotal</strong></div>
+      <div class="col"><strong>{{recordsTotal | currency}}</strong></div>
+    </div>
+
   </div>
 </div>
 
@@ -148,7 +148,7 @@
     <div class="row text-center">
       <div class="col"><strong>Nombre del trabajo</strong></div>
       <div class="col"><strong>Cantidad</strong></div>
-      <div class="col"><strong>Fecha de realizacion</strong></div>
+      <div class="col"><strong>Fecha de compra</strong></div>
       <div class="col"><strong>Precio</strong></div>
     </div>
 
@@ -177,6 +177,46 @@
   </div>
 </div>
 
+<div class="row mt-3">
+  <div class="col">
+
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Papelería</h3>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"><strong>Nombre del artículo</strong></div>
+      <div class="col"><strong>Cantidad</strong></div>
+      <div class="col"><strong>Fecha de compra</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let article of allArticles">
+      <div class="col">
+        {{article.name}}
+      </div>
+      <div class="col">
+        {{article.quantity}}
+      </div>
+      <div class="col">
+        {{article.date | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{article.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{articlesTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
 
 <div class="row m-3 text-center">
   <div class="col"></div>
@@ -185,6 +225,6 @@
     <h3>Total</h3>
   </div>
   <div class="col">
-    <h3>{{this.recordsTotal + this.candiesTotal + this.worksTotal | currency}}</h3>
+    <h3>{{this.recordsTotal + this.candiesTotal + this.worksTotal + this.articlesTotal | currency}}</h3>
   </div>
 </div>

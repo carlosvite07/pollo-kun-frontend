@@ -4,6 +4,7 @@ import { SummaryService } from './summary.service';
 import { Record } from '../hours/shared/record.model';
 import { CandiePurchase } from '../candies/candie-purchase.model';
 import { WorkRecord } from '../works/work-record.model';
+import { ArticlePurchase } from '../stationery/article-purchase.model';
 
 @Component({
   selector: 'app-summary',
@@ -31,6 +32,8 @@ export class SummaryComponent implements OnInit {
   candiesTotal: number = 0;
   allWorks: WorkRecord[] = [];
   worksTotal: number = 0;
+  articlesTotal: number = 0;
+  allArticles: ArticlePurchase[] = [];
   total: number = 0;
 
   constructor(
@@ -139,6 +142,19 @@ export class SummaryComponent implements OnInit {
         this.worksTotal += work.price;
         work.date = work.date.toDate();
         return work as WorkRecord;
+      });
+    });
+
+    this.summaryService.getArticlesByRange(start, end).subscribe(data => {
+      this.articlesTotal = 0;
+      this.allArticles = data.map(e => {
+        let article = {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        };
+        this.articlesTotal += article.price;
+        article.date = article.date.toDate();
+        return article as ArticlePurchase;
       });
     });
 

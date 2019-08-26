@@ -46,6 +46,8 @@ export class RecordComponent implements OnChanges {
     clearTimeout(this.endInitially);
     let now = new Date();
 
+    this.externalModal.dismissAll();
+    
     this.warningAlert = setTimeout(() => {
       this.showExternalModal(this.record.console.name,
         'Le quedan menos de ' + this.beforeFinishedMinutesAlert + ' minutos para que termine el ' + this.record.console.name, false, false);
