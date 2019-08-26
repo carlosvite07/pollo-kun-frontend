@@ -22,14 +22,18 @@
       </div>
     </div>
 
-    <div class="row text-center cyan">
+    <div class="row text-center">
       <div class="col"><strong>Número de consola</strong></div>
       <div class="col"><strong>Horas</strong></div>
       <div class="col"><strong>Fecha de uso</strong></div>
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center" *ngFor="let record of allRecords">
+    <div class="row text-center green">
+      <div class="col">Registros de 360</div>
+    </div>
+
+    <div class="row text-center" *ngFor="let record of threeSixtyRecords">
       <div class="col">
         {{record.console.name}}
       </div>
@@ -46,11 +50,48 @@
 
     <div class="row text-center">
       <div class="col"></div>
+      <div class="col"><strong>{{threeSixtyHours}}</strong></div>
       <div class="col"></div>
-      <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{recordsTotal | currency}}</strong></div>
+      <div class="col"><strong>{{threeSixtyTotal | currency}}</strong></div>
     </div>
 
+    <div class="row text-center green">
+      <div class="col">Registros de one</div>
+    </div>
+
+    <div class="row text-center" *ngFor="let record of oneRecords">
+      <div class="col">
+        {{record.console.name}}
+      </div>
+      <div class="col">
+        {{record.hours}}
+      </div>
+      <div class="col">
+        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{record.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"><strong>{{oneHours}}</strong></div>
+      <div class="col"></div>
+      <div class="col"><strong>{{oneTotal | currency}}</strong></div>
+    </div>
+
+    <div class="row text-center green">
+      <div class="col">Total de consolas</div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col"><strong>SubTotal de Horas</strong></div>
+        <div class="col"><strong>{{totalHours}}</strong></div>
+        <div class="col"><strong>SubTotal</strong></div>
+        <div class="col"><strong>{{recordsTotal | currency}}</strong></div>
+      </div>
+    
   </div>
 </div>
 
@@ -63,7 +104,7 @@
       </div>
     </div>
 
-    <div class="row text-center cyan">
+    <div class="row text-center">
       <div class="col"><strong>Dulce</strong></div>
       <div class="col"><strong>Cantidad</strong></div>
       <div class="col"><strong>Fecha de compra</strong></div>
@@ -104,7 +145,7 @@
       </div>
     </div>
 
-    <div class="row text-center cyan">
+    <div class="row text-center">
       <div class="col"><strong>Nombre del trabajo</strong></div>
       <div class="col"><strong>Cantidad</strong></div>
       <div class="col"><strong>Fecha de realizacion</strong></div>

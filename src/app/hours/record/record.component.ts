@@ -17,38 +17,38 @@ export class RecordComponent implements OnChanges {
   modalReference;
   warningAlert;
   endInitially;
-  beforeFinishedMinutesAlert: number = 10;
+  beforeFinishedMinutesAlert: number = 5;
 
   constructor(
     private externalModal: NgbModal,
     private recordService: RecordService,
     private modalService: ModalService
   ) {
-      this.modalService.endRecordId$.subscribe(
-        recordId => {
-          if(recordId === this.record.id){
-            this.endRecord(this.record);
-          }
+    this.modalService.endRecordId$.subscribe(
+      recordId => {
+        if (recordId === this.record.id) {
+          this.endRecord(this.record);
         }
-      );
+      }
+    );
 
-      this.modalService.selectedHour$.subscribe(
-        hour => {
-          if(hour.recordId === this.record.id){
-            this.addTime(hour.selectedHour);
-          }
+    this.modalService.selectedHour$.subscribe(
+      hour => {
+        if (hour.recordId === this.record.id) {
+          this.addTime(hour.selectedHour);
         }
-      );
+      }
+    );
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     clearTimeout(this.warningAlert);
     clearTimeout(this.endInitially);
     let now = new Date();
 
     this.warningAlert = setTimeout(() => {
       this.showExternalModal(this.record.console.name,
-        'Le quedan menos de ' + this.beforeFinishedMinutesAlert +' minutos para que termine el ' + this.record.console.name,false,false);
+        'Le quedan menos de ' + this.beforeFinishedMinutesAlert + ' minutos para que termine el ' + this.record.console.name, false, false);
     }, this.record.endDate.getTime() - (now.getTime() + this.beforeFinishedMinutesAlert * 60 * 1000));
 
     this.endInitially = setTimeout(() => {
@@ -64,11 +64,11 @@ export class RecordComponent implements OnChanges {
   }
 
   endConfirm(): void {
-    this.showExternalModal(this.record.console.name,'¿Estas seguro que quieres terminar el tiempo de ' + this.record.console.name + '?',true,false);
+    this.showExternalModal(this.record.console.name, '¿Estas seguro que quieres terminar el tiempo de ' + this.record.console.name + '?', true, false);
   }
 
   addTimeConfirm(): void {
-    this.showExternalModal(this.record.console.name,'¿Cuanto tiempo quieres agregar al ' + this.record.console.name + '?',false,true);
+    this.showExternalModal(this.record.console.name, '¿Cuanto tiempo quieres agregar al ' + this.record.console.name + '?', false, true);
   }
 
   addTime(hour: Hour): void {
@@ -80,15 +80,15 @@ export class RecordComponent implements OnChanges {
     this.recordService.addTime(this.record);
   }
 
-  showExternalModal(title:string,body:string, isEndRecord: boolean, isAddTime: boolean):void{
+  showExternalModal(title: string, body: string, isEndRecord: boolean, isAddTime: boolean): void {
     this.modalReference = this.externalModal.open(ModalComponentComponent, { centered: true });
     this.modalReference.componentInstance.title = title;
     this.modalReference.componentInstance.body = body;
     this.modalReference.componentInstance.recordId = this.record.id;
-    if(isEndRecord){
+    if (isEndRecord) {
       this.modalReference.componentInstance.isEndRecord = true;
     }
-    if(isAddTime){
+    if (isAddTime) {
       this.modalReference.componentInstance.isAddTime = true;
     }
   }

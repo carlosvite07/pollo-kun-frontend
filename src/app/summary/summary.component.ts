@@ -19,14 +19,20 @@ export class SummaryComponent implements OnInit {
 
   now = new Date();
 
-  allRecords: Record[] = [];
   recordsTotal: number = 0;
+  totalHours: number = 0;
+  oneRecords: Record[] = [];
+  oneTotal: number = 0;
+  oneHours: number = 0;
+  threeSixtyRecords: Record[] = [];
+  threeSixtyTotal: number = 0;
+  threeSixtyHours: number = 0;
   allCandies: CandiePurchase[] = [];
   candiesTotal: number = 0;
   allWorks: WorkRecord[] = [];
   worksTotal: number = 0;
   total: number = 0;
-  
+
   constructor(
     calendar: NgbCalendar,
     private summaryService: SummaryService
@@ -48,16 +54,16 @@ export class SummaryComponent implements OnInit {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;      
+      this.toDate = date;
     } else {
       this.toDate = null;
       this.fromDate = date;
     }
 
-    if(!this.toDate){
+    if (!this.toDate) {
       start = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day, 0, 0);
       end = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day + 1, 0, 0);
-    }else{
+    } else {
       start = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day, 0, 0);
       end = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day + 1, 0, 0);
     }
@@ -78,23 +84,40 @@ export class SummaryComponent implements OnInit {
 
   getSummaryByDate(start: Date, end: Date): void {
     this.total = 0;
-  
-    this.recordsTotal = 0;
+
     this.summaryService.getRecordsByRange(start, end).subscribe(data => {
-      this.allRecords = data.map(e => {
+      this.recordsTotal = 0;
+      this.totalHours = 0;
+      this.oneRecords = [];
+      this.oneTotal = 0;
+      this.oneHours = 0;
+      this.threeSixtyRecords = [];
+      this.threeSixtyTotal = 0;
+      this.threeSixtyHours = 0;
+      data.forEach(element => {
         let record = {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
+          id: element.payload.doc.id,
+          ...element.payload.doc.data()
         };
         this.recordsTotal += record.price;
         record.startDate = record.startDate.toDate();
         record.endDate = record.endDate.toDate();
-        return record as Record;
+        this.totalHours += record.hours;
+        if (record.console.type === 'one'){
+          this.oneRecords.push(record as Record);
+          this.oneTotal += record.price;
+          this.oneHours += record.hours;
+        }else{
+          this.threeSixtyRecords.push(record as Record);
+          this.threeSixtyTotal += record.price;
+          this.threeSixtyHours += record.hours;
+        }
+
       });
     });
 
-    this.candiesTotal = 0;
     this.summaryService.getCandiesByRange(start, end).subscribe(data => {
+      this.candiesTotal = 0;
       this.allCandies = data.map(e => {
         let candie = {
           id: e.payload.doc.id,
@@ -106,8 +129,8 @@ export class SummaryComponent implements OnInit {
       });
     });
 
-    this.worksTotal = 0;
     this.summaryService.getWorksByRange(start, end).subscribe(data => {
+      this.worksTotal = 0;
       this.allWorks = data.map(e => {
         let work = {
           id: e.payload.doc.id,
@@ -130,13 +153,13 @@ Crear cliente
 Cliente 1 (btnFinalizar TOtal -> Modal Total Cliente 1){
 
   Multiselect de lo que se va agregar
-  
+
   Dashboard de lo que lleva
 
 
 }
 
-Cliente 
+Cliente
   - Consola (agregar tiempo)
   - PC (Iniciar un conteo)
   - Dulces
