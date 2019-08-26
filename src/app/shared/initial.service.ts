@@ -17,7 +17,7 @@ export class InitialService {
     { name: '5 XBOX ONE', available: true, hourPrice: 15, type:'one', halfHourPrice: 10 },
   ];
 
-  dulces = [
+  candies = [
     {
       name: 'Palomitas Blancas',
       price: 3,
@@ -170,10 +170,95 @@ export class InitialService {
     }
   ];
 
+  articles = [
+    {
+      name: 'Folder Carta',
+      price: 3,
+      stock: 10
+    },
+    {
+      name: 'Folder Officio',
+      price: 4.5,
+      stock: 10
+    },
+    {
+      name: 'Pluma Negra',
+      price: 3.5,
+      stock: 10
+    },
+    {
+      name: 'Pluma Roja',
+      price: 3.5,
+      stock: 10
+    },
+    {
+      name: 'Pluma Azul',
+      price: 3.5,
+      stock: 10
+    },
+    {
+      name: 'Goma Chica',
+      price: 3,
+      stock: 10
+    },
+    {
+      name: 'Goma Mediana',
+      price: 3.5,
+      stock: 10
+    },
+    {
+      name: 'Goma Grande',
+      price: 4,
+      stock: 10
+    },
+    {
+      name: 'Disco',
+      price: 8,
+      stock: 49
+    },
+    {
+      name: 'Adaptador Micro SD ',
+      price: 5,
+      stock: 10
+    },
+    {
+      name: 'Micro SD 16 GB',
+      price: 100,
+      stock: 3
+    },
+    {
+      name: 'Micro SD 32 GB',
+      price: 130,
+      stock: 2
+    },
+    {
+      name: 'USB 16 GB',
+      price: 100,
+      stock: 3
+    },
+    {
+      name: 'USB 32 GB',
+      price: 130,
+      stock: 3
+    },
+    {
+      name: 'USB 32 GB',
+      price: 130,
+      stock: 3
+    },
+    {
+      name: 'Prit',
+      price: 4,
+      stock: 3
+    }
+  ];
+
   createAll(): any {
-    this.dulces.forEach( value => this.firestore.collection('candies').add(value)); 
-    this.works.forEach( value => this.firestore.collection('works').add(value));
-    this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
+    console.log('hola');
+    this.articles.forEach( value => this.firestore.collection('articles').add(value));  
+    // this.candies.forEach( value => this.firestore.collection('candies').add(value)); 
+    // this.works.forEach( value => this.firestore.collection('works').add(value));
+    // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
     return true;
   }
 
