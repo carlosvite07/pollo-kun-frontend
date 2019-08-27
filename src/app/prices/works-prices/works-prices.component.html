@@ -1,0 +1,52 @@
+<div class="row mt-5">
+    <div class="col text-center">
+        <h3 class="p-1">Trabajos e Impresiones</h3>
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="col-8">
+                <select [(ngModel)]="selectedWork" class="custom-select" (change)="onChangeSelection($event)">
+                    <option *ngFor="let work of allWorks" [ngValue]="work">{{work.name}}</option>
+                </select>
+            </div>
+            <div class="col">
+                <button (click)="clear()" type="button" class="btn btn-success">Limpiar Selección</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center" *ngIf="!selectedWork">
+    <div class="col">
+        <label><strong>Nombre</strong></label>
+        <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
+        <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Precio</strong></label>
+        <input [(ngModel)]="price" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
+        <div *ngIf="errorPrice" class="text-danger">Precio Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Acciones</strong></label><br>
+        <button (click)="create()" type="button" class="btn btn-success">Crear Nuevo</button>
+    </div>
+</div>
+
+<div class="row text-center" *ngIf="selectedWork">
+    <div class="col">
+        <label><strong>Nombre</strong></label>
+        <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
+        <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Precio</strong></label>
+        <input [(ngModel)]="price" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
+        <div *ngIf="errorPrice" class="text-danger">Precio Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Acciones</strong></label><br>
+        <button (click)="update()" type="button" class="btn btn-success mr-3">Actualizar</button>
+        <button (click)="delete()" type="button" class="btn btn-danger">Eliminar</button>
+    </div>
+</div>

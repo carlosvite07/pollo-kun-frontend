@@ -80,7 +80,7 @@ export class HoursRecordComponent implements OnInit {
   }
 
   updateAvaliableConsoles(): void {
-    this.recordService.updateConsole(this.selectedConsole);
+    this.recordService.update(this.selectedConsole);
   }
 
   // ngOnDestroy(){

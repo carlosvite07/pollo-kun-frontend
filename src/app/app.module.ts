@@ -22,8 +22,10 @@ import { ModalComponentComponent } from './shared/modal-component/modal-componen
 
 import { HoursModule } from './hours/hours.module';
 import { StationeryComponent } from './stationery/stationery.component';
-import { ConsoleComponent } from './prices/console/console.component';
+import { ConsoleComponent } from './prices/consoles-prices/consoles-prices.component';
 import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
+import { WorksPricesComponent } from './prices/works-prices/works-prices.component';
+import { ArticlesPricesComponent } from './prices/articles-prices/articles-prices.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.c
     ModalComponentComponent,
     StationeryComponent,
     ConsoleComponent,
-    CandiesPricesComponent
+    CandiesPricesComponent,
+    WorksPricesComponent,
+    ArticlesPricesComponent
   ],
   entryComponents: [
     ModalComponentComponent

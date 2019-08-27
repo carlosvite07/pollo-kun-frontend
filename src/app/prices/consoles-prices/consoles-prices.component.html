@@ -1,30 +1,28 @@
 <div class="row">
     <div class="col">
 
-        <div class="row ">
+        <div class="row text-center">
             <div class="col">
                 <h3 class="p-1">Consolas</h3>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col"></div>
-            <div class="col text-center">
-                <select [(ngModel)]="selectedConsole" class="custom-select" (change)="onChangeConsoleSelection($event)">
-                    <option *ngFor="let console of allConsoles" [ngValue]="console">{{console.name}}</option>
-                </select>
-            </div>
             <div class="col">
-                <button (click)="clear()" type="button" class="btn btn-success">Limpiar Selección</button>
+                <div class="row">
+                    <div class="col-8">
+                        <select [(ngModel)]="selectedConsole" class="custom-select" (change)="onChangeSelection($event)">
+                            <option *ngFor="let console of allConsoles" [ngValue]="console">{{console.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <button (click)="clear()" type="button" class="btn btn-success">Limpiar Selección</button>
+                    </div>
+                </div>
             </div>
-            <div class="col"></div>
         </div>
 
-        <div class="row text-center mt-5" *ngIf="!selectedConsole">
+        <div class="row text-center" *ngIf="!selectedConsole">
             <div class="col">
                 <label><strong>Nombre</strong></label>
-                <input [(ngModel)]="name" type="text" class="form-control"
-                    (ngModelChange)="onChangeName($event)" />
+                <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
                 <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
             </div>
             <div class="col">
@@ -50,16 +48,15 @@
             </div>
             <div class="col">
                 <label><strong>Acciones</strong></label><br>
-                <button (click)="createConsole()" type="button" class="btn btn-success">Crear Nuevo</button>
+                <button (click)="create()" type="button" class="btn btn-success">Crear Nuevo</button>
             </div>
         </div>
 
 
-        <div class="row text-center mt-5" *ngIf="selectedConsole">
+        <div class="row text-center" *ngIf="selectedConsole">
             <div class="col">
                 <label><strong>Nombre</strong></label>
-                <input [(ngModel)]="name" type="text" class="form-control"
-                    (ngModelChange)="onChangeName($event)" />
+                <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
                 <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
             </div>
             <div class="col">
@@ -76,8 +73,8 @@
             </div>
             <div class="col">
                 <label><strong>Acciones</strong></label><br>
-                <button (click)="updateConsole()" type="button" class="btn btn-success mr-3">Actualizar</button>
-                <button (click)="deleteConsole()" type="button" class="btn btn-danger">Eliminar</button>
+                <button (click)="update()" type="button" class="btn btn-success mr-3">Actualizar</button>
+                <button (click)="delete()" type="button" class="btn btn-danger">Eliminar</button>
             </div>
         </div>
 

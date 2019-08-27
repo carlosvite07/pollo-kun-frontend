@@ -1,15 +1,10 @@
-<div class="row">
-    <div class="col">
-
-        <div class="row ">
-            <div class="col">
-                <h3 class="p-1">Dulces</h3>
-            </div>
-        </div>
-
+<div class="row mt-5">
+    <div class="col text-center">
+        <h3 class="p-1">Dulces</h3>
+    </div>
+    <div class="col text-right">
         <div class="row">
-            <div class="col"></div>
-            <div class="col text-center">
+            <div class="col-8">
                 <select [(ngModel)]="selectedCandie" class="custom-select" (change)="onChangeSelection($event)">
                     <option *ngFor="let candie of allCandies" [ngValue]="candie">{{candie.name}}</option>
                 </select>
@@ -17,72 +12,100 @@
             <div class="col">
                 <button (click)="clear()" type="button" class="btn btn-success">Limpiar Selección</button>
             </div>
-            <div class="col"></div>
         </div>
+    </div>
+</div>
 
-        <div class="row text-center mt-5" *ngIf="!selectedCandie">
-            <div class="col">
-                <label><strong>Nombre</strong></label>
-                <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
-                <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
-            </div>
-            <div class="col">
-                <label><strong>Precio</strong></label>
-                <input [(ngModel)]="price" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
-                <div *ngIf="errorPrice" class="text-danger">Precio Incorrecto</div>
-            </div>
+<div class="row text-center" *ngIf="!selectedCandie">
+    <div class="col">
+        <label><strong>Nombre</strong></label>
+        <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
+        <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Precio</strong></label>
+        <input [(ngModel)]="price" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
+        <div *ngIf="errorPrice" class="text-danger">Precio Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Stock</strong></label>
+        <input [(ngModel)]="stock" type="number" class="form-control" (ngModelChange)="onChangeStock($event)" />
+        <div *ngIf="errorStock" class="text-danger">Stock Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>¿Tiene 2 precios?</strong></label><br>
+        <input type="checkbox" [(ngModel)]="twoPrices" [ngModelOptions]="{standalone: true}" class="" />
+    </div>
+    <div class="col-5" *ngIf="twoPrices">
+        <div class="row">
             <div class="col">
                 <label><strong>Precio 2</strong></label>
-                <input [(ngModel)]="price2" type="number" class="form-control"/>
+                <input [(ngModel)]="price2" type="number" class="form-control"
+                    (ngModelChange)="onChangePrice2($event)" />
+                <div *ngIf="errorPrice2" class="text-danger">Precio Incorrecto</div>
             </div>
             <div class="col">
                 <label><strong>Cantidad</strong></label>
                 <input [(ngModel)]="quantity" type="number" class="form-control"
-                (ngModelChange)="onChangeQuantity($event)" />
+                    (ngModelChange)="onChangeQuantity($event)" />
                 <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecto</div>
             </div>
             <div class="col">
                 <label><strong>Cantidad 2</strong></label>
-                <input [(ngModel)]="quantity2" type="number" class="form-control"/>
-            </div>
-            <div class="col">
-                <label><strong>Stock</strong></label>
-                <input [(ngModel)]="stock" type="number" class="form-control"
-                (ngModelChange)="onChangeStock($event)" />
-                <div *ngIf="errorStock" class="text-danger">Stock Incorrecto</div>
-            </div>
-
-            <div class="col">
-                <label><strong>Acciones</strong></label><br>
-                <button (click)="createCandie()" type="button" class="btn btn-success">Crear Nuevo</button>
+                <input [(ngModel)]="quantity2" type="number" class="form-control"
+                    (ngModelChange)="onChangeQuantity2($event)" />
+                <div *ngIf="errorQuantity2" class="text-danger">Cantidad Incorrecto</div>
             </div>
         </div>
+    </div>
+    <div class="col">
+        <label><strong>Acciones</strong></label><br>
+        <button (click)="create()" type="button" class="btn btn-success">Crear Nuevo</button>
+    </div>
+</div>
 
 
-        <!-- <div class="row text-center mt-5" *ngIf="selectedCandie">
+<div class="row text-center" *ngIf="selectedCandie">
+    <div class="col">
+        <label><strong>Nombre</strong></label>
+        <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
+        <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Precio</strong></label>
+        <input [(ngModel)]="price" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
+        <div *ngIf="errorPrice" class="text-danger">Precio Incorrecto</div>
+    </div>
+    <div class="col">
+        <label><strong>Stock</strong></label>
+        <input [(ngModel)]="stock" type="number" class="form-control" (ngModelChange)="onChangeStock($event)" />
+        <div *ngIf="errorStock" class="text-danger">Stock Incorrecto</div>
+    </div>
+    <div class="col-4" *ngIf="twoPrices">
+        <div class="row">
             <div class="col">
-                <label><strong>Nombre</strong></label>
-                <input [(ngModel)]="name" type="text" class="form-control" (ngModelChange)="onChangeName($event)" />
-                <div *ngIf="errorName" class="text-danger">Nombre Incorrecto</div>
+                <label><strong>Precio 2</strong></label>
+                <input [(ngModel)]="price2" type="number" class="form-control"
+                    (ngModelChange)="onChangePrice2($event)" />
+                <div *ngIf="errorPrice2" class="text-danger">Precio Incorrecto</div>
             </div>
             <div class="col">
-                <label><strong>Precio Hora</strong></label>
-                <input [(ngModel)]="hourPrice" type="number" class="form-control"
-                    (ngModelChange)="onChangeHourPrice($event)" />
-                <div *ngIf="errorHourPrice" class="text-danger">Precio Incorrecto</div>
+                <label><strong>Cantidad</strong></label>
+                <input [(ngModel)]="quantity" type="number" class="form-control"
+                    (ngModelChange)="onChangeQuantity($event)" />
+                <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecto</div>
             </div>
             <div class="col">
-                <label><strong>Precio Media Hora</strong></label>
-                <input [(ngModel)]="halfHourPrice" type="number" class="form-control"
-                    (ngModelChange)="onChangeHalfHourPrice($event)" />
-                <div *ngIf="errorHalfHourPrice" class="text-danger">Precio Incorrecto</div>
+                <label><strong>Cantidad 2</strong></label>
+                <input [(ngModel)]="quantity2" type="number" class="form-control"
+                    (ngModelChange)="onChangeQuantity2($event)" />
+                <div *ngIf="errorQuantity2" class="text-danger">Cantidad Incorrecto</div>
             </div>
-            <div class="col">
-                <label><strong>Acciones</strong></label><br>
-                <button (click)="updateConsole()" type="button" class="btn btn-success mr-3">Actualizar</button>
-                <button (click)="deleteConsole()" type="button" class="btn btn-danger">Eliminar</button>
-            </div>
-        </div> -->
-
+        </div>
+    </div>
+    <div class="col-3">
+        <label><strong>Acciones</strong></label><br>
+        <button (click)="update()" type="button" class="btn btn-success mr-3">Actualizar</button>
+        <button (click)="delete()" type="button" class="btn btn-danger">Eliminar</button>
     </div>
 </div>

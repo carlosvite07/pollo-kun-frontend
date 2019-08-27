@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordService } from '../../hours/shared/record.service';
-import { Console } from '../../hours/shared/console.model'
+import { Console } from '../../hours/shared/console.model';
 
 @Component({
-  selector: 'app-console',
-  templateUrl: './console.component.html',
-  styleUrls: ['./console.component.scss']
+  selector: 'app-consoles-prices',
+  templateUrl: './consoles-prices.component.html',
+  styleUrls: ['./consoles-prices.component.scss']
 })
 export class ConsoleComponent implements OnInit {
   allConsoles: Console[] = [];
   selectedConsole: Console;
-  consoleId: string;
+  id: string;
   name: string = '';
   hourPrice: number = 0;
   halfHourPrice: number = 0;
@@ -33,11 +33,12 @@ export class ConsoleComponent implements OnInit {
     });
   }
 
-  onChangeConsoleSelection(): void {
-    this.consoleId = this.selectedConsole.id;
+  onChangeSelection(): void {
+    this.id = this.selectedConsole.id;
     this.name = this.selectedConsole.name;
     this.hourPrice = this.selectedConsole.hourPrice;
     this.halfHourPrice = this.selectedConsole.halfHourPrice;
+    this.validation();
   }
 
   clear(): void {
@@ -64,36 +65,46 @@ export class ConsoleComponent implements OnInit {
     this.errorType = this.type === undefined ? true : false;
   }
   
-  createConsole(): void {
+  create(): void {
+    if(this.validation()){
+      this.errorType = this.type === undefined ? true : false;
+      if(!this.errorType){
+        let newConsole = {
+          name: this.name,
+          hourPrice: this.hourPrice,
+          halfHourPrice: this.halfHourPrice,
+          available: true,
+          type: this.type == 1 ? 'one' : '360'
+        } as Console;
+        this.recordService.create(newConsole);
+        this.clear()
+      }
+    }
+  }
+
+  update(): void{
+    if(this.validation()){
+      this.selectedConsole.name = this.name;
+      this.selectedConsole.hourPrice = this.hourPrice;
+      this.selectedConsole.halfHourPrice = this.halfHourPrice;
+      this.recordService.update(this.selectedConsole);
+      this.clear();
+    }
+  }
+
+  delete(): void{
+    this.recordService.delete(this.selectedConsole);
+    this.clear();
+  }
+
+  validation(): boolean{
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorHourPrice = this.hourPrice <= 0 ? true : false;
     this.errorHalfHourPrice = this.halfHourPrice <= 0 ? true : false;
-    this.errorType = this.type === undefined ? true : false;
-    if(this.errorName || this.errorHourPrice || this.errorHalfHourPrice || this.errorType){
-      return;
+    if(this.errorName || this.errorHourPrice || this.errorHalfHourPrice){
+      return false;
     }
-    let newConsole = {
-      name: this.name,
-      hourPrice: this.hourPrice,
-      halfHourPrice: this.halfHourPrice,
-      available: true,
-      type: this.type == 1 ? 'one' : '360'
-    } as Console;
-    this.recordService.createConsole(newConsole);
-    this.clear()
-  }
-
-  updateConsole(): void{
-    this.selectedConsole.name = this.name;
-    this.selectedConsole.hourPrice = this.hourPrice;
-    this.selectedConsole.halfHourPrice = this.halfHourPrice;
-    this.recordService.updateConsole(this.selectedConsole);
-    this.clear();
-  }
-
-  deleteConsole(): void{
-    this.recordService.deleteConsole(this.selectedConsole);
-    this.clear();
+    return true;
   }
 
 }

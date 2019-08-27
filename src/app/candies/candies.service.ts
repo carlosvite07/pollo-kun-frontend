@@ -18,15 +18,15 @@ export class CandiesService {
     return this.firestore.collection('candies').snapshotChanges();
   }
 
-  createCandie(candieModel: Candie): any {
+  create(candieModel: Candie): any {
     return this.firestore.collection('candies').add(candieModel);
   }
 
-  updateCandie(candieModel: Candie) {
+  update(candieModel: Candie) {
     this.firestore.doc('candies/' + candieModel.id).update(candieModel);
   }
 
-  deleteCandie(candieModel: Candie) {
+  delete(candieModel: Candie) {
     this.firestore.collection('candies').doc(candieModel.id).delete();
   }
 
