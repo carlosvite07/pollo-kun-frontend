@@ -1,6 +1,6 @@
 import { Console } from './console.model';
 
-export class Record{
+export class ConsoleRecord{
     id: string;
     startDate: Date;
     endDate: Date;

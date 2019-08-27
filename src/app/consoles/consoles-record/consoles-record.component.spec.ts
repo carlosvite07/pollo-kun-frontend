@@ -3,18 +3,18 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of, Observable } from 'rxjs';
 
-import { HoursRecordComponent } from './hours-record.component';
-import { RecordComponent } from '../record/record.component';
-import { RecordService } from '../shared/record.service';
+import { ConsolesRecordComponent } from './consoles-record.component';
+import { RecordComponent } from '../consoles-show/consoles-show.component';
+import { ConsolesService } from '../shared/consoles.service';
 import { Console } from '../shared/console.model';
 import { firestore } from 'firebase';
 
-describe('HoursRecordComponent', () => {
-  let component: HoursRecordComponent;
-  let fixture: ComponentFixture<HoursRecordComponent>;
+describe('ConsolesRecordComponent', () => {
+  let component: ConsolesRecordComponent;
+  let fixture: ComponentFixture<ConsolesRecordComponent>;
 
   //Mock class
-  class MockRecordService {
+  class MockConsolesService {
     getConsoles(): any {
       return of(
         [{
@@ -30,14 +30,14 @@ describe('HoursRecordComponent', () => {
       )
     }
 
-    getRecords() {
+    getConsolesRecords() {
       return of(
         [{
           payload: {
             doc: {
               id: '1',
               data: () => [
-                { 
+                {
                   console: {
                     available: false,
                     halfHourPrice: 10,
@@ -46,20 +46,20 @@ describe('HoursRecordComponent', () => {
                     name: "2 XBOX ONE",
                     type: "one"
                   },
-                  endDate:{
-                    toDate(){
+                  endDate: {
+                    toDate() {
                       return new Date();
                     }
                   },
                   finished: false,
                   price: 15,
-                  startDate:{
-                    toDate(){
+                  startDate: {
+                    toDate() {
                       return new Date();
                     }
                   }
                 },
-                
+
               ]
             }
           }
@@ -67,20 +67,20 @@ describe('HoursRecordComponent', () => {
       )
     }
   }
-  
-  let MockRecordServiceObject = new MockRecordService();
+
+  let MockConsolesServiceObject = new MockConsolesService();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HoursRecordComponent, RecordComponent],
+      declarations: [ConsolesRecordComponent, RecordComponent],
       imports: [FormsModule],
-      providers: [AngularFirestore, { provide: RecordService, useClass: MockRecordService }]
+      providers: [AngularFirestore, { provide: ConsolesService, useClass: MockConsolesService }]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HoursRecordComponent);
+    fixture = TestBed.createComponent(ConsolesRecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -99,16 +99,16 @@ describe('HoursRecordComponent', () => {
 
 
   it(`should return all Consoles`, async(() => {
-    const fixture = TestBed.createComponent(HoursRecordComponent);
+    const fixture = TestBed.createComponent(ConsolesRecordComponent);
     const app = fixture.componentInstance;
 
     //arrange
-    let getSpy = spyOn(MockRecordServiceObject,'getConsoles').and.returnValue({ subscribe: () => { } });
+    let getSpy = spyOn(MockConsolesServiceObject, 'getConsoles').and.returnValue({ subscribe: () => { } });
 
     //act
     app.ngOnInit();
 
-    // MockRecordServiceObject.getConsoles();
+    // MockConsolesServiceObject.getConsoles();
 
     //assert
     expect(getSpy).toHaveBeenCalled();

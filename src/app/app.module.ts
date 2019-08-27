@@ -18,9 +18,9 @@ import { SummaryComponent } from './summary/summary.component';
 import { StockComponent } from './stock/stock.component';
 import { PricesComponent } from './prices/prices.component';
 
-import { ModalComponentComponent } from './shared/modal-component/modal-component.component';
+import { ConsolesModalComponent } from './consoles/consoles-modal/consoles-modal.component';
 
-import { HoursModule } from './hours/hours.module';
+import { ConsolesModule } from './consoles/consoles.module';
 import { StationeryComponent } from './stationery/stationery.component';
 import { ConsoleComponent } from './prices/consoles-prices/consoles-prices.component';
 import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
@@ -36,7 +36,7 @@ import { ArticlesPricesComponent } from './prices/articles-prices/articles-price
     SummaryComponent,
     StockComponent,
     PricesComponent,
-    ModalComponentComponent,
+    ConsolesModalComponent,
     StationeryComponent,
     ConsoleComponent,
     CandiesPricesComponent,
@@ -44,14 +44,14 @@ import { ArticlesPricesComponent } from './prices/articles-prices/articles-price
     ArticlesPricesComponent
   ],
   entryComponents: [
-    ModalComponentComponent
+    ConsolesModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    HoursModule,
+    ConsolesModule,
     AngularFireModule.initializeApp(environment.firebase, 'pollo-kun-firestone'), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,

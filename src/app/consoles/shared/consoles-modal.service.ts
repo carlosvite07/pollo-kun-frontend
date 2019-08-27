@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Hour } from '../../hours/shared/hour.model';
 import { CandiePurchase } from 'src/app/candies/candie-purchase.model';
 
 @Injectable({
@@ -19,8 +18,8 @@ export class ModalService {
   candiePurchase$ = this.candiePurchase.asObservable();
 
   //Service
-  confirmEndRecord(recordId: string) {
-    this.endRecordIdSource.next(recordId);
+  confirmEndRecord(consoleRecordId: string) {
+    this.endRecordIdSource.next(consoleRecordId);
   }
 
   confirmAddTime(object:any) {

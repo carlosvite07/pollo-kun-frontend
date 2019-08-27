@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordService } from '../shared/record.service';
-import { HOURS } from '../shared/mock-hours';
+import { ConsolesService } from '../shared/consoles.service';
 import { Console } from '../shared/console.model';
+import { ConsoleRecord } from '../shared/console-record.model';
+import { HOURS } from '../shared/mock-hours';
 import { Hour } from '../shared/hour.model';
-import { Record } from '../shared/record.model';
 
 @Component({
-  selector: 'app-hours-record',
-  templateUrl: './hours-record.component.html',
-  styleUrls: ['./hours-record.component.scss']
+  selector: 'app-consoles-record',
+  templateUrl: './consoles-record.component.html',
+  styleUrls: ['./consoles-record.component.scss']
 })
-export class HoursRecordComponent implements OnInit {
+export class ConsolesRecordComponent implements OnInit {
   allConsoles: Console[] = [];
-  records: Record[] = [];
-  avaliableHours = HOURS;
+  consolesRecords: ConsoleRecord[] = [];
+  hours = HOURS;
 
   selectedConsole: Console;
   selectedHour: Hour;
   errorConsole: Boolean = false;
   errorHour: Boolean = false;
 
-  constructor(private recordService: RecordService) { }
+  constructor(private consolesService: ConsolesService) { }
 
-  trackByItems(index: number, record: Record): string { return record.id; }
+  trackByItems(index: number, consoleRecord: ConsoleRecord): string { return consoleRecord.id; }
 
   ngOnInit() {
-    this.recordService.getConsoles().subscribe(data => {
+    this.consolesService.getConsoles().subscribe(data => {
       this.allConsoles = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -34,17 +34,17 @@ export class HoursRecordComponent implements OnInit {
       });
     });
 
-    this.recordService.getRecords().subscribe(data => {
-      this.records = data.map(e => {
+    this.consolesService.getConsolesRecords().subscribe(data => {
+      this.consolesRecords = data.map(e => {
         let newRecord = {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         };
         newRecord.startDate = newRecord.startDate.toDate();
         newRecord.endDate = newRecord.endDate.toDate();
-        return newRecord as Record;
+        return newRecord as ConsoleRecord;
       });
-      this.records.sort((a, b) => a.endDate.getTime() - b.endDate.getTime())
+      this.consolesRecords.sort((a, b) => a.endDate.getTime() - b.endDate.getTime())
     });
   }
 
@@ -60,12 +60,11 @@ export class HoursRecordComponent implements OnInit {
       startDate: now,
       endDate: endDate,
       console: this.selectedConsole,
-      price: this.recordService.getRecordPrice(now, endDate, this.selectedConsole.hourPrice, this.selectedConsole.halfHourPrice),
+      price: this.consolesService.getConsoleRecordPrice(now, endDate, this.selectedConsole.hourPrice, this.selectedConsole.halfHourPrice),
       finished: false,
       hours: this.selectedHour.hoursValue
-    } as Record;
+    } as ConsoleRecord;
     this.createRecord(newRecord);
-    this.updateAvaliableConsoles();
     this.selectedConsole = undefined;
     this.selectedHour = undefined;
   }
@@ -74,17 +73,8 @@ export class HoursRecordComponent implements OnInit {
     return new Date(now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000);
   }
 
-  createRecord(record: Record): void {
-    this.selectedConsole.available = false;
-    this.recordService.createRecord(record, this.selectedConsole);
+  createRecord(record: ConsoleRecord): void {
+    this.consolesService.createRecord(record, this.selectedConsole);
   }
 
-  updateAvaliableConsoles(): void {
-    this.recordService.update(this.selectedConsole);
-  }
-
-  // ngOnDestroy(){
-  //   this.recordService.getConsoles().unsubscribe();
-  //   this.recordService.getRecords().unsubscribe();
-  // }
 }

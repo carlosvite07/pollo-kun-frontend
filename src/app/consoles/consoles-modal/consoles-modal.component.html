@@ -17,9 +17,8 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')"
-        *ngIf="!isAddTime && !isEndRecord &&!candiePurchase">Aceptar</button>
+        *ngIf="!isAddTime && !isEndRecord">Aceptar</button>
     <button type="button" class="btn btn-danger" (click)="confirmAddTime()" *ngIf="isAddTime">Aceptar</button>
     <button type="button" class="btn btn-danger" (click)="confirmEndRecord()" *ngIf="isEndRecord">Aceptar</button>
-    <button type="button" class="btn btn-success" (click)="confirmCandiePurchase()" *ngIf="candiePurchase">Aceptar</button>
     <button type="button" class="btn btn-danger"  (click)="activeModal.dismiss('Cross click')" *ngIf="candiePurchase">Cancelar</button>
 </div>

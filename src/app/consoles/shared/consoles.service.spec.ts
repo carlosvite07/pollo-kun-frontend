@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RecordService } from './record.service';
+import { ConsolesService } from './consoles.service';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
-describe('RecordService', () => {
+describe('ConsolesService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [RecordService],
+    providers: [ConsolesService],
     imports: [AngularFirestoreModule]
   }));
 
   it('should be created', () => {
-    const service: RecordService = TestBed.get(RecordService);
+    const service: ConsolesService = TestBed.get(ConsolesService);
     expect(service).toBeTruthy();
   });
 });

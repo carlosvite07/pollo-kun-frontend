@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HoursRecordComponent } from './hours-record/hours-record.component';
+import { ConsolesRecordComponent } from './consoles-record/consoles-record.component';
 
 const routes: Routes = [
-  { path: 'horas', component: HoursRecordComponent}
+  { path: 'consolas', component: ConsolesRecordComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HoursRoutingModule { }
+export class ConsolesRoutingModule { }

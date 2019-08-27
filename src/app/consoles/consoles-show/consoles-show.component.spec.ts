@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { RecordComponent } from './record.component';
+import { RecordComponent } from './consoles-show.component';
 
 describe('RecordComponent', () => {
   let component: RecordComponent;

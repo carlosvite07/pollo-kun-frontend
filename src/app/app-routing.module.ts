@@ -7,7 +7,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { StationeryComponent } from './stationery/stationery.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/horas', pathMatch: 'full' },
+  { path: '', redirectTo: '/consolas', pathMatch: 'full' },
   { path: 'dulces', component: CandiesComponent },
   { path: 'trabajos', component: WorksComponent },
   { path: 'dulces', component: CandiesComponent },

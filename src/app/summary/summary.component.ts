@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { SummaryService } from './summary.service';
-import { Record } from '../hours/shared/record.model';
+import { ConsoleRecord } from '../consoles/shared/console-record.model';
 import { CandiePurchase } from '../candies/candie-purchase.model';
 import { WorkRecord } from '../works/work-record.model';
 import { ArticlePurchase } from '../stationery/article-purchase.model';
@@ -22,10 +22,10 @@ export class SummaryComponent implements OnInit {
 
   recordsTotal: number = 0;
   totalHours: number = 0;
-  oneRecords: Record[] = [];
+  oneRecords: ConsoleRecord[] = [];
   oneTotal: number = 0;
   oneHours: number = 0;
-  threeSixtyRecords: Record[] = [];
+  threeSixtyRecords: ConsoleRecord[] = [];
   threeSixtyTotal: number = 0;
   threeSixtyHours: number = 0;
   allCandies: CandiePurchase[] = [];
@@ -107,11 +107,11 @@ export class SummaryComponent implements OnInit {
         record.endDate = record.endDate.toDate();
         this.totalHours += record.hours;
         if (record.console.type === 'one'){
-          this.oneRecords.push(record as Record);
+          this.oneRecords.push(record as ConsoleRecord);
           this.oneTotal += record.price;
           this.oneHours += record.hours;
         }else{
-          this.threeSixtyRecords.push(record as Record);
+          this.threeSixtyRecords.push(record as ConsoleRecord);
           this.threeSixtyTotal += record.price;
           this.threeSixtyHours += record.hours;
         }

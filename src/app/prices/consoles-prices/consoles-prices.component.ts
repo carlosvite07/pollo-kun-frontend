@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordService } from '../../hours/shared/record.service';
-import { Console } from '../../hours/shared/console.model';
+import { ConsolesService } from '../../consoles/shared/consoles.service';
+import { Console } from '../../consoles/shared/console.model';
 
 @Component({
   selector: 'app-consoles-prices',
@@ -20,7 +20,7 @@ export class ConsoleComponent implements OnInit {
   errorHalfHourPrice: boolean = false;
   errorType: boolean = false;
 
-  constructor(private recordService: RecordService) { }
+  constructor(private recordService: ConsolesService) { }
 
   ngOnInit() {
     this.recordService.getConsoles().subscribe(data => {
@@ -108,3 +108,56 @@ export class ConsoleComponent implements OnInit {
   }
 
 }
+
+
+/*
+Cliente
+
+Agregar nuevo cliente
+
+Cliente 1
+
+Consolas | Dulces | Computadora |  Trabajos e Impresiones | Papelería
+
+1 XBOX 360 1 hora -> Agregar tiempo, Terminar
+1 Pau Pau -> Quitar Pagado []
+1 Palomitas -> Quitar Pagado
+
+Cliente 2 Terminar
+Consolas | Dulces | Computadora |  Trabajos e Impresiones | Papelería
+
+6 Computadora -> Terminar
+1 Impresión
+1 Folder -> Quitar
+
+Cliente 3
+Consolas | Dulces | Computadora |  Trabajos e Impresiones | Papelería
+
+2 Copias
+3 Ampliaciones
+3 Copias Oficio
+1 Prit -> Quitar
+1 impresión fallida
+
+
+client = {
+  consoleRecords = [
+    {..},
+    price: 15,
+  ]
+  candiesPurchase = [
+    {..},
+  ],
+  pcRecord = [
+    {..},
+  ]
+  worksPurchase = [
+    {..},
+  ],
+  articlePurchase = [
+    {..},
+  ]
+
+}
+
+*/

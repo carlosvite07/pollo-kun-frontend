@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col text-center">
         <label><strong>Número de Consola</strong></label><br>
-        <span>{{record.console.name}}</span>
+        <span>{{consoleRecord.console.name}}</span>
     </div>
     <div class="col text-center">
         <label><strong>Número de Horas</strong></label><br>
-        <span>{{record.hours}}</span>
+        <span>{{consoleRecord.hours}}</span>
     </div>
     <div class="col text-center">
         <label><strong>Tiempo Inicio Fin y Precio</strong></label><br>
         <div>
-            {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a"}}<br>
-            {{record.price | currency}}
+            {{consoleRecord.startDate | date:"h:mm a"}} - {{consoleRecord.endDate | date:"h:mm a"}}<br>
+            {{consoleRecord.price | currency}}
         </div>
     </div>
     <div class="col-5 text-center">
