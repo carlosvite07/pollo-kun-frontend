@@ -8,7 +8,6 @@ export class InitialService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  
   consoles = [
     { name: '1 XBOX 360', available: true, hourPrice: 10, type:'360', halfHourPrice: 7 },
     { name: '2 XBOX ONE', available: true, hourPrice: 15, type:'one', halfHourPrice: 10 },
@@ -254,13 +253,11 @@ export class InitialService {
   ];
 
   createAll(): any {
-    console.log('hola');
-    this.articles.forEach( value => this.firestore.collection('articles').add(value));  
+    // this.articles.forEach( value => this.firestore.collection('articles').add(value));  
     // this.candies.forEach( value => this.firestore.collection('candies').add(value)); 
     // this.works.forEach( value => this.firestore.collection('works').add(value));
     // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
     return true;
   }
-
   
 }

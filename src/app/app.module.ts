@@ -15,7 +15,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CandiesComponent } from './candies/candies.component';
 import { WorksComponent } from './works/works.component';
 import { SummaryComponent } from './summary/summary.component';
-import { StockComponent } from './stock/stock.component';
 import { PricesComponent } from './prices/prices.component';
 
 import { ConsolesModalComponent } from './consoles/consoles-modal/consoles-modal.component';
@@ -34,7 +33,6 @@ import { ArticlesPricesComponent } from './prices/articles-prices/articles-price
     CandiesComponent,
     WorksComponent,
     SummaryComponent,
-    StockComponent,
     PricesComponent,
     ConsolesModalComponent,
     StationeryComponent,
