@@ -59,6 +59,8 @@ export class ConsolesService {
   
   //Console Modal
   confirmEndConsoleRecod(client: Client, consoleIndex: number) {
+    console.log('endRecord')
+
     let object = {
       client: client,
       consoleIndex: consoleIndex
@@ -68,6 +70,7 @@ export class ConsolesService {
 
   endConsoleRecord(client: Client, consoleIndex: number) {
     client.consolesRecords[consoleIndex].finished = true;
+    client.consolesRecords[consoleIndex].notification.readed = true;
     let consoleId = client.consolesRecords[consoleIndex].console.id;
     this.updateAvailable(consoleId);
     this.clientService.update(client);

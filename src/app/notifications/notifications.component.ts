@@ -20,6 +20,7 @@ export class NotificationsComponent implements OnInit {
   ngOnInit() {
     this.clientsService.activeClients$.subscribe(clients => {
       let now = new Date();
+      this.notifications = []
       this.isConsoleRecordOnTime(clients, now);
       setInterval(() => {
         let now = new Date();
@@ -27,10 +28,12 @@ export class NotificationsComponent implements OnInit {
       }, 60 * 1000);
     });
 
+
+
   }
 
   isConsoleRecordOnTime(clients: Client[], now: Date) {
-    let minutesLess = new Date(now.getTime() - this.minutesNotification * 60 * 1000);
+    let minutesLess = new Date(now.getTime() + this.minutesNotification * 60 * 1000);
     clients.forEach(client => {
       if (client.consolesRecords) {
         client.consolesRecords.forEach((consoleRecord, consoleRecordIndex) => {
@@ -38,20 +41,16 @@ export class NotificationsComponent implements OnInit {
             if (consoleRecord.endDate < now) {
               this.consolesService.endConsoleRecord(client, consoleRecordIndex);
             }
-            if (consoleRecord.endDate > minutesLess) {
+            if (consoleRecord.endDate < minutesLess) {              
               if(!consoleRecord.notification){
                 let notification = {
-                  body: `${this.minutesNotification} minutos para que termine la ${consoleRecord.console.name} del Cliente${client.counter}`,
-                  readed: true,
+                  body: `Faltan menos de ${this.minutesNotification} minutos para que termine la ${consoleRecord.console.name} del Cliente${client.counter}`,
+                  readed: false,
                 } as Notification;
-                this.notifications.unshift(notification);
-                this.clientsService.createNotification(client, consoleRecordIndex, notification)
-              }else{
-                if (consoleRecord.notification.readed) {
-                  //remove from list
-                }
+                this.clientsService.createNotification(client, consoleRecordIndex, notification);
+                this.notifications.push(notification);
               }
-
+              this.notifications.push(consoleRecord.notification);
             }
           }
         });
@@ -59,8 +58,8 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  endConsoleRecord(client: Client) {
-
+  makeReadedNotification(notification: Notification){
+    notification
   }
 
 
