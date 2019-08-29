@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ConsolesService } from '../shared/consoles.service';
 import { Console } from '../shared/console.model';
 import { ConsoleRecord } from '../shared/console-record.model';
 import { HOURS } from '../shared/mock-hours';
 import { Hour } from '../shared/hour.model';
+import { Client } from '../../clients/client.model';
 
 @Component({
   selector: 'app-consoles-record',
@@ -11,6 +12,7 @@ import { Hour } from '../shared/hour.model';
   styleUrls: ['./consoles-record.component.scss']
 })
 export class ConsolesRecordComponent implements OnInit {
+  @Input() client;
   allConsoles: Console[] = [];
   consolesRecords: ConsoleRecord[] = [];
   hours = HOURS;
@@ -22,8 +24,6 @@ export class ConsolesRecordComponent implements OnInit {
 
   constructor(private consolesService: ConsolesService) { }
 
-  trackByItems(index: number, consoleRecord: ConsoleRecord): string { return consoleRecord.id; }
-
   ngOnInit() {
     this.consolesService.getConsoles().subscribe(data => {
       this.allConsoles = data.map(e => {
@@ -32,19 +32,6 @@ export class ConsolesRecordComponent implements OnInit {
           ...e.payload.doc.data()
         } as Console;
       });
-    });
-
-    this.consolesService.getConsolesRecords().subscribe(data => {
-      this.consolesRecords = data.map(e => {
-        let newRecord = {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        };
-        newRecord.startDate = newRecord.startDate.toDate();
-        newRecord.endDate = newRecord.endDate.toDate();
-        return newRecord as ConsoleRecord;
-      });
-      this.consolesRecords.sort((a, b) => a.endDate.getTime() - b.endDate.getTime())
     });
   }
 
@@ -64,17 +51,17 @@ export class ConsolesRecordComponent implements OnInit {
       finished: false,
       hours: this.selectedHour.hoursValue
     } as ConsoleRecord;
-    this.createRecord(newRecord);
+    if(!this.client.consolesRecords){
+      this.client.consolesRecords = [];
+    }
+    this.client.consolesRecords.unshift(newRecord);
+    this.consolesService.createRecord(this.selectedConsole.id, this.client);
     this.selectedConsole = undefined;
     this.selectedHour = undefined;
   }
 
   getEndDate(now: Date): Date {
     return new Date(now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000);
-  }
-
-  createRecord(record: ConsoleRecord): void {
-    this.consolesService.createRecord(record, this.selectedConsole);
   }
 
 }

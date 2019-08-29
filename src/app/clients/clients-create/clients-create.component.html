@@ -1,0 +1,45 @@
+<div class="row text-center mb-2">
+    <div class="col">
+        <button (click)="create()" type="button" class="btn btn-success">Crear un Cliente</button>
+    </div>
+</div>
+
+<div class="row" *ngIf="allClients.length > 0">
+    <div class="col" >
+        <ngb-tabset *ngIf="selectedClient">
+            <ngb-tab title="Consolas">
+                <ng-template ngbTabContent>
+                    <app-consoles-record [client]="selectedClient"></app-consoles-record>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Dulces">
+                <ng-template ngbTabContent>
+                    Dulces
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Computadora">
+                <ng-template ngbTabContent>
+                    Computadora
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Trabajos e Impresiones">
+                <ng-template ngbTabContent>
+                    Trabajos e Impresiones
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Papelería">
+                <ng-template ngbTabContent>
+                    Papelería
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+    <div class="col-3 text-center">
+        <label><strong>Seleccionar Cliente</strong></label>
+        <select [(ngModel)]="selectedClient" class="custom-select">
+            <option *ngFor="let client of allClients" [ngValue]="client">Cliente {{client.counter}}</option>
+        </select>
+    </div>
+</div>
+
+<app-clients-show *ngFor="let client of allClients; trackBy: trackByItems" [client]="client"></app-clients-show>

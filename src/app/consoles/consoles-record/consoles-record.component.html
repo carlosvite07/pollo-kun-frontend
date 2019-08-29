@@ -18,8 +18,3 @@
         <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar Tiempo</button>
     </div>
 </div>
-
-<div class="mt-5">
-    <app-consoles-show *ngFor="let consoleRecord of consolesRecords; trackBy: trackByItems"
-        [consoleRecord]="consoleRecord"></app-consoles-show>
-</div>

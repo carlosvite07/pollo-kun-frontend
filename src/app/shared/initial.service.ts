@@ -259,5 +259,5 @@ export class InitialService {
     // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
     return true;
   }
-  
+
 }

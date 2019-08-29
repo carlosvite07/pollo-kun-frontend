@@ -1,4 +1,5 @@
 import { Console } from './console.model';
+import { Notification } from '../../notifications/notification.model';
 
 export class ConsoleRecord{
     id: string;
@@ -8,4 +9,5 @@ export class ConsoleRecord{
     price: number;
     finished: boolean;
     hours: number;
+    notification: Notification;
 }
