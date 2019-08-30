@@ -12,12 +12,12 @@ export class ClientsComponent implements OnInit {
   allClients: Client[] = [];
   clientsCounter: number = 0;
   selectedClient: Client;
-  
+
 
   constructor(
     private clientsService: ClientsService,
     private consolesService: ConsolesService
-  ) {}
+  ) { }
 
   ngOnInit() {
     let now = new Date();
@@ -26,9 +26,9 @@ export class ClientsComponent implements OnInit {
     startDate.setMinutes(0);
     startDate.setSeconds(0);
     startDate.setMilliseconds(0);
-    
+
     //Finish Old Clients
-    this.clientsService.getOldClients(startDate).subscribe(oldClients =>{
+    this.clientsService.getOldClients(startDate).subscribe(oldClients => {
       oldClients.forEach(oldClient => {
         let clientId = oldClient.payload.doc.id;
         let clientData = oldClient.payload.doc.data() as any;
@@ -53,7 +53,7 @@ export class ClientsComponent implements OnInit {
           id: clientId,
           ...clientData
         } as Client;
-        if(client.consolesRecords) {
+        if (client.consolesRecords) {
           client.consolesRecords.map((consoleRecord, index) => {
             consoleRecord.startDate = clientData.consolesRecords[index].startDate.toDate();
             consoleRecord.endDate = clientData.consolesRecords[index].endDate.toDate();
@@ -61,8 +61,6 @@ export class ClientsComponent implements OnInit {
           client.consolesRecords.forEach((consoleRecord, consoleIndex) => {
             if (consoleRecord.endDate < now && !consoleRecord.finished) {
               this.consolesService.endConsoleRecord(client, consoleIndex);
-            }else{
-              
             }
           });
         }
@@ -71,8 +69,8 @@ export class ClientsComponent implements OnInit {
             selectedClient = true;
             this.selectedClient = client;
           }
+          this.allClients.push(client);
         }
-        this.allClients.push(client);
       });
       this.clientsService.setActiveClients(this.allClients);
     });
@@ -90,29 +88,8 @@ export class ClientsComponent implements OnInit {
     this.selectedClient = undefined;
   }
 
-}
-
-
-
-/*
-execute function every second
-
-getActiveClients = {
-  Array de consolas ocupadas .unshift(consolas)
-}
-
-consoleRecord = {
-  console: Console
-  notification: {
-
+  endClient(client: Client): void {
+    this.clientsService.confirmEndClient(client);
   }
-}
 
-Array de notificaciones
-
-notifications = {
-  id: string;
-  body: string;
-  closed: boolean,
 }
-*/

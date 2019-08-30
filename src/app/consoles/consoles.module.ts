@@ -6,14 +6,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConsolesRoutingModule } from './consoles-routing.module';
 import { ConsolesRecordComponent } from './consoles-record/consoles-record.component';
 import { ConsolesShowComponent } from './consoles-show/consoles-show.component';
-import { ConsolesNotificationsComponent } from './consoles-notifications/consoles-notifications.component';
-
 
 @NgModule({
   declarations: [
     ConsolesRecordComponent,
-    ConsolesShowComponent,
-    ConsolesNotificationsComponent
+    ConsolesShowComponent
   ],
   imports: [
     CommonModule,
@@ -23,8 +20,7 @@ import { ConsolesNotificationsComponent } from './consoles-notifications/console
   ],
   exports: [
     ConsolesRecordComponent,
-    ConsolesShowComponent,
-    ConsolesNotificationsComponent
+    ConsolesShowComponent
   ]
 })
 export class ConsolesModule { }

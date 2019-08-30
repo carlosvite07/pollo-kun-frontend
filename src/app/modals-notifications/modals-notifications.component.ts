@@ -1,18 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConsolesService } from '../shared/consoles.service';
+import { ConsolesService } from '../consoles/shared/consoles.service';
+import { ClientsService } from '../clients/clients.service';
 import { Client } from 'src/app/clients/client.model';
-import { HOURS } from '../shared/mock-hours';
-import { Hour } from '../shared/hour.model';
-import { ClientsService } from '../../clients/clients.service';
+import { HOURS } from '../consoles/shared/mock-hours';
+import { Hour } from '../consoles/shared/hour.model';
 
 @Component({
-  selector: 'app-consoles-notifications',
-  templateUrl: './consoles-notifications.component.html',
-  styleUrls: ['./consoles-notifications.component.scss']
+  selector: 'app-modals-notifications',
+  templateUrl: './modals-notifications.component.html',
+  styleUrls: ['./modals-notifications.component.scss']
 })
-export class ConsolesNotificationsComponent implements OnInit {
-  @ViewChild('content', { static: false }) private content;
+export class ModalsNotificationsComponent implements OnInit {
+  @ViewChild('consoleModal', { static: false }) private consoleModal;
+  @ViewChild('endClientModal', { static: false }) private endClientModal;
   client: Client;
   consoleIndex: number;
   avaliableHours: Hour[] = HOURS;
@@ -25,12 +26,13 @@ export class ConsolesNotificationsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private consolesService: ConsolesService,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
   ) { }
 
   ngOnInit() {
     this.consolesService.consoleRecordEnd$.subscribe(
       consoleRecordEnd => {
+        this.resetAll();
         this.isEndTime = true;
         this.client = consoleRecordEnd.client;
         this.consoleIndex = consoleRecordEnd.consoleIndex;
@@ -38,12 +40,13 @@ export class ConsolesNotificationsComponent implements OnInit {
         let clientName = 'Cliente ' + consoleRecordEnd.client.counter;
         this.title = `Terminar ${consoleName} - ${clientName}`;
         this.body = `¿Quieres terminar el tiempo de la ${consoleName} - ${clientName}?`;
-        this.modalService.open(this.content, { centered: true });
+        this.modalService.open(this.consoleModal, { centered: true });
       }
     );
 
     this.consolesService.consoleRecordAddTime$.subscribe(
       consoleRecordAddTime => {
+        this.resetAll();
         this.isEndTime = false;
         this.client = consoleRecordAddTime.client;
         this.consoleIndex = consoleRecordAddTime.consoleIndex;
@@ -51,19 +54,28 @@ export class ConsolesNotificationsComponent implements OnInit {
         let clientName = 'Cliente ' + consoleRecordAddTime.client.counter;
         this.title = `Agregar Tiempo del ${consoleName} - ${clientName}`;
         this.body = `¿Cuánto tiempo se va agregar a la ${consoleName} - ${clientName}?`;
-        this.modalService.open(this.content, { centered: true });
+        this.modalService.open(this.consoleModal, { centered: true });
       }
     );
 
-    let startDate = new Date();
-    startDate.setHours(0);
-    startDate.setMinutes(0);
-    startDate.setSeconds(0);
-    startDate.setMilliseconds(0);
-    let endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 1);
+    this.clientsService.clientEnd$.subscribe(
+      client => {
+        this.resetAll();
+        this.client = client;
+        this.modalService.open(this.endClientModal, { centered: true });
+      }
+    );
+  }
 
-    //busyConsoles
+  resetAll() {
+    this.client = undefined;
+    this.consoleIndex = undefined;
+    this.avaliableHours = undefined;
+    this.title = undefined;
+    this.body = undefined;
+    this.isEndTime = undefined;
+    this.selectedHour = undefined;
+    this.errorHour = undefined;
   }
 
   endTime() {
@@ -77,12 +89,13 @@ export class ConsolesNotificationsComponent implements OnInit {
       return;
     }
     this.modalService.dismissAll();
-    this.consolesService.addTimeConsoleRecord(this.client, this.consoleIndex,this.selectedHour);
+    this.consolesService.addTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
     this.selectedHour = undefined;
   }
 
-  //execute all time every second
-  //Recorrer busyconsoles if endDate < now then terminar
-
+  endClient() {
+    this.modalService.dismissAll();
+    this.clientsService.endCient(this.client);
+  }
 
 }

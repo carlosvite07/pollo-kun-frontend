@@ -17,8 +17,6 @@ import { WorksComponent } from './works/works.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PricesComponent } from './prices/prices.component';
 
-import { ConsolesModalComponent } from './consoles/consoles-modal/consoles-modal.component';
-
 import { ConsolesModule } from './consoles/consoles.module';
 import { ClientsModule } from './clients/clients.module';
 import { StationeryComponent } from './stationery/stationery.component';
@@ -27,6 +25,8 @@ import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.c
 import { WorksPricesComponent } from './prices/works-prices/works-prices.component';
 import { ArticlesPricesComponent } from './prices/articles-prices/articles-prices.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ModalsNotificationsComponent } from './modals-notifications/modals-notifications.component';
+
 
 @NgModule({
   declarations: [
@@ -36,16 +36,13 @@ import { NotificationsComponent } from './notifications/notifications.component'
     WorksComponent,
     SummaryComponent,
     PricesComponent,
-    ConsolesModalComponent,
     StationeryComponent,
     ConsoleComponent,
     CandiesPricesComponent,
     WorksPricesComponent,
     ArticlesPricesComponent,
     NotificationsComponent,
-  ],
-  entryComponents: [
-    ConsolesModalComponent,
+    ModalsNotificationsComponent
   ],
   imports: [
     BrowserModule,

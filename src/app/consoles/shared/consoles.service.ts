@@ -56,11 +56,9 @@ export class ConsolesService {
   getConsolesRecords(): any {
     return this.firestore.collection('records', ref => ref.where('finished', '==', false)).snapshotChanges();
   }
-  
+
   //Console Modal
   confirmEndConsoleRecod(client: Client, consoleIndex: number) {
-    console.log('endRecord')
-
     let object = {
       client: client,
       consoleIndex: consoleIndex
@@ -70,7 +68,9 @@ export class ConsolesService {
 
   endConsoleRecord(client: Client, consoleIndex: number) {
     client.consolesRecords[consoleIndex].finished = true;
-    client.consolesRecords[consoleIndex].notification.readed = true;
+    if (client.consolesRecords[consoleIndex].notification) {
+      client.consolesRecords[consoleIndex].notification.readed = true;
+    }
     let consoleId = client.consolesRecords[consoleIndex].console.id;
     this.updateAvailable(consoleId);
     this.clientService.update(client);
@@ -92,6 +92,9 @@ export class ConsolesService {
     currentConsole.price = this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate,
       currentConsole.console.hourPrice, currentConsole.console.halfHourPrice);
     client.consolesRecords[consoleIndex] = currentConsole;
+    if (client.consolesRecords[consoleIndex].notification) {
+      delete client.consolesRecords[consoleIndex].notification;
+    }
     this.clientService.update(client);
   }
 

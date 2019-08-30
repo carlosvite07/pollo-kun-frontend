@@ -4,8 +4,8 @@
     </div>
 </div>
 
-<div class="row" *ngIf="allClients.length > 0">
-    <div class="col" >
+<div class="row mb-3" *ngIf="allClients.length > 0">
+    <div class="col">
         <ngb-tabset *ngIf="selectedClient">
             <ngb-tab title="Consolas">
                 <ng-template ngbTabContent>
@@ -42,4 +42,18 @@
     </div>
 </div>
 
-<app-clients-show *ngFor="let client of allClients; trackBy: trackByItems" [client]="client"></app-clients-show>
+<div class="row mb-3" *ngFor="let client of allClients;">
+    <div class="col">
+        <div class="d-flex align-items-center">
+            <h5 class="m-0">
+                Cliente {{client.counter}}
+            </h5>
+            <button type="button" class="btn btn-sm btn-danger ml-5" (click)="endClient(client)">
+                Terminar Cliente
+            </button>
+        </div>
+        <div>
+            <app-clients-show [client]="client"></app-clients-show>
+        </div>
+    </div>
+</div>

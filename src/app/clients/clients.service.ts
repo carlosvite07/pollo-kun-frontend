@@ -11,6 +11,9 @@ export class ClientsService {
   private activeClients = new Subject<any>();
   activeClients$ = this.activeClients.asObservable();
 
+  private clientEnd = new Subject<Client>();
+  clientEnd$ = this.clientEnd.asObservable();
+
   constructor(private firestore: AngularFirestore) { }
 
   getOldClients(startDate: Date) {
@@ -62,6 +65,31 @@ export class ClientsService {
   createNotification(client: Client, consoleRecordIndex: number, notification: Notification) {
     client.consolesRecords[consoleRecordIndex].notification = notification;
     this.update(client);
+  }
+
+  markAsReadedNotification(client: Client, consoleRecordIndex: number) {
+    client.consolesRecords[consoleRecordIndex].notification.readed = true;
+    this.update(client);
+  }
+
+  endCient(client: Client): any {
+    if (client.consolesRecords) {
+      client.consolesRecords.forEach((consoleRecord, index) => {
+        client.consolesRecords[index].finished = true;
+        if (client.consolesRecords[index].notification) {
+          client.consolesRecords[index].notification.readed = true;
+        }
+        let consoleId = client.consolesRecords[index].console.id;
+        this.firestore.doc(`consoles/${consoleId}`).update({ available: true });
+      });
+    }
+    client.finished = true;
+    this.update(client);
+  }
+
+  //Modal
+  confirmEndClient(client: Client) {
+    this.clientEnd.next(client);
   }
 
 }
