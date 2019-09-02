@@ -8,10 +8,6 @@ import { SummaryComponent } from './summary/summary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/clientes', pathMatch: 'full' },
-  // { path: 'dulces', component: CandiesComponent },
-  // { path: 'trabajos', component: WorksComponent },
-  // { path: 'dulces', component: CandiesComponent },
-  // { path: 'papeleria', component: StationeryComponent },
   { path: 'precios', component: PricesComponent },
   { path: 'resumen', component: SummaryComponent },
 ];
@@ -21,10 +17,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
-/*
-Cliente
-
-
-
-*/

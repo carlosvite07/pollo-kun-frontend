@@ -30,7 +30,9 @@ export class NotificationsComponent implements OnInit {
     const source = timer(1000, 60*1000);
     const subscribe = source.subscribe(() => {
       let now = new Date();        
-      this.isConsoleRecordOnTime(this.clients, now);
+      if(this.clients){
+        this.isConsoleRecordOnTime(this.clients, now);
+      }
     });
   }
 

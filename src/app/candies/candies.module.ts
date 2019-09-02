@@ -3,22 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ConsolesRecordComponent } from './consoles-record/consoles-record.component';
-import { ConsolesShowComponent } from './consoles-show/consoles-show.component';
+import { CandieCreateComponent } from './candie-create/candie-create.component';
+import { CandieShowComponent } from './candie-show/candie-show.component';
+
 
 @NgModule({
   declarations: [
-    ConsolesRecordComponent,
-    ConsolesShowComponent
+    CandieCreateComponent,
+    CandieShowComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    NgbModule,
   ],
   exports: [
-    ConsolesRecordComponent,
-    ConsolesShowComponent
+    CandieCreateComponent,
+    CandieShowComponent
   ]
 })
-export class ConsolesModule { }
+export class CandiesModule { }

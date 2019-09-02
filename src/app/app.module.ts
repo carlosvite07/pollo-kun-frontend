@@ -27,7 +27,6 @@ import { ArticlesPricesComponent } from './prices/articles-prices/articles-price
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ModalsNotificationsComponent } from './modals-notifications/modals-notifications.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +41,7 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
     WorksPricesComponent,
     ArticlesPricesComponent,
     NotificationsComponent,
-    ModalsNotificationsComponent
+    ModalsNotificationsComponent,
   ],
   imports: [
     BrowserModule,

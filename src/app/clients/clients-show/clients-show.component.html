@@ -6,4 +6,10 @@
         </div>
     </div>
 
+    <div class="row" *ngIf="client.candiesPurchases">
+        <div class="col">
+            <app-candie-show [client]="client"></app-candie-show>
+        </div>
+    </div>
+
 </div>
