@@ -70,7 +70,7 @@ export class ModalsNotificationsComponent implements OnInit {
         let computerName = computerRecordEnd.client.computersRecords[this.computerIndex].computer.name;
         let clientName = 'Cliente ' + computerRecordEnd.client.counter;
         this.title = `Terminar ${computerName} - ${clientName}`;
-        this.body = `¿Quieres terminar el tiempo de la ${computerName} - ${clientName}?`;
+        this.body = `¿Quieres terminar el tiempo de la ${computerName} - ${clientName}? Se cobraran: ${computerRecordEnd.computerPrice} pesos`;
         this.modalService.open(this.computerModal, { centered: true });
       }
     );

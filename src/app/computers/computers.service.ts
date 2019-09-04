@@ -51,9 +51,11 @@ export class ComputersService {
 
   //Computer Modal
   confirmEndComputerRecod(client: Client, computerIndex: number) {
+    let now = new Date();
     let object = {
       client: client,
-      computerIndex: computerIndex
+      computerIndex: computerIndex,
+      computerPrice: this.getComputerRecordPrice(client.computersRecords[computerIndex].startDate,now,client.computersRecords[computerIndex].computer)
     };
     this.computerRecordEnd.next(object);
   }
@@ -61,6 +63,7 @@ export class ComputersService {
   endComputerRecord(client: Client, computerIndex: number) {
     let now = new Date();
     client.computersRecords[computerIndex].finished = true;
+    client.computersRecords[computerIndex].paid = true;
     client.computersRecords[computerIndex].endDate = now;
     client.computersRecords[computerIndex].price =
       this.getComputerRecordPrice(client.computersRecords[computerIndex].startDate, now, client.computersRecords[computerIndex].computer);
@@ -117,6 +120,7 @@ export class ComputersService {
       if(!client.computersRecords[index].finished){
         count++;
         client.computersRecords[index].finished = true;
+        client.computersRecords[index].paid = true;
         client.computersRecords[index].endDate = now;
         client.computersRecords[index].price =
           this.getComputerRecordPrice(client.computersRecords[index].startDate, now, client.computersRecords[index].computer);

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ComputersService } from '../computers.service';
-
+import { ClientsService } from '../../clients/clients.service';
 
 @Component({
   selector: 'app-computer-show',
@@ -10,13 +10,21 @@ import { ComputersService } from '../computers.service';
 export class ComputerShowComponent implements OnInit {
   @Input() client;
 
-  constructor(private computersService:ComputersService) { }
+  constructor(
+    private computersService: ComputersService,
+    private clientsService: ClientsService
+  ) { }
 
   ngOnInit() {
   }
 
   end(index: number): void {
-    this.computersService.confirmEndComputerRecod(this.client,index);
+    this.computersService.confirmEndComputerRecod(this.client, index);
+  }
+
+  changeCheckValue(index: number) {
+    this.client.computersRecords[index].paid = !this.client.computersRecords[index].paid;
+    this.clientsService.update(this.client);
   }
 
 }

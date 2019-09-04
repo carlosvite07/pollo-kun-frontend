@@ -41,6 +41,7 @@ export class ComputerCreateComponent implements OnInit {
       startDate: now,
       computer: this.selectedComputer,
       finished: false,
+      paid: false,
     } as ComputerRecord;
     if(!this.client.computersRecords){
       this.client.computersRecords = [];

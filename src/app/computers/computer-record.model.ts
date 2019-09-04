@@ -9,4 +9,5 @@ export class ComputerRecord {
     finished: boolean;
     hours: number;
     minutes: number;
+    paid: boolean;
 }
