@@ -10,11 +10,11 @@ export class ArticlesService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  getArticles(): any{
-    return this.firestore.collection('articles', ref => ref.where('stock','>',0)).snapshotChanges();
+  getArticles(): any {
+    return this.firestore.collection('articles', ref => ref.where('stock', '>', 0)).snapshotChanges();
   }
 
-  getAllArticles(): any{
+  getAllArticles(): any {
     return this.firestore.collection('articles').snapshotChanges();
   }
 
@@ -26,12 +26,16 @@ export class ArticlesService {
     this.firestore.doc('articles/' + articleModel.id).update(articleModel);
   }
 
+  updateStock(articleId: string, stock: number) {
+    this.firestore.doc('articles/' + articleId).update({ stock: stock });
+  }
+
   delete(articleModel: Article) {
     this.firestore.collection('articles').doc(articleModel.id).delete();
   }
 
-  articlePurchase(articlePurchase: ArticlePurchase): any{
+  articlePurchase(articlePurchase: ArticlePurchase): any {
     return this.firestore.collection('articlesPurchases').add(articlePurchase);
-  } 
+  }
 
 }

@@ -40,26 +40,29 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onChangeQuantity(): void {
-    this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
+    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
   }
 
   articlePurchase(): void {
     this.errorArticle = (this.selectedArticle) ? false : true;
-    this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
+    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
     if (this.errorArticle || this.errorQuantity) {
       return;
     }
     let newPurchase = {
+      article: this.selectedArticle,
       date: new Date(),
       name: this.selectedArticle.name,
       quantity: this.selectedQuantity,
-      price: this.selectedQuantity * this.selectedPrice
+      price: this.selectedQuantity * this.selectedPrice,
+      paid: true
     } as ArticlePurchase;
     if (!this.client.articlesPurchases) {
       this.client.articlesPurchases = [];
     }
     this.client.articlesPurchases.unshift(newPurchase);
     this.clientsService.update(this.client);
+    this.articlesService.updateStock(this.selectedArticle.id,this.selectedArticle.stock-this.selectedQuantity);
     this.selectedArticle = undefined;
     this.selectedPrice = undefined;
     this.selectedQuantity = 1;

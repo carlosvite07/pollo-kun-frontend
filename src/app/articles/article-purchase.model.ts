@@ -1,6 +1,9 @@
+import { Article } from '../articles/article.model';
+
 export class ArticlePurchase {
-    name: string;
+    article: Article;
     price: number;
     date: Date;
     quantity: number;
+    paid: boolean;
 }

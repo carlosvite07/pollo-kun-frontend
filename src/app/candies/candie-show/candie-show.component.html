@@ -3,7 +3,8 @@
     <div class="col"><label><strong>Cantidad</strong></label></div>
     <div class="col"><label><strong>Hora de compra</strong></label></div>
     <div class="col"><label><strong>Precio</strong></label></div>
-    <div class="col-4"><label><strong></strong></label></div>
+    <div class="col-3"><label><strong></strong></label></div>
+    <div class="col"><label><strong>¿Pagado?</strong></label></div>
 </div>
 
 <div class="row mb-1 text-center" *ngFor="let candiePurchase of client.candiesPurchases; let i = index">
@@ -19,5 +20,8 @@
     <div class="col">
         {{candiePurchase.price | currency}}
     </div>
-    <div class="col-4"></div>
+    <div class="col-3"></div>
+    <div class="col">
+        <input type="checkbox" class="form-check-input" [ngModel]="isPaid">
+    </div>
 </div>
