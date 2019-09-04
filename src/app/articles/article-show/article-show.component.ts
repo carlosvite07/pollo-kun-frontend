@@ -12,6 +12,7 @@ export class ArticleShowComponent implements OnInit {
   @Input() client;
   allArticles: Article[] = [];
   paid: boolean = false;
+  
   constructor(
     private clientsService: ClientsService,
     private articlesService: ArticlesService
@@ -33,7 +34,7 @@ export class ArticleShowComponent implements OnInit {
     this.clientsService.update(this.client);
   }
 
-  removeArticle(index: number) {
+  remove(index: number) {
     let selectedArticle = this.client.articlesPurchases[index].article;
     let quantity = this.client.articlesPurchases[index].quantity;
     

@@ -22,7 +22,7 @@
             {{articlePurchase.price | currency}}
         </div>
         <div class="col-3">
-            <button (click)="removeArticle(i)" type="button" class="btn btn-sm btn-danger">Quitar</button>
+            <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">Quitar</button>
         </div>
         <div class="col">
             <input type="checkbox" class="form-check-input" [ngModel]="articlePurchase.paid"

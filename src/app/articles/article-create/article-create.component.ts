@@ -55,7 +55,7 @@ export class ArticleCreateComponent implements OnInit {
       name: this.selectedArticle.name,
       quantity: this.selectedQuantity,
       price: this.selectedQuantity * this.selectedPrice,
-      paid: true
+      paid: false
     } as ArticlePurchase;
     if (!this.client.articlesPurchases) {
       this.client.articlesPurchases = [];

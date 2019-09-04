@@ -18,10 +18,9 @@
         <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
     </div>
     <div class="col text-center">
-        <label><strong>Stock</strong></label>
+        <label><strong>Existencia</strong></label>
         <input [ngModel]="selectedArticle.stock" type="number" class="form-control" disabled *ngIf="selectedArticle"/>
         <input type="number" class="form-control" disabled *ngIf="!selectedArticle"/>
-        <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
     </div>
     <div class="col text-center">
         <label><strong>Acciones</strong></label><br>

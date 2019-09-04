@@ -1,7 +1,10 @@
+import { Candie } from '../candies/candie.model';
+
 export class CandiePurchase {
     id: string;
-    name: string;
+    candie: Candie;
     price: number;
     date: Date;
     quantity: number;
+    paid: boolean;
 }

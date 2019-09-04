@@ -21,6 +21,11 @@
         <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
     </div>
     <div class="col text-center">
+        <label><strong>Existencia</strong></label>
+        <input [ngModel]="selectedCandie.stock" type="number" class="form-control" disabled *ngIf="selectedCandie" />
+        <input type="number" class="form-control" disabled *ngIf="!selectedCandie" />
+    </div>
+    <div class="col text-center">
         <label><strong>Acciones</strong></label><br>
         <button (click)="candiePurchaseConfirm()" type="button" class="btn btn-success">Registrar Compra</button>
     </div>

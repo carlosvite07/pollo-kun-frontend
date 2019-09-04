@@ -26,6 +26,10 @@ export class CandiesService {
     this.firestore.doc('candies/' + candieModel.id).update(candieModel);
   }
 
+  updateStock(articleId: string, stock: number) {
+    this.firestore.doc('candies/' + articleId).update({ stock: stock });
+  }
+
   delete(candieModel: Candie) {
     this.firestore.collection('candies').doc(candieModel.id).delete();
   }
