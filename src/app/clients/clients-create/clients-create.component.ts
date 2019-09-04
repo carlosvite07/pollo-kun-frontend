@@ -85,6 +85,11 @@ export class ClientsComponent implements OnInit {
             }
           });
         }
+        if (client.worksRecords) {
+          client.worksRecords.map((workRecord, index) => {
+            workRecord.date = clientData.worksRecords[index].date.toDate();
+          });
+        }
         if (!client.finished) {
           if (!selectedClient) {
             selectedClient = true;

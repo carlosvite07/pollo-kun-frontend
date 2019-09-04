@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConsolesModule } from '../consoles/consoles.module';
 import { CandiesModule } from '../candies/candies.module';
+import { WorksModule } from '../works/works.module';
 import { ComputersModule } from '../computers/computers.module';
 
 import { ClientsRoutingModule } from './clients-routing.module';
@@ -12,7 +13,7 @@ import { ClientsShowComponent } from './clients-show/clients-show.component';
 
 @NgModule({
   declarations: [
-    ClientsComponent, 
+    ClientsComponent,
     ClientsShowComponent
   ],
   imports: [
@@ -22,7 +23,8 @@ import { ClientsShowComponent } from './clients-show/clients-show.component';
     NgbModule,
     ConsolesModule,
     CandiesModule,
-    ComputersModule
+    ComputersModule,
+    WorksModule
   ]
 })
 export class ClientsModule { }

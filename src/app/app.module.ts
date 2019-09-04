@@ -12,7 +12,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 
-import { WorksComponent } from './works/works.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PricesComponent } from './prices/prices.component';
 
@@ -30,7 +29,6 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
   declarations: [
     AppComponent,
     NavbarComponent,
-    WorksComponent,
     SummaryComponent,
     PricesComponent,
     StationeryComponent,
@@ -39,7 +37,7 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
     WorksPricesComponent,
     ArticlesPricesComponent,
     NotificationsComponent,
-    ModalsNotificationsComponent,
+    ModalsNotificationsComponent
   ],
   imports: [
     BrowserModule,

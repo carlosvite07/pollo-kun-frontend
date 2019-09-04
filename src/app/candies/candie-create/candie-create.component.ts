@@ -41,12 +41,12 @@ export class CandieCreateComponent implements OnInit {
   }
 
   onChangeQuantity(): void {
-    this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
+    this.errorQuantity = this.selectedQuantity <= 0;
   }
 
   candiePurchaseConfirm(): void {
     this.errorCandie = (this.selectedCandie) ? false : true;
-    this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
+    this.errorQuantity = this.selectedQuantity <= 0;
     if (this.errorCandie || this.errorQuantity) {
       return;
     }
@@ -63,14 +63,6 @@ export class CandieCreateComponent implements OnInit {
     this.clientsService.update(this.client);
     this.selectedCandie = undefined;
     this.selectedQuantity = 1;
-    this.showSuccesPurchase();
-  }
-
-  showSuccesPurchase() {
-    this.successPurchase = true;
-    setTimeout(() => {
-      this.successPurchase = false;
-    }, 3000)
   }
 
 }

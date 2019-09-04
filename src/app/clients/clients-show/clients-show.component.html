@@ -18,4 +18,9 @@
         </div>
     </div>
 
+    <div class="row" *ngIf="client.worksRecords">
+        <div class="col">
+            <app-work-show [client]="client"></app-work-show>
+        </div>
+    </div>
 </div>

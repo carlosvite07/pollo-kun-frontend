@@ -1,44 +1,35 @@
-<div class="row">
-    <div class="col text-center">
-        <label><strong>Trabajo</strong></label>
+<div class="row text-center">
+    <div class="col">
+        <label><strong>Trabajos e Impresiones</strong></label>
         <select [(ngModel)]="selectedWork" class="custom-select" (change)="onChangeSelection($event)">
             <option *ngFor="let work of allWorks" [ngValue]="work">{{work.name}}</option>
         </select>
-        <div *ngIf="errorWork" class="text-danger">Selecciona un trabajo</div>
+        <div *ngIf="errorWork" class="text-danger">Selecciona un Trabajo</div>
     </div>
-    <div class="col text-center" *ngIf="!unknowWork">
+    <div class="col" *ngIf="!unknowWork">
         <label><strong>Precio</strong></label>
-        <select *ngIf="!selectedWork" class="custom-select"></select>
-        <select *ngIf="selectedWork" [(ngModel)]="selectedPrice" class="custom-select">
-            <option [ngValue]="selectedWork.price" selected>{{selectedWork.price}}</option>
-            <option [ngValue]="selectedWork.price2" *ngIf="selectedWork.price2">{{selectedWork.price2}}</option>
-        </select>
+        <input [(ngModel)]="selectedPrice" type="number" class="form-control" (ngModelChange)="onChangeQuantity($event)"
+            disabled />
     </div>
-    <div class="col text-center" *ngIf="unknowWork">
+    <div class="col" *ngIf="unknowWork">
         <label><strong>Especifique el Trabajo</strong></label>
         <input type="text" [(ngModel)]="specificWork" class="form-control"
             (ngModelChange)="onChangeSpecificWork($event)">
         <div *ngIf="errorSpecificWork" class="text-danger">No ha especificado el trabajo que realizó</div>
     </div>
-    <div class="col text-center" *ngIf="unknowWork">
+    <div class="col" *ngIf="unknowWork">
         <label><strong>Precio</strong></label>
         <input [(ngModel)]="selectedPrice" type="number" class="form-control" (ngModelChange)="onChangePrice($event)" />
         <div *ngIf="errorPrice" class="text-danger">Cantidad Incorrecta</div>
     </div>
-    <div class="col text-center">
+    <div class="col">
         <label><strong>Cantidad</strong></label>
         <input [(ngModel)]="selectedQuantity" type="number" class="form-control"
             (ngModelChange)="onChangeQuantity($event)" />
         <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
     </div>
-    <div class="col text-center">
+    <div class="col">
         <label><strong>Acciones</strong></label><br>
-        <button (click)="workRecordConfirm()" type="button" class="btn btn-success">Registrar Trabajo</button>
-    </div>
-</div>
-
-<div class="row mt-5" *ngIf="successRecord">
-    <div class="col text-center alert alert-success">
-        Trabajo registrado ve a Resumen para ver tu registro
+        <button (click)="workRecord()" type="button" class="btn btn-success">Registrar Compra</button>
     </div>
 </div>
