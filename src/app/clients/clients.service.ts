@@ -72,17 +72,7 @@ export class ClientsService {
     this.update(client);
   }
 
-  endCient(client: Client): any {
-    if (client.consolesRecords) {
-      client.consolesRecords.forEach((consoleRecord, index) => {
-        client.consolesRecords[index].finished = true;
-        if (client.consolesRecords[index].notification) {
-          client.consolesRecords[index].notification.readed = true;
-        }
-        let consoleId = client.consolesRecords[index].console.id;
-        this.firestore.doc(`consoles/${consoleId}`).update({ available: true });
-      });
-    }
+  endClient(client: Client): any {
     client.finished = true;
     this.update(client);
   }

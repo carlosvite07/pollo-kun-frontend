@@ -94,7 +94,7 @@ export class ComputersService {
     if (minutesAndHours.hours >= 1) {
       total += minutesAndHours.hours * hourPrice;
     }
-    if(total === 0){
+    if (total === 0) {
       total = 3;
     }
     return total;
@@ -108,6 +108,28 @@ export class ComputersService {
       minutes: Math.floor(minutes * 60),
       hours: hours
     };
+  }
+
+  endAllComputersRecords(client: Client) {
+    let now = new Date();
+    let count = 0;
+    client.computersRecords.forEach((computerRecord, index) => {
+      if(!client.computersRecords[index].finished){
+        count++;
+        client.computersRecords[index].finished = true;
+        client.computersRecords[index].endDate = now;
+        client.computersRecords[index].price =
+          this.getComputerRecordPrice(client.computersRecords[index].startDate, now, client.computersRecords[index].computer);
+        let minutesAndHours = this.getMinutesAndHours(client.computersRecords[index].startDate, now);
+        client.computersRecords[index].hours = minutesAndHours.hours;
+        client.computersRecords[index].minutes = minutesAndHours.minutes;
+        let computerId = client.computersRecords[index].computer.id;
+        this.updateAvailable(computerId);
+      }
+    });
+    if(count > 0){
+      this.clientService.update(client);
+    }
   }
 
 

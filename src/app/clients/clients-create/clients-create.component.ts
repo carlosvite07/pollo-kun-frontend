@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
 import { ConsolesService } from '../../consoles/shared/consoles.service';
+import { ComputersService } from '../../computers/computers.service';
 
 @Component({
   selector: 'app-clients-create',
@@ -16,7 +17,8 @@ export class ClientsComponent implements OnInit {
 
   constructor(
     private clientsService: ClientsService,
-    private consolesService: ConsolesService
+    private consolesService: ConsolesService,
+    private computersService: ComputersService
   ) { }
 
   ngOnInit() {
@@ -37,6 +39,12 @@ export class ClientsComponent implements OnInit {
           ...clientData
         } as Client;
         client.startDate = clientData.startDate.toDate();
+        if (client.consolesRecords) {
+          this.consolesService.endAllConsolesRecords(client);
+        }
+        if (client.computersRecords) {
+          this.computersService.endAllComputersRecords(client);
+        }
         this.clientsService.finishClient(client);
       })
     });
@@ -72,7 +80,7 @@ export class ClientsComponent implements OnInit {
         if (client.computersRecords) {
           client.computersRecords.map((computerRecord, index) => {
             computerRecord.startDate = clientData.computersRecords[index].startDate.toDate();
-            if(computerRecord.endDate){
+            if (computerRecord.endDate) {
               computerRecord.endDate = clientData.computersRecords[index].endDate.toDate();
             }
           });

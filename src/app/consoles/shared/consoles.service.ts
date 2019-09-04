@@ -114,4 +114,22 @@ export class ConsolesService {
     return total;
   }
 
+  endAllConsolesRecords(client: Client) {
+    let count = 0;
+    client.consolesRecords.forEach((consoleRecord, index) => {
+      if(!client.consolesRecords[index].finished){
+        count++;
+        client.consolesRecords[index].finished = true;
+        if (client.consolesRecords[index].notification) {
+          client.consolesRecords[index].notification.readed = true;
+        }
+        let consoleId = client.consolesRecords[index].console.id;
+        this.updateAvailable(consoleId);
+      }
+    });
+    if(count > 0){
+      this.clientService.update(client);
+    }
+  }
+
 }

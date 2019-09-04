@@ -117,7 +117,13 @@ export class ModalsNotificationsComponent implements OnInit {
 
   endClient() {
     this.modalService.dismissAll();
-    this.clientsService.endCient(this.client);
+    if(this.client.consolesRecords){
+      this.consolesService.endAllConsolesRecords(this.client);
+    }
+    if(this.client.computersRecords){
+      this.computersService.endAllComputersRecords(this.client);
+    }
+    this.clientsService.endClient(this.client);
   }
 
 }
