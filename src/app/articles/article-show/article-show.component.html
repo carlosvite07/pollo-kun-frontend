@@ -1,0 +1,23 @@
+<div class="row text-center">
+    <div class="col"><label><strong>Artículo</strong></label></div>
+    <div class="col"><label><strong>Cantidad</strong></label></div>
+    <div class="col"><label><strong>Hora de compra</strong></label></div>
+    <div class="col"><label><strong>Precio</strong></label></div>
+    <div class="col-4"><label><strong></strong></label></div>
+</div>
+
+<div class="row mb-1 text-center" *ngFor="let articlePurchase of client.articlesPurchases; let i = index">
+    <div class="col">
+        <span>{{articlePurchase.name}}</span>
+    </div>
+    <div class="col">
+        <span>{{articlePurchase.quantity}}</span>
+    </div>
+    <div class="col">
+        {{articlePurchase.date | date:"h:mm a"}}<br>
+    </div>
+    <div class="col">
+        {{articlePurchase.price | currency}}
+    </div>
+    <div class="col-4"></div>
+</div>

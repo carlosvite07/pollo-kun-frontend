@@ -6,6 +6,7 @@ import { ConsolesModule } from '../consoles/consoles.module';
 import { CandiesModule } from '../candies/candies.module';
 import { WorksModule } from '../works/works.module';
 import { ComputersModule } from '../computers/computers.module';
+import { ArticlesModule } from '../articles/articles.module';
 
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients-create/clients-create.component';
@@ -24,7 +25,8 @@ import { ClientsShowComponent } from './clients-show/clients-show.component';
     ConsolesModule,
     CandiesModule,
     ComputersModule,
-    WorksModule
+    WorksModule,
+    ArticlesModule
   ]
 })
 export class ClientsModule { }

@@ -23,4 +23,10 @@
             <app-work-show [client]="client"></app-work-show>
         </div>
     </div>
+
+    <div class="row" *ngIf="client.articlesPurchases">
+        <div class="col">
+            <app-article-show [client]="client"></app-article-show>
+        </div>
+    </div>
 </div>

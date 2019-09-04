@@ -4,7 +4,7 @@ import { SummaryService } from './summary.service';
 import { ConsoleRecord } from '../consoles/shared/console-record.model';
 import { CandiePurchase } from '../candies/candie-purchase.model';
 import { WorkRecord } from '../works/work-record.model';
-import { ArticlePurchase } from '../stationery/article-purchase.model';
+import { ArticlePurchase } from '../articles/article-purchase.model';
 
 @Component({
   selector: 'app-summary',

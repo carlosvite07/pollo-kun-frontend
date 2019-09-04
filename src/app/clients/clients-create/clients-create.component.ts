@@ -90,6 +90,11 @@ export class ClientsComponent implements OnInit {
             workRecord.date = clientData.worksRecords[index].date.toDate();
           });
         }
+        if (client.articlesPurchases) {
+          client.articlesPurchases.map((workRecord, index) => {
+            workRecord.date = clientData.articlesPurchases[index].date.toDate();
+          });
+        }
         if (!client.finished) {
           if (!selectedClient) {
             selectedClient = true;

@@ -8,8 +8,8 @@
     </div>
     <div class="col text-center">
         <label><strong>Precio</strong></label>
-        <input [(ngModel)]="selectedPrice" type="number" class="form-control"
-            (ngModelChange)="onChangeQuantity($event)" disabled/>
+        <input [(ngModel)]="selectedPrice" type="number" class="form-control" (ngModelChange)="onChangeQuantity($event)"
+            disabled />
     </div>
     <div class="col text-center">
         <label><strong>Cantidad</strong></label>
@@ -19,12 +19,6 @@
     </div>
     <div class="col text-center">
         <label><strong>Acciones</strong></label><br>
-        <button (click)="articlePurchaseConfirm()" type="button" class="btn btn-success">Registrar Compra</button>
-    </div>
-</div>
-
-<div class="row mt-5" *ngIf="successPurchase">
-    <div class="col text-center alert alert-success">
-        Artículo registrado ve a Resumen para ver tu registro
+        <button (click)="articlePurchase()" type="button" class="btn btn-success">Registrar Compra</button>
     </div>
 </div>

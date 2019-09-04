@@ -1,26 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { StationeryService } from './stationery.service';
-import { Article } from './article.model';
-import { ArticlePurchase } from './article-purchase.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { ArticlesService } from '../articles.service';
+import { Article } from '../article.model';
+import { ArticlePurchase } from '../article-purchase.model';
+import { ClientsService } from '../../clients/clients.service';
 
 @Component({
-  selector: 'app-stationery',
-  templateUrl: './stationery.component.html',
-  styleUrls: ['./stationery.component.scss']
+  selector: 'app-article-create',
+  templateUrl: './article-create.component.html',
+  styleUrls: ['./article-create.component.scss']
 })
-export class StationeryComponent implements OnInit {
+export class ArticleCreateComponent implements OnInit {
+  @Input() client;
   allArticles: Article[] = [];
   selectedArticle: Article;
   selectedPrice: number;
   selectedQuantity: number = 1;
   errorArticle: boolean = false;
   errorQuantity: boolean = false;
-  successPurchase = false;
 
-  constructor(private stationeryService: StationeryService) { }
+  constructor(
+    private articlesService: ArticlesService,
+    private clientsService: ClientsService
+  ) { }
 
   ngOnInit() {
-    this.stationeryService.getArticles().subscribe(data => {
+    this.articlesService.getArticles().subscribe(data => {
       this.allArticles = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -39,7 +43,7 @@ export class StationeryComponent implements OnInit {
     this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
   }
 
-  articlePurchaseConfirm(): void {
+  articlePurchase(): void {
     this.errorArticle = (this.selectedArticle) ? false : true;
     this.errorQuantity = (this.selectedQuantity <= 0) ? true : false;
     if (this.errorArticle || this.errorQuantity) {
@@ -51,17 +55,14 @@ export class StationeryComponent implements OnInit {
       quantity: this.selectedQuantity,
       price: this.selectedQuantity * this.selectedPrice
     } as ArticlePurchase;
-    this.stationeryService.articlePurchase(newPurchase);
+    if (!this.client.articlesPurchases) {
+      this.client.articlesPurchases = [];
+    }
+    this.client.articlesPurchases.unshift(newPurchase);
+    this.clientsService.update(this.client);
     this.selectedArticle = undefined;
+    this.selectedPrice = undefined;
     this.selectedQuantity = 1;
-    this.showSuccesPurchase();
-  }
-
-  showSuccesPurchase() {
-    this.successPurchase = true;
-    setTimeout(() => {
-      this.successPurchase = false;
-    }, 3000)
   }
 
 }

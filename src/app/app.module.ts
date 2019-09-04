@@ -18,7 +18,6 @@ import { PricesComponent } from './prices/prices.component';
 import { ClientsModule } from './clients/clients.module';
 import { ConsolesModule } from './consoles/consoles.module';
 import { ConsoleComponent } from './prices/consoles-prices/consoles-prices.component';
-import { StationeryComponent } from './stationery/stationery.component';
 import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
 import { WorksPricesComponent } from './prices/works-prices/works-prices.component';
 import { ArticlesPricesComponent } from './prices/articles-prices/articles-prices.component';
@@ -31,7 +30,6 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
     NavbarComponent,
     SummaryComponent,
     PricesComponent,
-    StationeryComponent,
     ConsoleComponent,
     CandiesPricesComponent,
     WorksPricesComponent,

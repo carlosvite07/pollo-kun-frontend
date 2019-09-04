@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ArticlePurchase } from './article-purchase.model';
-import { Article } from './article.model';
+import { ArticlePurchase } from '../articles/article-purchase.model';
+import { Article } from '../articles/article.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StationeryService {
+export class ArticlesService {
 
   constructor(private firestore: AngularFirestore) { }
 
@@ -33,5 +33,5 @@ export class StationeryService {
   articlePurchase(articlePurchase: ArticlePurchase): any{
     return this.firestore.collection('articlesPurchases').add(articlePurchase);
   } 
-  
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StationeryService } from '../../stationery/stationery.service';
-import { Article } from '../../stationery/article.model';
+import { ArticlesService } from '../../articles/articles.service';
+import { Article } from '../../articles/article.model';
 
 @Component({
   selector: 'app-articles-prices',
@@ -18,10 +18,10 @@ export class ArticlesPricesComponent implements OnInit {
   errorPrice: boolean = false;
   errorStock: boolean = false;
 
-  constructor(private stationeryService: StationeryService) { }
+  constructor(private articlesService: ArticlesService) { }
 
   ngOnInit() {
-    this.stationeryService.getAllArticles().subscribe(data => {
+    this.articlesService.getAllArticles().subscribe(data => {
       this.allArticles = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -65,7 +65,7 @@ export class ArticlesPricesComponent implements OnInit {
         price: this.price,
         stock: this.price
       } as Article;
-      this.stationeryService.create(newArticle);
+      this.articlesService.create(newArticle);
       this.clear();
     }
   }
@@ -75,13 +75,13 @@ export class ArticlesPricesComponent implements OnInit {
       this.selectedArticle.name = this.name;
       this.selectedArticle.price = this.price;
       this.selectedArticle.stock = this.stock;
-      this.stationeryService.update(this.selectedArticle);
+      this.articlesService.update(this.selectedArticle);
       this.clear();
     }
   }
 
   delete(): void {
-    this.stationeryService.delete(this.selectedArticle);
+    this.articlesService.delete(this.selectedArticle);
     this.clear();
   }
 
