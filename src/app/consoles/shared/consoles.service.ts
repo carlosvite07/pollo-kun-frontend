@@ -3,7 +3,7 @@ import { Console } from './console.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ClientsService } from '../../clients/clients.service';
 import { Client } from '../../clients/client.model';
-import { Subject, from } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Hour } from '../shared/hour.model';
 
 @Injectable({
@@ -53,6 +53,7 @@ export class ConsolesService {
     return this.clientService.update(clientModel);
   }
 
+  //TODO DELETE
   getConsolesRecords(): any {
     return this.firestore.collection('records', ref => ref.where('finished', '==', false)).snapshotChanges();
   }
@@ -99,7 +100,7 @@ export class ConsolesService {
   }
 
   //Utility
-  getConsoleRecordPrice(start: Date, end: Date, hourPrice: number, halfHourPrice: number, ): number {
+  getConsoleRecordPrice(start: Date, end: Date, hourPrice: number, halfHourPrice: number): number {
     let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
     let hours: number = Math.floor(difference);
     let minutes: number = difference - hours;

@@ -10,9 +10,9 @@ export class CandieShowComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.client.candiesPurchases.map(candiePurchase => {
-      candiePurchase.date = candiePurchase.date.toDate();
-    });
+    // this.client.candiesPurchases.map(candiePurchase => {
+    //   candiePurchase.date = candiePurchase.date.toDate();
+    // });
   }
 
 }

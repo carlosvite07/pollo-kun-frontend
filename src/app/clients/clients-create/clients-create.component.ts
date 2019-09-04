@@ -64,6 +64,19 @@ export class ClientsComponent implements OnInit {
             }
           });
         }
+        if (client.candiesPurchases) {
+          client.candiesPurchases.map((candieRecord, index) => {
+            candieRecord.date = clientData.candiesPurchases[index].date.toDate();
+          });
+        }
+        if (client.computersRecords) {
+          client.computersRecords.map((computerRecord, index) => {
+            computerRecord.startDate = clientData.computersRecords[index].startDate.toDate();
+            if(computerRecord.endDate){
+              computerRecord.endDate = clientData.computersRecords[index].endDate.toDate();
+            }
+          });
+        }
         if (!client.finished) {
           if (!selectedClient) {
             selectedClient = true;

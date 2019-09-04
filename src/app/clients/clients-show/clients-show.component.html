@@ -12,4 +12,10 @@
         </div>
     </div>
 
+    <div class="row" *ngIf="client.computersRecords">
+        <div class="col">
+            <app-computer-show [client]="client"></app-computer-show>
+        </div>
+    </div>
+
 </div>

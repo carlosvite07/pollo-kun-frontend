@@ -252,11 +252,29 @@ export class InitialService {
     }
   ];
 
+  computers = [
+    {
+      name: '6 Computadora',
+      available: true,
+      hourPrice: 8,
+      halfHourPrice: 5,
+      fiveMinutesPrice: 3,
+    },
+    {
+      name: '7 Computadora',
+      available: true,
+      hourPrice: 8,
+      halfHourPrice: 5,
+      fiveMinutesPrice: 3,
+    }
+  ]
+
   createAll(): any {
     // this.articles.forEach( value => this.firestore.collection('articles').add(value));  
     // this.candies.forEach( value => this.firestore.collection('candies').add(value)); 
     // this.works.forEach( value => this.firestore.collection('works').add(value));
     // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
+    // this.computers.forEach( value => this.firestore.collection('computers').add(value));  
     return true;
   }
 

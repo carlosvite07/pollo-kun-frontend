@@ -1,0 +1,40 @@
+<div class="row text-center">
+    <div class="col"><label><strong>Computadora</strong></label></div>
+    <div class="col"><label><strong>Horas / Minutos</strong></label></div>
+    <div class="col"><label><strong>Tiempo Incio - Fin</strong></label></div>
+    <div class="col"><label><strong>Precio</strong></label></div>
+    <div class="col-4"><label><strong>Acciones</strong></label></div>
+</div>
+
+<div class="row mb-1 text-center" [ngClass]="{'gray-background': computerRecord.finished}"
+    *ngFor="let computerRecord of client.computersRecords; let i = index">
+    <div class="col">
+        <span>{{computerRecord.computer.name}}</span>
+    </div>
+    <div class="col">
+        <span *ngIf="computerRecord.hours > 0">
+            {{computerRecord.hours}} horas /
+        </span>
+        <span *ngIf="computerRecord.minutes > 0">
+            {{computerRecord.minutes}} minutos
+        </span>
+        <span *ngIf="computerRecord.minutes == 0">
+            0 minutos
+        </span>
+    </div>
+    <div class="col">
+        {{computerRecord.startDate | date:"h:mm a"}} - <span
+            *ngIf="computerRecord.endDate">{{computerRecord.endDate | date:"h:mm a"}}</span>
+    </div>
+    <div class="col">
+        <span *ngIf="computerRecord.price">
+            {{computerRecord.price | currency}}
+        </span>
+    </div>
+    <div class="col-4" *ngIf="!computerRecord.finished">
+        <button (click)="end(i)" type="button" class="btn btn-sm btn-danger mr-3 mb-2">Terminar</button>
+    </div>
+    <div class="col-4 text-center" *ngIf="computerRecord.finished">
+        <strong>Tiempo Terminado</strong>
+    </div>
+</div>

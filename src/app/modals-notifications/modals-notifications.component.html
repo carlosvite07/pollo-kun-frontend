@@ -21,8 +21,30 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="endTime()" *ngIf="isEndTime">Aceptar</button>
-        <button type="button" class="btn btn-success" (click)="addTime()" *ngIf="!isEndTime">Aceptar</button>
+        <button type="button" class="btn btn-success" (click)="consoleEndTime()" *ngIf="isEndTime">Aceptar</button>
+        <button type="button" class="btn btn-success" (click)="consoleAddTime()" *ngIf="!isEndTime">Aceptar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Cancelar</button>
+    </div>
+</ng-template>
+
+<ng-template #computerModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            {{title}}
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <strong>
+            <span class="text-danger">
+                {{body}}
+            </span>
+        </strong>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="computerEndTime()">Aceptar</button>
         <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Cancelar</button>
     </div>
 </ng-template>

@@ -12,15 +12,14 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 
-import { CandiesComponent } from './candies/candies.component';
 import { WorksComponent } from './works/works.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PricesComponent } from './prices/prices.component';
 
-import { ConsolesModule } from './consoles/consoles.module';
 import { ClientsModule } from './clients/clients.module';
-import { StationeryComponent } from './stationery/stationery.component';
+import { ConsolesModule } from './consoles/consoles.module';
 import { ConsoleComponent } from './prices/consoles-prices/consoles-prices.component';
+import { StationeryComponent } from './stationery/stationery.component';
 import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
 import { WorksPricesComponent } from './prices/works-prices/works-prices.component';
 import { ArticlesPricesComponent } from './prices/articles-prices/articles-prices.component';
@@ -31,7 +30,6 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
   declarations: [
     AppComponent,
     NavbarComponent,
-    CandiesComponent,
     WorksComponent,
     SummaryComponent,
     PricesComponent,

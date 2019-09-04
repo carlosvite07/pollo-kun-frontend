@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConsolesService } from '../consoles/shared/consoles.service';
+import { ComputersService } from '../computers/computers.service';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from 'src/app/clients/client.model';
 import { HOURS } from '../consoles/shared/mock-hours';
@@ -13,9 +14,11 @@ import { Hour } from '../consoles/shared/hour.model';
 })
 export class ModalsNotificationsComponent implements OnInit {
   @ViewChild('consoleModal', { static: false }) private consoleModal;
+  @ViewChild('computerModal', { static: false }) private computerModal;
   @ViewChild('endClientModal', { static: false }) private endClientModal;
   client: Client;
   consoleIndex: number;
+  computerIndex: number;
   avaliableHours: Hour[] = HOURS;
   title: string;
   body: string;
@@ -26,6 +29,7 @@ export class ModalsNotificationsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private consolesService: ConsolesService,
+    private computersService: ComputersService,
     private clientsService: ClientsService,
   ) { }
 
@@ -58,6 +62,19 @@ export class ModalsNotificationsComponent implements OnInit {
       }
     );
 
+    this.computersService.computerRecordEnd$.subscribe(
+      computerRecordEnd => {
+        this.resetAll();
+        this.client = computerRecordEnd.client;
+        this.computerIndex = computerRecordEnd.computerIndex;
+        let computerName = computerRecordEnd.client.computersRecords[this.computerIndex].computer.name;
+        let clientName = 'Cliente ' + computerRecordEnd.client.counter;
+        this.title = `Terminar ${computerName} - ${clientName}`;
+        this.body = `¿Quieres terminar el tiempo de la ${computerName} - ${clientName}?`;
+        this.modalService.open(this.computerModal, { centered: true });
+      }
+    );
+
     this.clientsService.clientEnd$.subscribe(
       client => {
         this.resetAll();
@@ -78,12 +95,12 @@ export class ModalsNotificationsComponent implements OnInit {
     this.errorHour = undefined;
   }
 
-  endTime() {
+  consoleEndTime() {
     this.modalService.dismissAll();
     this.consolesService.endConsoleRecord(this.client, this.consoleIndex);
   }
 
-  addTime() {
+  consoleAddTime() {
     if (!this.selectedHour) {
       this.errorHour = true;
       return;
@@ -91,6 +108,11 @@ export class ModalsNotificationsComponent implements OnInit {
     this.modalService.dismissAll();
     this.consolesService.addTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
     this.selectedHour = undefined;
+  }
+
+  computerEndTime() {
+    this.modalService.dismissAll();
+    this.computersService.endComputerRecord(this.client, this.computerIndex);
   }
 
   endClient() {
