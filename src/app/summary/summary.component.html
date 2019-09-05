@@ -86,10 +86,52 @@
     </div>
 
     <div class="row text-center">
-      <div class="col"><strong>SubTotal de Horas</strong></div>
+      <div class="col"><strong>Total de Horas</strong></div>
       <div class="col"><strong>{{totalHours}}</strong></div>
       <div class="col"><strong>SubTotal</strong></div>
       <div class="col"><strong>{{recordsTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Computadoras</h3>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"><strong>Número de la Computadora</strong></div>
+      <div class="col"><strong>Tiempo</strong></div>
+      <div class="col"><strong>Fecha de uso</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let computer of allComputers">
+      <div class="col">
+        {{computer.computer.name}}
+      </div>
+      <div class="col">
+        <span *ngIf="computer.hours > 0">{{computer.hours}} Horas</span>
+        <span *ngIf="computer.minutes > 0">{{computer.minutes}} Minutos</span>
+      </div>
+      <div class="col">
+        {{computer.startDate | date:"h:mm a"}} - {{computer.endDate | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{computer.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col">Total Horas</div>
+      <div class="col">{{totalComputersHours}} Horas {{totalComputersMinutes}} Minutos</div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{computersTotal | currency}}</strong></div>
     </div>
 
   </div>
@@ -113,7 +155,7 @@
 
     <div class="row text-center" *ngFor="let candie of allCandies">
       <div class="col">
-        {{candie.name}}
+        {{candie.candie.name}}
       </div>
       <div class="col">
         {{candie.quantity}}
@@ -225,6 +267,6 @@
     <h3>Total</h3>
   </div>
   <div class="col">
-    <h3>{{this.recordsTotal + this.candiesTotal + this.worksTotal + this.articlesTotal | currency}}</h3>
+    <h3>{{recordsTotal + candiesTotal + computersTotal + worksTotal + articlesTotal | currency}}</h3>
   </div>
 </div>

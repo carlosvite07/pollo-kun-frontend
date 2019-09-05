@@ -8,6 +8,10 @@ export class SummaryService {
 
   constructor(private firestore: AngularFirestore) { }
 
+  getClientsByRange(start:Date,end:Date){
+    return this.firestore.collection('clients', ref => ref.where('startDate','>=',start).where('startDate','<',end)).snapshotChanges();
+  }
+
   getRecordsByRange(start:Date,end:Date): any{
     return this.firestore.collection('records', ref => ref.where('startDate','>=',start).where('startDate','<',end)).snapshotChanges();
   }
