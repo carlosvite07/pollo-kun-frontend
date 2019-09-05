@@ -11,7 +11,7 @@ import { timer } from 'rxjs';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  minutesNotification: number = 5;
+  minutesNotification: number = 3;
   notifications: any[] = [];
   clients;
   constructor(
@@ -27,10 +27,10 @@ export class NotificationsComponent implements OnInit {
       this.clients = clients;
     });
 
-    const source = timer(1000, 60*1000);
+    const source = timer(1000, 60 * 1000);
     const subscribe = source.subscribe(() => {
-      let now = new Date();        
-      if(this.clients){
+      let now = new Date();
+      if (this.clients) {
         this.isConsoleRecordOnTime(this.clients, now);
       }
     });
@@ -46,8 +46,8 @@ export class NotificationsComponent implements OnInit {
             if (consoleRecord.endDate < now) {
               this.consolesService.endConsoleRecord(client, consoleRecordIndex);
             }
-            if (consoleRecord.endDate < minutesLess) {    
-              if(!consoleRecord.notification){
+            if (consoleRecord.endDate < minutesLess) {
+              if (!consoleRecord.notification) {
                 let notification = {
                   body: `Faltan menos de ${this.minutesNotification} minutos para que termine la ${consoleRecord.console.name} del Cliente${client.counter}`,
                   readed: false,
@@ -61,10 +61,10 @@ export class NotificationsComponent implements OnInit {
                   }
                 );
               }
-              if(!consoleRecord.notification.readed){
+              if (!consoleRecord.notification.readed) {
                 this.notifications.push(
-                {
-                  client: client,
+                  {
+                    client: client,
                     consoleRecordIndex: consoleRecordIndex,
                     notification: consoleRecord.notification
                   }
@@ -77,8 +77,8 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  closeNotification(notification: any){
-    this.clientsService.markAsReadedNotification(notification.client,notification.consoleRecordIndex);
+  closeNotification(notification: any) {
+    this.clientsService.markAsReadedNotification(notification.client, notification.consoleRecordIndex);
   }
 
 }

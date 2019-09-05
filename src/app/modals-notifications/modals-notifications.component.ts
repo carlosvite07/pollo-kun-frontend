@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ArticlesService } from '../articles/articles.service';
 import { ConsolesService } from '../consoles/shared/consoles.service';
+import { CandiesService } from '../candies/candies.service';
 import { ComputersService } from '../computers/computers.service';
+import { WorksService } from '../works/works.service';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from 'src/app/clients/client.model';
 import { HOURS } from '../consoles/shared/mock-hours';
@@ -18,6 +21,7 @@ export class ModalsNotificationsComponent implements OnInit {
   @ViewChild('computerModal', { static: false }) private computerModal;
   @ViewChild('endClientModal', { static: false }) private endClientModal;
   client: Client;
+  debt: number = 0;
   consoleIndex: number;
   computerIndex: number;
   avaliableConsoles: Console[] = [];
@@ -34,8 +38,11 @@ export class ModalsNotificationsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
+    private articlesService: ArticlesService,
     private consolesService: ConsolesService,
+    private candiesService: CandiesService,
     private computersService: ComputersService,
+    private worksService: WorksService,
     private clientsService: ClientsService,
   ) { }
 
@@ -108,7 +115,8 @@ export class ModalsNotificationsComponent implements OnInit {
     this.clientsService.clientEnd$.subscribe(
       client => {
         this.resetAll();
-        this.client = client;
+        this.client = client.client;
+        this.debt = client.debt;
         this.modalService.open(this.endClientModal, { centered: true });
       }
     );
@@ -116,6 +124,7 @@ export class ModalsNotificationsComponent implements OnInit {
 
   resetAll() {
     this.client = undefined;
+    this.debt = 0;
     this.consoleIndex = undefined;
     this.title = undefined;
     this.body = undefined;
@@ -143,7 +152,6 @@ export class ModalsNotificationsComponent implements OnInit {
     this.selectedConsole = undefined;
   }
 
-
   consoleAddTime() {
     if (!this.selectedHour) {
       this.errorHour = true;
@@ -161,11 +169,25 @@ export class ModalsNotificationsComponent implements OnInit {
 
   endClient() {
     this.modalService.dismissAll();
-    if(this.client.consolesRecords){
+    //Articles
+    if (this.client.articlesPurchases && this.client.articlesPurchases.length > 0) {
+      this.articlesService.endAllArticlesPurchases(this.client);
+    }
+    //Consoles
+    if (this.client.consolesRecords) {
       this.consolesService.endAllConsolesRecords(this.client);
     }
-    if(this.client.computersRecords){
+    //Candies
+    if (this.client.candiesPurchases && this.client.candiesPurchases.length > 0) {
+      this.candiesService.endAllCandiesPurchases(this.client);
+    }
+    //Computers
+    if (this.client.computersRecords && this.client.computersRecords.length > 0) {
       this.computersService.endAllComputersRecords(this.client);
+    }
+    //Works
+    if (this.client.worksRecords) {
+      this.worksService.endAllWorksRecords(this.client);
     }
     this.clientsService.endClient(this.client);
   }

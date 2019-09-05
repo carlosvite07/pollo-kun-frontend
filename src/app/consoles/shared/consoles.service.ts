@@ -5,6 +5,7 @@ import { ClientsService } from '../../clients/clients.service';
 import { Client } from '../../clients/client.model';
 import { Subject } from 'rxjs';
 import { Hour } from '../shared/hour.model';
+import undefined = require('firebase/empty-import');
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,7 @@ export class ConsolesService {
 
   endConsoleRecord(client: Client, consoleIndex: number) {
     client.consolesRecords[consoleIndex].finished = true;
+    client.consolesRecords[consoleIndex].paid = true;
     if (client.consolesRecords[consoleIndex].notification) {
       client.consolesRecords[consoleIndex].notification.readed = true;
     }
@@ -96,7 +98,8 @@ export class ConsolesService {
     this.updateUnavailable(selectedConsole.id);
     client.consolesRecords[consoleIndex].console = selectedConsole;
     client.consolesRecords[consoleIndex].price = newPrice;
-    this.clientService.update(client);
+    delete client.consolesRecords[consoleIndex].notification;
+    this.clientService.set(client);
   }
 
   confirmAddTimeConsoleRecord(client: Client, consoleIndex: number) {
@@ -142,6 +145,7 @@ export class ConsolesService {
       if (!client.consolesRecords[index].finished) {
         count++;
         client.consolesRecords[index].finished = true;
+        client.consolesRecords[index].paid = true;
         if (client.consolesRecords[index].notification) {
           client.consolesRecords[index].notification.readed = true;
         }

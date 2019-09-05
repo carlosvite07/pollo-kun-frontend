@@ -63,7 +63,6 @@ export class ComputersService {
   endComputerRecord(client: Client, computerIndex: number) {
     let now = new Date();
     client.computersRecords[computerIndex].finished = true;
-    client.computersRecords[computerIndex].paid = true;
     client.computersRecords[computerIndex].endDate = now;
     client.computersRecords[computerIndex].price =
       this.getComputerRecordPrice(client.computersRecords[computerIndex].startDate, now, client.computersRecords[computerIndex].computer);

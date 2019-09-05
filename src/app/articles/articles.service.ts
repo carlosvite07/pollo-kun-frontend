@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ArticlePurchase } from '../articles/article-purchase.model';
 import { Article } from '../articles/article.model';
+import { Client } from '../clients/client.model';
+import { ClientsService } from '../clients/clients.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticlesService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(
+    private firestore: AngularFirestore,
+    private clientsService: ClientsService
+  ) { }
 
   getArticles(): any {
     return this.firestore.collection('articles', ref => ref.where('stock', '>', 0)).snapshotChanges();
@@ -36,6 +41,19 @@ export class ArticlesService {
 
   articlePurchase(articlePurchase: ArticlePurchase): any {
     return this.firestore.collection('articlesPurchases').add(articlePurchase);
+  }
+
+  endAllArticlesPurchases(client: Client) {
+    let count = 0;
+    client.articlesPurchases.forEach((purchase, index) => {
+      if (!client.articlesPurchases[index].paid) {
+        count++;
+        client.articlesPurchases[index].paid = true;
+      }
+    });
+    if (count > 0) {
+      this.clientsService.update(client);
+    }
   }
 
 }

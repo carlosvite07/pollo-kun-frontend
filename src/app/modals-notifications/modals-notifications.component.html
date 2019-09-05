@@ -67,8 +67,11 @@
     </div>
     <div class="modal-body text-center">
         <strong>
-            <span class="text-info">
+            <span class="text-danger">
                 Terminaras con el registro del Cliente {{client.counter}}.
+                <div *ngIf="debt > 0">
+                    Cobrarle ${{debt}} pesos.
+                </div>
             </span>
         </strong>
     </div>

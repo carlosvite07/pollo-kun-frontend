@@ -11,7 +11,7 @@ export class ClientsService {
   private activeClients = new Subject<any>();
   activeClients$ = this.activeClients.asObservable();
 
-  private clientEnd = new Subject<Client>();
+  private clientEnd = new Subject<any>();
   clientEnd$ = this.clientEnd.asObservable();
 
   constructor(private firestore: AngularFirestore) { }
@@ -51,6 +51,10 @@ export class ClientsService {
     this.firestore.doc('clients/' + clientModel.id).update(clientModel);
   }
 
+  set(clientModel: Client) {
+    this.firestore.doc('clients/' + clientModel.id).set(clientModel);
+  }
+
   endConsoleRecord(client: Client, consoleRecordIndex: number) {
     client.consolesRecords[consoleRecordIndex].finished = true;
     let consoleId = client.consolesRecords[consoleRecordIndex].console.id;
@@ -78,8 +82,12 @@ export class ClientsService {
   }
 
   //Modal
-  confirmEndClient(client: Client) {
-    this.clientEnd.next(client);
+  confirmEndClient(client: Client,debt:number) {
+    let object = {
+      client: client,
+      debt: debt
+    }
+    this.clientEnd.next(object);
   }
 
 }

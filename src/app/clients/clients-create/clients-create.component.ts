@@ -119,8 +119,4 @@ export class ClientsComponent implements OnInit {
     this.selectedClient = undefined;
   }
 
-  endClient(client: Client): void {
-    this.clientsService.confirmEndClient(client);
-  }
-
 }
