@@ -13,7 +13,13 @@
                 {{body}}
             </span>
         </strong>
-        <div *ngIf="!isEndTime">
+        <div *ngIf="isConsoleChange">
+            <select [(ngModel)]="selectedConsole" class="custom-select">
+                <option *ngFor="let console of avaliableConsoles" [ngValue]="console">{{console.name}}</option>
+            </select>
+            <div *ngIf="errorConsole" class="text-danger font-weight-bold">Selecciona una consola</div>
+        </div>
+        <div *ngIf="isAddTime">
             <select [(ngModel)]="selectedHour" class="custom-select">
                 <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
             </select>
@@ -22,7 +28,8 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="consoleEndTime()" *ngIf="isEndTime">Aceptar</button>
-        <button type="button" class="btn btn-success" (click)="consoleAddTime()" *ngIf="!isEndTime">Aceptar</button>
+        <button type="button" class="btn btn-success" (click)="consoleChange()" *ngIf="isConsoleChange">Aceptar</button>
+        <button type="button" class="btn btn-success" (click)="consoleAddTime()" *ngIf="isAddTime">Aceptar</button>
         <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Cancelar</button>
     </div>
 </ng-template>

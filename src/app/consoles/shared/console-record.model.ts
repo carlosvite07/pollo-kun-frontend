@@ -10,4 +10,5 @@ export class ConsoleRecord{
     finished: boolean;
     hours: number;
     notification: Notification;
+    paid: boolean;
 }

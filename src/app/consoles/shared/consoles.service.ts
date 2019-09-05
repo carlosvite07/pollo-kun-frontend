@@ -13,6 +13,9 @@ export class ConsolesService {
   private consoleRecordEnd = new Subject<any>();
   consoleRecordEnd$ = this.consoleRecordEnd.asObservable();
 
+  private consoleRecordChange = new Subject<any>();
+  consoleRecordChange$ = this.consoleRecordChange.asObservable();
+
   private consoleRecordAddTime = new Subject<any>();
   consoleRecordAddTime$ = this.consoleRecordAddTime.asObservable();
 
@@ -77,6 +80,25 @@ export class ConsolesService {
     this.clientService.update(client);
   }
 
+  confirmChangeConsoleRecord(client: Client, consoleIndex: number) {
+    let object = {
+      client: client,
+      consoleIndex: consoleIndex
+    };
+    this.consoleRecordChange.next(object);
+  }
+
+  changeConsoleRecord(client: Client, consoleIndex: number, selectedConsole: Console) {
+    let newPrice =
+      this.getConsoleRecordPrice(client.consolesRecords[consoleIndex].startDate,
+        client.consolesRecords[consoleIndex].endDate, selectedConsole);
+    this.updateAvailable(client.consolesRecords[consoleIndex].console.id);
+    this.updateUnavailable(selectedConsole.id);
+    client.consolesRecords[consoleIndex].console = selectedConsole;
+    client.consolesRecords[consoleIndex].price = newPrice;
+    this.clientService.update(client);
+  }
+
   confirmAddTimeConsoleRecord(client: Client, consoleIndex: number) {
     let object = {
       client: client,
@@ -90,8 +112,8 @@ export class ConsolesService {
     currentConsole.endDate =
       new Date(currentConsole.endDate.getTime() + selectedHour.hoursValue * 60 * 60 * 1000);
     currentConsole.hours += selectedHour.hoursValue;
-    currentConsole.price = this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate,
-      currentConsole.console.hourPrice, currentConsole.console.halfHourPrice);
+    currentConsole.price =
+      this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate, currentConsole.console);
     client.consolesRecords[consoleIndex] = currentConsole;
     if (client.consolesRecords[consoleIndex].notification) {
       delete client.consolesRecords[consoleIndex].notification;
@@ -100,16 +122,16 @@ export class ConsolesService {
   }
 
   //Utility
-  getConsoleRecordPrice(start: Date, end: Date, hourPrice: number, halfHourPrice: number): number {
+  getConsoleRecordPrice(start: Date, end: Date, selectedConsole: Console): number {
     let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
     let hours: number = Math.floor(difference);
     let minutes: number = difference - hours;
     let total: number = 0;
     if (minutes != 0) {
-      total += halfHourPrice;
+      total += selectedConsole.halfHourPrice;
     }
     if (hours >= 1) {
-      total += hours * hourPrice;
+      total += hours * selectedConsole.hourPrice;
     }
     return total;
   }
@@ -117,7 +139,7 @@ export class ConsolesService {
   endAllConsolesRecords(client: Client) {
     let count = 0;
     client.consolesRecords.forEach((consoleRecord, index) => {
-      if(!client.consolesRecords[index].finished){
+      if (!client.consolesRecords[index].finished) {
         count++;
         client.consolesRecords[index].finished = true;
         if (client.consolesRecords[index].notification) {
@@ -127,7 +149,7 @@ export class ConsolesService {
         this.updateAvailable(consoleId);
       }
     });
-    if(count > 0){
+    if (count > 0) {
       this.clientService.update(client);
     }
   }

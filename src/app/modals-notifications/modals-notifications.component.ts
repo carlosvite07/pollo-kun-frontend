@@ -6,6 +6,7 @@ import { ClientsService } from '../clients/clients.service';
 import { Client } from 'src/app/clients/client.model';
 import { HOURS } from '../consoles/shared/mock-hours';
 import { Hour } from '../consoles/shared/hour.model';
+import { Console } from '../consoles/shared/console.model';
 
 @Component({
   selector: 'app-modals-notifications',
@@ -19,11 +20,16 @@ export class ModalsNotificationsComponent implements OnInit {
   client: Client;
   consoleIndex: number;
   computerIndex: number;
+  avaliableConsoles: Console[] = [];
   avaliableHours: Hour[] = HOURS;
   title: string;
   body: string;
   isEndTime: boolean = false;
+  isConsoleChange: boolean = false;
+  isAddTime: boolean = false;
   selectedHour: Hour = undefined;
+  selectedConsole: Console = undefined;
+  errorConsole: boolean = false;
   errorHour: boolean = false;
 
   constructor(
@@ -34,6 +40,16 @@ export class ModalsNotificationsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.consolesService.getConsoles().subscribe(data => {
+      this.avaliableConsoles = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as Console;
+      });
+    });
+
     this.consolesService.consoleRecordEnd$.subscribe(
       consoleRecordEnd => {
         this.resetAll();
@@ -48,10 +64,24 @@ export class ModalsNotificationsComponent implements OnInit {
       }
     );
 
+    this.consolesService.consoleRecordChange$.subscribe(
+      consoleRecordChange => {
+        this.resetAll();
+        this.isConsoleChange = true;
+        this.client = consoleRecordChange.client;
+        this.consoleIndex = consoleRecordChange.consoleIndex;
+        let consoleName = consoleRecordChange.client.consolesRecords[this.consoleIndex].console.name;
+        let clientName = 'Cliente ' + consoleRecordChange.client.counter;
+        this.title = `Cambiar la consola ${consoleName} - ${clientName}`;
+        this.body = `¿Por cuál consola desea cambiar la ${consoleName} del ${clientName}?`;
+        this.modalService.open(this.consoleModal, { centered: true });
+      }
+    );
+
     this.consolesService.consoleRecordAddTime$.subscribe(
       consoleRecordAddTime => {
         this.resetAll();
-        this.isEndTime = false;
+        this.isAddTime = true;
         this.client = consoleRecordAddTime.client;
         this.consoleIndex = consoleRecordAddTime.consoleIndex;
         let consoleName = consoleRecordAddTime.client.consolesRecords[this.consoleIndex].console.name;
@@ -87,18 +117,32 @@ export class ModalsNotificationsComponent implements OnInit {
   resetAll() {
     this.client = undefined;
     this.consoleIndex = undefined;
-    this.avaliableHours = undefined;
     this.title = undefined;
     this.body = undefined;
-    this.isEndTime = undefined;
+    this.isEndTime = false;
+    this.isConsoleChange = false;
+    this.isAddTime = false;
     this.selectedHour = undefined;
+    this.selectedConsole = undefined;
     this.errorHour = undefined;
+    this.errorConsole = undefined;
   }
 
   consoleEndTime() {
     this.modalService.dismissAll();
     this.consolesService.endConsoleRecord(this.client, this.consoleIndex);
   }
+
+  consoleChange() {
+    if (!this.selectedConsole) {
+      this.errorConsole = true;
+      return;
+    }
+    this.modalService.dismissAll();
+    this.consolesService.changeConsoleRecord(this.client, this.consoleIndex, this.selectedConsole);
+    this.selectedConsole = undefined;
+  }
+
 
   consoleAddTime() {
     if (!this.selectedHour) {

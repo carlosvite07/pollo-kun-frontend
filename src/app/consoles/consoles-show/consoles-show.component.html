@@ -34,15 +34,15 @@
         {{consoleRecord.price | currency}}
     </div>
     <div class="col-3" *ngIf="!consoleRecord.finished">
-        <button (click)="addTime(i)" type="button" class="btn btn-sm btn-warning mr-3 mb-2">Agregar
-            Tiempo</button>
+        <button (click)="addTime(i)" type="button" class="btn btn-sm btn-warning mr-3 mb-2">Más Tiempo</button>
+        <button (click)="change(i)" type="button" class="btn btn-sm btn-secondary mr-3 mb-2">Cambiar</button>
         <button (click)="end(i)" type="button" class="btn btn-sm btn-danger mr-3 mb-2">Terminar</button>
     </div>
     <div class="col-3" *ngIf="consoleRecord.finished">
         <strong>Tiempo Terminado</strong>
     </div>
     <div class="col">
-        <input type="checkbox" class="form-check-input" [ngModel]="isPaid">
+        <input type="checkbox" class="form-check-input" [ngModel]="consoleRecord.paid" (change)="changeCheckValue(i)">
     </div>
 </div>
 

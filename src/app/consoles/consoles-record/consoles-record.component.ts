@@ -4,7 +4,6 @@ import { Console } from '../shared/console.model';
 import { ConsoleRecord } from '../shared/console-record.model';
 import { HOURS } from '../shared/mock-hours';
 import { Hour } from '../shared/hour.model';
-import { Client } from '../../clients/client.model';
 
 @Component({
   selector: 'app-consoles-record',
@@ -47,9 +46,10 @@ export class ConsolesRecordComponent implements OnInit {
       startDate: now,
       endDate: endDate,
       console: this.selectedConsole,
-      price: this.consolesService.getConsoleRecordPrice(now, endDate, this.selectedConsole.hourPrice, this.selectedConsole.halfHourPrice),
+      price: this.consolesService.getConsoleRecordPrice(now, endDate, this.selectedConsole),
       finished: false,
-      hours: this.selectedHour.hoursValue
+      hours: this.selectedHour.hoursValue,
+      paid: false,
     } as ConsoleRecord;
     if(!this.client.consolesRecords){
       this.client.consolesRecords = [];
