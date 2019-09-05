@@ -66,7 +66,8 @@ export class WorkCreateComponent implements OnInit {
       date: new Date(),
       name: this.selectedWork.name,
       quantity: this.selectedQuantity,
-      price: this.selectedQuantity * this.selectedPrice
+      price: this.selectedQuantity * this.selectedPrice,
+      paid: false
     } as WorkRecord;
     if(this.unknowWork){
       this.errorSpecificWork = !this.specificWork;

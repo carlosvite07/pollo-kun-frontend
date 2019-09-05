@@ -4,4 +4,5 @@ export class WorkRecord {
     price: number;
     date: Date;
     quantity: number;
+    paid: boolean;
 }
