@@ -5,7 +5,6 @@ import { ClientsService } from '../../clients/clients.service';
 import { Client } from '../../clients/client.model';
 import { Subject } from 'rxjs';
 import { Hour } from '../shared/hour.model';
-import undefined = require('firebase/empty-import');
 
 @Injectable({
   providedIn: 'root'
