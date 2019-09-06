@@ -23,6 +23,7 @@ import { WorksPricesComponent } from './prices/works-prices/works-prices.compone
 import { ArticlesPricesComponent } from './prices/articles-prices/articles-prices.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ModalsNotificationsComponent } from './modals-notifications/modals-notifications.component';
+import { ComputersPricesComponent } from './prices/computers-prices/computers-prices.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ModalsNotificationsComponent } from './modals-notifications/modals-noti
     WorksPricesComponent,
     ArticlesPricesComponent,
     NotificationsComponent,
-    ModalsNotificationsComponent
+    ModalsNotificationsComponent,
+    ComputersPricesComponent
   ],
   imports: [
     BrowserModule,

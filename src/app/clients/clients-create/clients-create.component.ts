@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
+import { ArticlesService } from '../../articles/articles.service';
+import { CandiesService } from '../../candies/candies.service';
 import { ConsolesService } from '../../consoles/shared/consoles.service';
 import { ComputersService } from '../../computers/computers.service';
+import { WorksService } from '../../works/works.service';
 
 @Component({
   selector: 'app-clients-create',
@@ -17,8 +20,11 @@ export class ClientsComponent implements OnInit {
 
   constructor(
     private clientsService: ClientsService,
+    private articlesService: ArticlesService,
+    private candiesService: CandiesService,
     private consolesService: ConsolesService,
-    private computersService: ComputersService
+    private computersService: ComputersService,
+    private worksService: WorksService,
   ) { }
 
   ngOnInit() {
@@ -37,15 +43,33 @@ export class ClientsComponent implements OnInit {
         let client = {
           id: clientId,
           ...clientData
-        } as Client;
+        };
         client.startDate = clientData.startDate.toDate();
+        if (client.articlesPurchases && client.articlesPurchases.length > 0) {
+          this.articlesService.endAllArticlesPurchases(client as Client);
+        }
+        if (client.candiesPurchases && client.candiesPurchases.length > 0) {
+          this.candiesService.endAllCandiesPurchases(client as Client);
+        }
+        if (client.worksRecords) {
+          this.worksService.endAllWorksRecords(client as Client);
+        }
         if (client.consolesRecords) {
-          this.consolesService.endAllConsolesRecords(client);
+          this.consolesService.endAllConsolesRecords(client as Client);
         }
         if (client.computersRecords) {
-          this.computersService.endAllComputersRecords(client);
+          client.computersRecords.forEach((el, index) => {
+            if (client.computersRecords[index].startDate) {
+              client.computersRecords[index].startDate = el.startDate.toDate();
+            }
+            if (client.computersRecords[index].endDate) {
+              client.computersRecords[index].endDate = el.endDate.toDate();
+            }
+          });
+          this.computersService.endAllComputersRecords(client as Client);
         }
-        this.clientsService.finishClient(client);
+        
+        this.clientsService.finishClient(client as Client);
       })
     });
 
