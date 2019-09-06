@@ -4,6 +4,7 @@ import { Client } from '../clients/client.model';
 import { ConsolesService } from '../consoles/shared/consoles.service';
 import { Notification } from '../notifications/notification.model';
 import { timer } from 'rxjs';
+import { HOST_ATTR } from '@angular/compiler';
 
 @Component({
   selector: 'app-notifications',

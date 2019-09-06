@@ -31,10 +31,12 @@ export class ModalsNotificationsComponent implements OnInit {
   isEndTime: boolean = false;
   isConsoleChange: boolean = false;
   isAddTime: boolean = false;
+  isLessTime: boolean = false;
   selectedHour: Hour = undefined;
   selectedConsole: Console = undefined;
   errorConsole: boolean = false;
   errorHour: boolean = false;
+  errorLessHour: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -99,6 +101,20 @@ export class ModalsNotificationsComponent implements OnInit {
       }
     );
 
+    this.consolesService.consoleRecordLessTime$.subscribe(
+      consoleRecordLessTime => {
+        this.resetAll();
+        this.isLessTime = true;
+        this.client = consoleRecordLessTime.client;
+        this.consoleIndex = consoleRecordLessTime.consoleIndex;
+        let consoleName = consoleRecordLessTime.client.consolesRecords[this.consoleIndex].console.name;
+        let clientName = 'Cliente ' + consoleRecordLessTime.client.counter;
+        this.title = `Reducir Tiempo del ${consoleName} - ${clientName}`;
+        this.body = `¿Cuánto tiempo se va a reducir de la ${consoleName} - ${clientName}?`;
+        this.modalService.open(this.consoleModal, { centered: true });
+      }
+    );
+
     this.computersService.computerRecordEnd$.subscribe(
       computerRecordEnd => {
         this.resetAll();
@@ -131,10 +147,12 @@ export class ModalsNotificationsComponent implements OnInit {
     this.isEndTime = false;
     this.isConsoleChange = false;
     this.isAddTime = false;
+    this.isLessTime = false;
     this.selectedHour = undefined;
     this.selectedConsole = undefined;
     this.errorHour = undefined;
     this.errorConsole = undefined;
+    this.errorLessHour = false;
   }
 
   consoleEndTime() {
@@ -160,6 +178,25 @@ export class ModalsNotificationsComponent implements OnInit {
     this.modalService.dismissAll();
     this.consolesService.addTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
     this.selectedHour = undefined;
+  }
+
+  consoleLessTime() {
+    if (!this.selectedHour) {
+      this.errorHour = true;
+      return;
+    }
+    let now = new Date();
+    let updatedDate = 
+      new Date((this.client.consolesRecords[this.consoleIndex].endDate.getTime() - this.selectedHour.hoursValue * 60 * 60 * 1000));
+    if( updatedDate < now){
+      this.errorLessHour = true;
+      setTimeout(() =>  { this.errorLessHour = false }, 5000);
+      return;
+    }else{
+      this.modalService.dismissAll();
+      this.consolesService.lessTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
+      this.selectedHour = undefined;
+    }
   }
 
   computerEndTime() {

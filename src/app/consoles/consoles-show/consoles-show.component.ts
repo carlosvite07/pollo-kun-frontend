@@ -10,7 +10,7 @@ import { ClientsService } from '../../clients/clients.service';
 })
 export class ConsolesShowComponent implements OnChanges {
   @Input() client: Client;
-
+  isWarningLessTime = false;
 
   constructor(
     private consolesService: ConsolesService,
@@ -32,9 +32,22 @@ export class ConsolesShowComponent implements OnChanges {
     this.consolesService.confirmAddTimeConsoleRecord(this.client, index);
   }
 
+  lessTime(index: number): void {
+    if(this.client.consolesRecords[index].hours < 1){
+      this.warningLessTime();
+      return;
+    }
+    this.consolesService.confirmLessTimeConsoleRecord(this.client, index);
+  }
+
   changeCheckValue(index: number) {
     this.client.consolesRecords[index].paid = !this.client.consolesRecords[index].paid;
     this.clientsService.update(this.client);
+  }
+
+  warningLessTime(){
+    this.isWarningLessTime = true;
+    setTimeout(() => { this.isWarningLessTime = false }, 3000);
   }
 
 }

@@ -19,6 +19,9 @@ export class ConsolesService {
   private consoleRecordAddTime = new Subject<any>();
   consoleRecordAddTime$ = this.consoleRecordAddTime.asObservable();
 
+  private consoleRecordLessTime = new Subject<any>();
+  consoleRecordLessTime$ = this.consoleRecordLessTime.asObservable();
+
   constructor(
     private firestore: AngularFirestore,
     private clientService: ClientsService
@@ -72,7 +75,7 @@ export class ConsolesService {
 
   endConsoleRecord(client: Client, consoleIndex: number) {
     client.consolesRecords[consoleIndex].finished = true;
-    client.consolesRecords[consoleIndex].paid = true;
+    client.consolesRecords[consoleIndex].paid = false;
     if (client.consolesRecords[consoleIndex].notification) {
       client.consolesRecords[consoleIndex].notification.readed = true;
     }
@@ -120,7 +123,29 @@ export class ConsolesService {
     if (client.consolesRecords[consoleIndex].notification) {
       delete client.consolesRecords[consoleIndex].notification;
     }
-    this.clientService.update(client);
+    this.clientService.set(client);
+  }
+
+  confirmLessTimeConsoleRecord(client: Client, consoleIndex: number) {
+    let object = {
+      client: client,
+      consoleIndex: consoleIndex
+    };
+    this.consoleRecordLessTime.next(object);
+  }
+
+  lessTimeConsoleRecord(client: Client, consoleIndex: number, selectedHour: Hour) {
+    let currentConsole = client.consolesRecords[consoleIndex];
+    currentConsole.endDate =
+      new Date(currentConsole.endDate.getTime() - selectedHour.hoursValue * 60 * 60 * 1000);
+    currentConsole.hours -= selectedHour.hoursValue;
+    currentConsole.price =
+      this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate, currentConsole.console);
+    client.consolesRecords[consoleIndex] = currentConsole;
+    if (client.consolesRecords[consoleIndex].notification) {
+      delete client.consolesRecords[consoleIndex].notification;
+    }
+    this.clientService.set(client);
   }
 
   //Utility

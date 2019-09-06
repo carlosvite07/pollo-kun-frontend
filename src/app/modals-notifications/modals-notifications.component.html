@@ -25,11 +25,19 @@
             </select>
             <div *ngIf="errorHour" class="text-danger font-weight-bold">Selecciona una hora</div>
         </div>
+        <div *ngIf="isLessTime">
+            <select [(ngModel)]="selectedHour" class="custom-select">
+                <option *ngFor="let hour of avaliableHours" [ngValue]="hour">{{hour.name}}</option>
+            </select>
+            <div *ngIf="errorHour" class="text-danger font-weight-bold">Selecciona una hora</div>
+            <div *ngIf="errorLessHour" class="text-danger font-weight-bold">No se puede reducir esa cantidad. Intenta reducir menos tiempo.</div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="consoleEndTime()" *ngIf="isEndTime">Aceptar</button>
         <button type="button" class="btn btn-success" (click)="consoleChange()" *ngIf="isConsoleChange">Aceptar</button>
         <button type="button" class="btn btn-success" (click)="consoleAddTime()" *ngIf="isAddTime">Aceptar</button>
+        <button type="button" class="btn btn-success" (click)="consoleLessTime()" *ngIf="isLessTime">Aceptar</button>
         <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">Cancelar</button>
     </div>
 </ng-template>
