@@ -11,7 +11,7 @@ import { timer } from 'rxjs';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  minutesNotification: number = 1;
+  minutesNotification: number = 2;
   notifications: any[] = [];
   clients;
   constructor(

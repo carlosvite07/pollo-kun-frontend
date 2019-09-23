@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col text-center">
-    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="monthSelection" [dayTemplate]="t" outsideDays="hidden">
     </ngb-datepicker>
 
     <ng-template #t let-date let-focused="focused">
@@ -10,6 +10,12 @@
         {{ date.day }}
       </span>
     </ng-template>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <input type="number" [(ngModel)]="monthSelection">
   </div>
 </div>
 

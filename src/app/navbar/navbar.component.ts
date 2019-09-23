@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  showNavbar: boolean = false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  toggleNavbar() {
+    this.showNavbar = !this.showNavbar;
   }
 
 }

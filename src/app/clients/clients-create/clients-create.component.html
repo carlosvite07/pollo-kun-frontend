@@ -1,52 +1,54 @@
-<div class="row mb-2">
-    <div class="col-3">
-        <input [(ngModel)]="clientAlias" type="text" class="form-control" placeholder="Alias de Cliente (Opcional)">
+<div class="container">
+    <div class="row mb-2">
+        <div class="col-12 col-md-4 col-lg-3">
+            <input [(ngModel)]="clientAlias" type="text" class="form-control" placeholder="Alias de Cliente (Opcional)">
+        </div>
+        <div class="col-12 col-md-8 text-center mt-2 text-md-left col-lg-9 mt-md-0">
+            <button (click)="create()" type="button" class="btn btn-success">Crear un Cliente</button>
+        </div>
     </div>
-    <div class="col-9">
-        <button (click)="create()" type="button" class="btn btn-success">Crear un Cliente</button>
+    
+    <div class="row justify-content-center mb-3" *ngIf="allClients.length > 0">
+        <div class="col-12 order-2 order-lg-1 col-lg">
+            <ngb-tabset *ngIf="selectedClient">
+                <ngb-tab title="Consolas">
+                    <ng-template ngbTabContent>
+                        <app-consoles-record [client]="selectedClient"></app-consoles-record>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Dulces">
+                    <ng-template ngbTabContent>
+                        <app-candie-create [client]="selectedClient"></app-candie-create>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Computadora">
+                    <ng-template ngbTabContent>
+                        <app-computer-create [client]="selectedClient"></app-computer-create>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Trabajos e Impresiones">
+                    <ng-template ngbTabContent>
+                        <app-work-create [client]="selectedClient"></app-work-create>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Papelería">
+                    <ng-template ngbTabContent>
+                        <app-article-create [client]="selectedClient"></app-article-create>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+        <div class="col-12 order-1 mb-2 col-md-6 col-lg-3 order-lg-2 text-center">
+            <label><strong>Seleccionar Cliente</strong></label>
+            <select [(ngModel)]="selectedClient" class="custom-select">
+                <option *ngFor="let client of allClients" [ngValue]="client">Cliente {{client.counter +' '+client.alias}}</option>
+            </select>
+        </div>
     </div>
-</div>
-
-<div class="row mb-3" *ngIf="allClients.length > 0">
-    <div class="col">
-        <ngb-tabset *ngIf="selectedClient">
-            <ngb-tab title="Consolas">
-                <ng-template ngbTabContent>
-                    <app-consoles-record [client]="selectedClient"></app-consoles-record>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Dulces">
-                <ng-template ngbTabContent>
-                    <app-candie-create [client]="selectedClient"></app-candie-create>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Computadora">
-                <ng-template ngbTabContent>
-                    <app-computer-create [client]="selectedClient"></app-computer-create>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Trabajos e Impresiones">
-                <ng-template ngbTabContent>
-                    <app-work-create [client]="selectedClient"></app-work-create>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab title="Papelería">
-                <ng-template ngbTabContent>
-                    <app-article-create [client]="selectedClient"></app-article-create>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
-    <div class="col-3 text-center">
-        <label><strong>Seleccionar Cliente</strong></label>
-        <select [(ngModel)]="selectedClient" class="custom-select">
-            <option *ngFor="let client of allClients" [ngValue]="client">Cliente {{client.counter +' '+client.alias}}</option>
-        </select>
-    </div>
-</div>
-
-<div class="row mb-3" *ngFor="let client of allClients;">
-    <div class="col">
-        <app-clients-show [client]="client"></app-clients-show>
+    
+    <div class="row mb-3" *ngFor="let client of allClients;">
+        <div class="col">
+            <app-clients-show [client]="client"></app-clients-show>
+        </div>
     </div>
 </div>

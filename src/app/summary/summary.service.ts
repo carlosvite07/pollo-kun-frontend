@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class SummaryService {
+  monthSelection : number = 1;
 
   constructor(private firestore: AngularFirestore) { }
 

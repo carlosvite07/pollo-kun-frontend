@@ -170,12 +170,12 @@ export class SummaryComponent implements OnInit {
       this.computersTotal += computer.price;
       computer.startDate = computer.startDate.toDate();
       computer.endDate = computer.endDate.toDate();
-      this.totalComputersMinutes += computer.hours * 60;
+      this.totalComputersMinutes += (computer.hours * 60);
       this.totalComputersMinutes += computer.minutes;
-      this.totalComputersHours = Math.floor(this.totalComputersMinutes / 60);
-      this.totalComputersMinutes -= (this.totalComputersHours * 60);
       return computer as CandiePurchase;
     });
+    this.totalComputersHours = Math.floor(this.totalComputersMinutes / 60);
+    this.totalComputersMinutes -= (this.totalComputersHours * 60);
   }
 
   showCandiesPurchases(candiesPurchases) {

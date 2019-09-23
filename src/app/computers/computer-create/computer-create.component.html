@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Computadora</strong></label>
         <select [(ngModel)]="selectedComputer" class="custom-select"  (change)="onChangeSelection($event)">
             <option *ngFor="let computer of allComputers" [ngValue]="computer">{{computer.name}}</option>
         </select>
         <div *ngIf="errorComputer" class="text-danger">Selecciona una computadora</div>
     </div>
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Acciones</strong></label><br>
         <button (click)="makeARecord()" type="button" class="btn btn-success">Registrar Tiempo</button>
     </div>

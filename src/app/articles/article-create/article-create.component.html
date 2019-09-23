@@ -1,28 +1,28 @@
 <div class="row">
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Artículo</strong></label>
         <select [(ngModel)]="selectedArticle" class="custom-select" (change)="onChangeSelection($event)">
             <option *ngFor="let article of allArticles" [ngValue]="article">{{article.name}}</option>
         </select>
         <div *ngIf="errorArticle" class="text-danger">Selecciona un artículo</div>
     </div>
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Precio</strong></label>
         <input [(ngModel)]="selectedPrice" type="number" class="form-control" (ngModelChange)="onChangeQuantity($event)"
             disabled />
     </div>
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Cantidad</strong></label>
         <input [(ngModel)]="selectedQuantity" type="number" class="form-control"
             (ngModelChange)="onChangeQuantity($event)" />
         <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
     </div>
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Existencia</strong></label>
         <input [ngModel]="selectedArticle.stock" type="number" class="form-control" disabled *ngIf="selectedArticle"/>
         <input type="number" class="form-control" disabled *ngIf="!selectedArticle"/>
     </div>
-    <div class="col text-center">
+    <div class="col-12 col-md text-center">
         <label><strong>Acciones</strong></label><br>
         <button (click)="articlePurchase()" type="button" class="btn btn-sm btn-success">Registrar Compra</button>
     </div>
