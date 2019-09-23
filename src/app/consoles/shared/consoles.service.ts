@@ -75,7 +75,6 @@ export class ConsolesService {
 
   endConsoleRecord(client: Client, consoleIndex: number) {
     client.consolesRecords[consoleIndex].finished = true;
-    client.consolesRecords[consoleIndex].paid = false;
     if (client.consolesRecords[consoleIndex].notification) {
       client.consolesRecords[consoleIndex].notification.readed = true;
     }

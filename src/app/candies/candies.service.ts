@@ -15,12 +15,8 @@ export class CandiesService {
     private clientsService: ClientsService
   ) { }
 
-  getCandies(): any {
-    return this.firestore.collection('candies', ref => ref.where('stock', '>', 0)).snapshotChanges();
-  }
-
   getAllCandies() {
-    return this.firestore.collection('candies').snapshotChanges();
+    return this.firestore.collection('candies', ref => ref.orderBy('name')).snapshotChanges();
   }
 
   create(candieModel: Candie): any {

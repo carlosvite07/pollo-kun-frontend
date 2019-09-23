@@ -4,7 +4,6 @@ import { Client } from '../clients/client.model';
 import { ConsolesService } from '../consoles/shared/consoles.service';
 import { Notification } from '../notifications/notification.model';
 import { timer } from 'rxjs';
-import { HOST_ATTR } from '@angular/compiler';
 
 @Component({
   selector: 'app-notifications',
@@ -12,7 +11,7 @@ import { HOST_ATTR } from '@angular/compiler';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  minutesNotification: number = 3;
+  minutesNotification: number = 1;
   notifications: any[] = [];
   clients;
   constructor(
@@ -29,7 +28,7 @@ export class NotificationsComponent implements OnInit {
     });
 
     const source = timer(1000, 60 * 1000);
-    const subscribe = source.subscribe(() => {
+    source.subscribe(() => {
       let now = new Date();
       if (this.clients) {
         this.isConsoleRecordOnTime(this.clients, now);

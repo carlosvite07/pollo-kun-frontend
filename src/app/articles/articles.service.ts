@@ -15,12 +15,8 @@ export class ArticlesService {
     private clientsService: ClientsService
   ) { }
 
-  getArticles(): any {
-    return this.firestore.collection('articles', ref => ref.where('stock', '>', 0)).snapshotChanges();
-  }
-
   getAllArticles(): any {
-    return this.firestore.collection('articles').snapshotChanges();
+    return this.firestore.collection('articles', ref => ref.orderBy('name')).snapshotChanges();
   }
 
   create(articleModel: Article): any {

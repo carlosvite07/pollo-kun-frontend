@@ -1,10 +1,10 @@
 <div class="container mt-3">
 
     <div class="row">
-        <div class="col-3">
+        <div class="col-5">
             <div class="d-flex align-items-center">
                 <h5 class="m-0">
-                    Cliente {{client.counter}} (Debe {{debt | currency}})
+                    Cliente {{client.counter+' '+client.alias}} (Debe {{debt | currency}})
                 </h5>
             </div>
         </div>

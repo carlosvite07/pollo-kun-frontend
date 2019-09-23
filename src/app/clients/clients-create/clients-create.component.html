@@ -1,5 +1,8 @@
 <div class="row mb-2">
-    <div class="col">
+    <div class="col-3">
+        <input [(ngModel)]="clientAlias" type="text" class="form-control" placeholder="Alias de Cliente (Opcional)">
+    </div>
+    <div class="col-9">
         <button (click)="create()" type="button" class="btn btn-success">Crear un Cliente</button>
     </div>
 </div>
@@ -37,7 +40,7 @@
     <div class="col-3 text-center">
         <label><strong>Seleccionar Cliente</strong></label>
         <select [(ngModel)]="selectedClient" class="custom-select">
-            <option *ngFor="let client of allClients" [ngValue]="client">Cliente {{client.counter}}</option>
+            <option *ngFor="let client of allClients" [ngValue]="client">Cliente {{client.counter +' '+client.alias}}</option>
         </select>
     </div>
 </div>

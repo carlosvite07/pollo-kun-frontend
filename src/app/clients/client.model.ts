@@ -6,6 +6,7 @@ import { WorkRecord } from '../works/work-record.model';
 
 export class Client {
     id: string;
+    alias: string;
     counter: number;
     startDate: Date;
     endDate: Date;

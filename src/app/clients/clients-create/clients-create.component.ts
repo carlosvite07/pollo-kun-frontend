@@ -16,7 +16,7 @@ export class ClientsComponent implements OnInit {
   allClients: Client[] = [];
   clientsCounter: number = 0;
   selectedClient: Client;
-
+  clientAlias: '';
 
   constructor(
     private clientsService: ClientsService,
@@ -133,14 +133,19 @@ export class ClientsComponent implements OnInit {
   }
 
   create(): void {
+    if(this.clientAlias === undefined){
+      this.clientAlias = '';
+    }
     let now = new Date();
     let newClient = {
+      alias: this.clientAlias,
       counter: ++this.clientsCounter,
       startDate: now,
       finished: false
     } as Client;
     this.clientsService.create(newClient);
     this.selectedClient = undefined;
+    this.clientAlias = '';
   }
 
 }

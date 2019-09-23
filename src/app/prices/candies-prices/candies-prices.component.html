@@ -33,32 +33,6 @@
         <div *ngIf="errorStock" class="text-danger">Stock Incorrecto</div>
     </div>
     <div class="col">
-        <label><strong>¿Tiene 2 precios?</strong></label><br>
-        <input type="checkbox" [(ngModel)]="twoPrices" [ngModelOptions]="{standalone: true}" class="" />
-    </div>
-    <div class="col-5" *ngIf="twoPrices">
-        <div class="row">
-            <div class="col">
-                <label><strong>Precio 2</strong></label>
-                <input [(ngModel)]="price2" type="number" class="form-control"
-                    (ngModelChange)="onChangePrice2($event)" />
-                <div *ngIf="errorPrice2" class="text-danger">Precio Incorrecto</div>
-            </div>
-            <div class="col">
-                <label><strong>Cantidad</strong></label>
-                <input [(ngModel)]="quantity" type="number" class="form-control"
-                    (ngModelChange)="onChangeQuantity($event)" />
-                <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecto</div>
-            </div>
-            <div class="col">
-                <label><strong>Cantidad 2</strong></label>
-                <input [(ngModel)]="quantity2" type="number" class="form-control"
-                    (ngModelChange)="onChangeQuantity2($event)" />
-                <div *ngIf="errorQuantity2" class="text-danger">Cantidad Incorrecto</div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
         <label><strong>Acciones</strong></label><br>
         <button (click)="create()" type="button" class="btn btn-success">Crear Nuevo</button>
     </div>
@@ -80,28 +54,6 @@
         <label><strong>Stock</strong></label>
         <input [(ngModel)]="stock" type="number" class="form-control" (ngModelChange)="onChangeStock($event)" />
         <div *ngIf="errorStock" class="text-danger">Stock Incorrecto</div>
-    </div>
-    <div class="col-4" *ngIf="twoPrices">
-        <div class="row">
-            <div class="col">
-                <label><strong>Precio 2</strong></label>
-                <input [(ngModel)]="price2" type="number" class="form-control"
-                    (ngModelChange)="onChangePrice2($event)" />
-                <div *ngIf="errorPrice2" class="text-danger">Precio Incorrecto</div>
-            </div>
-            <div class="col">
-                <label><strong>Cantidad</strong></label>
-                <input [(ngModel)]="quantity" type="number" class="form-control"
-                    (ngModelChange)="onChangeQuantity($event)" />
-                <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecto</div>
-            </div>
-            <div class="col">
-                <label><strong>Cantidad 2</strong></label>
-                <input [(ngModel)]="quantity2" type="number" class="form-control"
-                    (ngModelChange)="onChangeQuantity2($event)" />
-                <div *ngIf="errorQuantity2" class="text-danger">Cantidad Incorrecto</div>
-            </div>
-        </div>
     </div>
     <div class="col-3">
         <label><strong>Acciones</strong></label><br>

@@ -25,7 +25,7 @@ export class CandieCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.candiesService.getCandies().subscribe(data => {
+    this.candiesService.getAllCandies().subscribe(data => {
       this.allCandies = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -38,6 +38,7 @@ export class CandieCreateComponent implements OnInit {
   onChangeSelection(): void {
     this.selectedPrice = this.selectedCandie.price;
     this.errorCandie = false;
+    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedCandie.stock < this.selectedQuantity;
   }
 
   onChangeQuantity(): void {

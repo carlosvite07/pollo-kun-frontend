@@ -24,7 +24,7 @@ export class ArticleCreateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.articlesService.getArticles().subscribe(data => {
+    this.articlesService.getAllArticles().subscribe(data => {
       this.allArticles = data.map(e => {
         return {
           id: e.payload.doc.id,
@@ -37,6 +37,7 @@ export class ArticleCreateComponent implements OnInit {
   onChangeSelection(): void {
     this.selectedPrice = this.selectedArticle.price;
     this.errorArticle = false;
+    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
   }
 
   onChangeQuantity(): void {
