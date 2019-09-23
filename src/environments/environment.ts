@@ -14,17 +14,17 @@
 //   }
 // };
 
- export const environment = {
-   production: false,
-   firebase: {
-     apiKey: "AIzaSyDOfNFhiBegPNMHldBij5O_kyyVRUlpkFA",
-     authDomain: "pollo-kun.firebaseapp.com",
-     databaseURL: "https://pollo-kun.firebaseio.com",
-     projectId: "pollo-kun",
-     storageBucket: "pollo-kun.appspot.com",
-     messagingSenderId: "381404084132"
-   },
- };
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyDOfNFhiBegPNMHldBij5O_kyyVRUlpkFA",
+    authDomain: "pollo-kun.firebaseapp.com",
+    databaseURL: "https://pollo-kun.firebaseio.com",
+    projectId: "pollo-kun",
+    storageBucket: "pollo-kun.appspot.com",
+    messagingSenderId: "381404084132"
+  },
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
