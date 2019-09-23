@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col text-center">
-    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="monthSelection" [dayTemplate]="t" outsideDays="hidden">
+    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="monthSelection" [dayTemplate]="t"
+      outsideDays="hidden">
     </ngb-datepicker>
 
     <ng-template #t let-date let-focused="focused">
@@ -14,8 +15,9 @@
 </div>
 
 <div class="row">
-  <div class="col">
-    <input type="number" [(ngModel)]="monthSelection">
+  <div class="col-6">
+    <strong>Número de meses a mostrar </strong>
+    <input type="number" [(ngModel)]="monthSelection" class="form-control">
   </div>
 </div>
 
@@ -159,7 +161,7 @@
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center" *ngFor="let candie of allCandies">
+    <div class="row text-center" *ngFor="let candie of allCandiesPurchases">
       <div class="col">
         {{candie.candie.name}}
       </div>
@@ -200,7 +202,7 @@
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center" *ngFor="let work of allWorks">
+    <div class="row text-center" *ngFor="let work of allWorksRecords">
       <div class="col">
         {{work.name}}
       </div>
@@ -241,7 +243,7 @@
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center" *ngFor="let article of allArticles">
+    <div class="row text-center" *ngFor="let article of allArticlesPurchases">
       <div class="col">
         {{article.name}}
       </div>
@@ -274,5 +276,11 @@
   </div>
   <div class="col">
     <h3>{{recordsTotal + candiesTotal + computersTotal + worksTotal + articlesTotal | currency}}</h3>
+  </div>
+</div>
+
+<div class="row m-3 text-right">
+  <div class="col">
+    <button (click)="toExcel()" type="button" class="btn btn-success">Exportar Excel</button>
   </div>
 </div>
