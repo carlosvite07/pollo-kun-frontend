@@ -68,7 +68,6 @@ export class ClientsComponent implements OnInit {
           });
           this.computersService.endAllComputersRecords(client as Client);
         }
-        
         this.clientsService.finishClient(client as Client);
       })
     });
@@ -77,7 +76,7 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getClients(startDate).subscribe(todayClients => {
       this.allClients = [];
       this.clientsCounter = todayClients.length;
-      let selectedClient = false;
+      this.selectedClient = undefined;
       todayClients.forEach(todayClient => {
         let clientId = todayClient.payload.doc.id;
         let clientData = todayClient.payload.doc.data() as any;
@@ -120,8 +119,7 @@ export class ClientsComponent implements OnInit {
           });
         }
         if (!client.finished) {
-          if (!selectedClient) {
-            selectedClient = true;
+          if (client.selected) {
             this.selectedClient = client;
           }
           this.allClients.push(client);
@@ -133,19 +131,24 @@ export class ClientsComponent implements OnInit {
   }
 
   create(): void {
-    if(this.clientAlias === undefined){
+    if (this.clientAlias === undefined) {
       this.clientAlias = '';
     }
     let now = new Date();
+    this.clientsService.setSelectedClient(this.allClients,null);
     let newClient = {
       alias: this.clientAlias,
       counter: ++this.clientsCounter,
       startDate: now,
-      finished: false
+      finished: false,
+      selected: true
     } as Client;
     this.clientsService.create(newClient);
-    this.selectedClient = undefined;
     this.clientAlias = '';
+  }
+
+  onChangeClient(): void {
+    this.clientsService.setSelectedClient(this.allClients,this.selectedClient.id);
   }
 
 }

@@ -16,4 +16,5 @@ export class Client {
     consolesRecords: ConsoleRecord[];
     articlesPurchases: ArticlePurchase[];
     worksRecords: WorkRecord[];
+    selected: boolean;
 }

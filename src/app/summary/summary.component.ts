@@ -98,7 +98,7 @@ export class SummaryComponent implements OnInit {
         return {
           "Nombre": e.payload.doc.data()['name'],
           "Precio": e.payload.doc.data()['price'],
-          "Stock": null,
+          "Stock": e.payload.doc.data()['stock'],
           "Vendidos": null,
           "Tiempo": null,
           "Total": null

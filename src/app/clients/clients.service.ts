@@ -78,6 +78,7 @@ export class ClientsService {
 
   endClient(client: Client): any {
     client.finished = true;
+    client.selected = false;
     this.update(client);
   }
 
@@ -88,6 +89,17 @@ export class ClientsService {
       debt: debt
     }
     this.clientEnd.next(object);
+  }
+
+  setSelectedClient(clients: Client[], idSelectedClient:string){
+    clients.forEach(client => {
+      if(client.id === idSelectedClient){
+        client.selected = true;
+      }else{
+        client.selected = false;
+      }
+      this.update(client);
+    });
   }
 
 }
