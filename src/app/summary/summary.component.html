@@ -150,47 +150,6 @@
 
     <div class="row ">
       <div class="col">
-        <h3 class="p-1">Dulces</h3>
-      </div>
-    </div>
-
-    <div class="row text-center">
-      <div class="col"><strong>Dulce</strong></div>
-      <div class="col"><strong>Cantidad</strong></div>
-      <div class="col"><strong>Fecha de compra</strong></div>
-      <div class="col"><strong>Precio</strong></div>
-    </div>
-
-    <div class="row text-center" *ngFor="let candie of allCandiesPurchases">
-      <div class="col">
-        {{candie.candie.name}}
-      </div>
-      <div class="col">
-        {{candie.quantity}}
-      </div>
-      <div class="col">
-        {{candie.date | date:"h:mm a d/M/yy"}}<br>
-      </div>
-      <div class="col">
-        {{candie.price | currency}}
-      </div>
-    </div>
-
-    <div class="row text-center">
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{candiesTotal | currency}}</strong></div>
-    </div>
-
-  </div>
-</div>
-
-<div class="row mt-3">
-  <div class="col">
-
-    <div class="row ">
-      <div class="col">
         <h3 class="p-1">Trabajos</h3>
       </div>
     </div>
@@ -222,6 +181,64 @@
       <div class="col"></div>
       <div class="col cyan"><strong>SubTotal</strong></div>
       <div class="col cyan"><strong>{{worksTotal | currency}}</strong></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Consolas, Computadoras, Trabajos</h3>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>Sub Total</strong></div>
+      <div class="col cyan"><strong>{{recordsTotal + computersTotal +  worksTotal | currency}}</strong></div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+
+    <div class="row ">
+      <div class="col">
+        <h3 class="p-1">Dulces</h3>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"><strong>Dulce</strong></div>
+      <div class="col"><strong>Cantidad</strong></div>
+      <div class="col"><strong>Fecha de compra</strong></div>
+      <div class="col"><strong>Precio</strong></div>
+    </div>
+
+    <div class="row text-center" *ngFor="let candie of allCandiesPurchases">
+      <div class="col">
+        {{candie.candie.name}}
+      </div>
+      <div class="col">
+        {{candie.quantity}}
+      </div>
+      <div class="col">
+        {{candie.date | date:"h:mm a d/M/yy"}}<br>
+      </div>
+      <div class="col">
+        {{candie.price | currency}}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>SubTotal</strong></div>
+      <div class="col cyan"><strong>{{candiesTotal | currency}}</strong></div>
     </div>
 
   </div>
