@@ -63,7 +63,7 @@ export class ArticlesPricesComponent implements OnInit {
       let newArticle = {
         name: this.name,
         price: this.price,
-        stock: this.price
+        stock: this.stock
       } as Article;
       this.articlesService.create(newArticle);
       this.clear();
