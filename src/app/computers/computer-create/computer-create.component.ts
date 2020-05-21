@@ -48,6 +48,7 @@ export class ComputerCreateComponent implements OnInit {
     }
     this.client.computersRecords.unshift(newComputerRecord);
     this.computersService.createRecord(this.selectedComputer.id, this.client);
+    this.selectedComputer = undefined;
   }
 
 }

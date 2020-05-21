@@ -2,6 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// Testing
 // export const environment = {
 //   production: false,
 //   firebase: {
@@ -14,6 +15,7 @@
 //   }
 // };
 
+// Production
 export const environment = {
   production: false,
   firebase: {
