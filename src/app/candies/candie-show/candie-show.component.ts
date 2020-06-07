@@ -21,9 +21,12 @@ export class CandieShowComponent implements OnInit {
   ngOnInit() {
     this.candiesService.getAllCandies().subscribe(data => {
       this.allCandies = data.map(e => {
+        const data = e.payload.doc.data() as Candie;
         return {
           id: e.payload.doc.id,
-          ...e.payload.doc.data()
+          name: data.name,
+          price: data.price,
+          history: data.history
         } as Candie;
       });
     });
