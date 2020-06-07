@@ -16,11 +16,6 @@
                         <app-consoles-record [client]="selectedClient"></app-consoles-record>
                     </ng-template>
                 </ngb-tab>
-                <ngb-tab title="Dulces">
-                    <ng-template ngbTabContent>
-                        <app-candie-create [client]="selectedClient"></app-candie-create>
-                    </ng-template>
-                </ngb-tab>
                 <ngb-tab title="Computadora">
                     <ng-template ngbTabContent>
                         <app-computer-create [client]="selectedClient"></app-computer-create>
@@ -30,6 +25,16 @@
                     <ng-template ngbTabContent>
                         <app-work-create [client]="selectedClient"></app-work-create>
                     </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Dulces">
+                  <ng-template ngbTabContent>
+                      <app-candie-create [client]="selectedClient"></app-candie-create>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Electrónicos">
+                  <ng-template ngbTabContent>
+                      <app-electronic-create [client]="selectedClient"></app-electronic-create>
+                  </ng-template>
                 </ngb-tab>
                 <ngb-tab title="Papelería">
                     <ng-template ngbTabContent>

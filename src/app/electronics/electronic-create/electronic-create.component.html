@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12 col-md text-center">
+      <label><strong>Electrónico</strong></label>
+      <select [(ngModel)]="selectedElectronic" class="custom-select" (change)="onChangeSelection($event)">
+          <option *ngFor="let electronic of allElectronics" [ngValue]="electronic">{{electronic.name}}</option>
+      </select>
+      <div *ngIf="errorElectronic" class="text-danger">Selecciona un dulce</div>
+  </div>
+  <div class="col-12 col-md text-center">
+      <label><strong>Precio</strong></label>
+      <input [(ngModel)]="selectedPrice" type="number" class="form-control" (ngModelChange)="onChangeQuantity($event)"
+      disabled />
+  </div>
+  <div class="col-12 col-md text-center">
+      <label><strong>Cantidad</strong></label>
+      <input [(ngModel)]="selectedQuantity" type="number" class="form-control"
+          (ngModelChange)="onChangeQuantity($event)" />
+      <div *ngIf="errorQuantity" class="text-danger">Cantidad Incorrecta</div>
+  </div>
+  <div class="col-12 col-md text-center">
+      <label><strong>Existencia</strong></label>
+      <input [ngModel]="stock" type="number" class="form-control" disabled *ngIf="selectedElectronic" />
+      <input type="number" class="form-control" disabled *ngIf="!selectedElectronic" />
+  </div>
+  <div class="col-12 col-md text-center">
+      <label><strong>Acciones</strong></label><br>
+      <button (click)="electronicPurchaseConfirm()" type="button" class="btn btn-success">Registrar Compra</button>
+  </div>
+</div>

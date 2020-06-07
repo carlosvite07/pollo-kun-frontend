@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ClientsService } from '../../clients/clients.service';
-import { CandiesService } from '../../candies/candies.service';
+import { CandiesService } from '../candies.service';
 import { Candie } from '../candie.model';
 
 @Component({

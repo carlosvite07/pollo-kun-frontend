@@ -6,6 +6,7 @@ import { CandiesService } from '../../candies/candies.service';
 import { ConsolesService } from '../../consoles/shared/consoles.service';
 import { ComputersService } from '../../computers/computers.service';
 import { WorksService } from '../../works/works.service';
+import { ElectronicsService } from '../../electronics/electronics.service';
 
 @Component({
   selector: 'app-clients-create',
@@ -25,7 +26,8 @@ export class ClientsComponent implements OnInit {
     private consolesService: ConsolesService,
     private computersService: ComputersService,
     private worksService: WorksService,
-  ) { }
+    private electronicsService: ElectronicsService,
+    ) { }
 
   ngOnInit() {
     let now = new Date();
@@ -47,6 +49,9 @@ export class ClientsComponent implements OnInit {
         client.startDate = clientData.startDate.toDate();
         if (client.articlesPurchases && client.articlesPurchases.length > 0) {
           this.articlesService.endAllArticlesPurchases(client as Client);
+        }
+        if (client.electronicsPurchases && client.electronicsPurchases.length > 0) {
+          this.electronicsService.endAllElectronicsPurchases(client as Client);
         }
         if (client.candiesPurchases && client.candiesPurchases.length > 0) {
           this.candiesService.endAllCandiesPurchases(client as Client);
@@ -114,8 +119,13 @@ export class ClientsComponent implements OnInit {
           });
         }
         if (client.articlesPurchases) {
-          client.articlesPurchases.map((workRecord, index) => {
-            workRecord.date = clientData.articlesPurchases[index].date.toDate();
+          client.articlesPurchases.map((articleRecord, index) => {
+            articleRecord.date = clientData.articlesPurchases[index].date.toDate();
+          });
+        }
+        if (client.electronicsPurchases) {
+          client.electronicsPurchases.map((electronicRecord, index) => {
+            electronicRecord.date = clientData.electronicsPurchases[index].date.toDate();
           });
         }
         if (!client.finished) {

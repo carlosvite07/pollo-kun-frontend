@@ -1,50 +1,59 @@
 <div class="container mt-3">
-
-    <div class="row">
-        <div class="col-12 col-md-4 text-center">
-            <h4>
-                <strong>
-                    Cliente {{client.counter+' '+client.alias}} (Debe {{debt | currency}})
-                </strong> 
-            </h4>
-        </div>
-        <div class="col-12 mt-1 text-center col-md-3 mt-lg-0">
-            <button type="button" class="btn btn-sm btn-danger" (click)="endClient()">
-                Terminar Cliente
-            </button>
-        </div>
-        <div class="col text-center text-danger" *ngIf="errorComputers">
-            <strong>Termina todos los registros de las computadoras de este Cliente</strong>
-        </div>
+  <div class="row">
+    <div class="col-12 col-md-4 text-center">
+      <h4>
+        <strong>
+          Cliente {{ client.counter + " " + client.alias }} (Debe
+          {{ debt | currency }})
+        </strong>
+      </h4>
     </div>
-
-    <div class="row" *ngIf="client.consolesRecords">
-        <div class="col">
-            <app-consoles-show [client]="client"></app-consoles-show>
-        </div>
+    <div class="col-12 mt-1 text-center col-md-3 mt-lg-0">
+      <button type="button" class="btn btn-sm btn-danger" (click)="endClient()">
+        Terminar Cliente
+      </button>
     </div>
-
-    <div class="row" *ngIf="client.candiesPurchases">
-        <div class="col">
-            <app-candie-show [client]="client"></app-candie-show>
-        </div>
+    <div class="col text-center text-danger" *ngIf="errorComputers">
+      <strong
+        >Termina todos los registros de las computadoras de este Cliente</strong
+      >
     </div>
+  </div>
 
-    <div class="row" *ngIf="client.computersRecords">
-        <div class="col">
-            <app-computer-show [client]="client"></app-computer-show>
-        </div>
+  <div class="row" *ngIf="client.consolesRecords">
+    <div class="col">
+      <app-consoles-show [client]="client"></app-consoles-show>
     </div>
+  </div>
 
-    <div class="row" *ngIf="client.worksRecords">
-        <div class="col">
-            <app-work-show [client]="client"></app-work-show>
-        </div>
+  <div class="row" *ngIf="client.computersRecords">
+    <div class="col">
+      <app-computer-show [client]="client"></app-computer-show>
     </div>
+  </div>
 
-    <div class="row" *ngIf="client.articlesPurchases">
-        <div class="col">
-            <app-article-show [client]="client"></app-article-show>
-        </div>
+  <div class="row" *ngIf="client.worksRecords">
+    <div class="col">
+      <app-work-show [client]="client"></app-work-show>
     </div>
+  </div>
+
+  <div class="row" *ngIf="client.candiesPurchases">
+    <div class="col">
+      <app-candie-show [client]="client"></app-candie-show>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="client.articlesPurchases">
+    <div class="col">
+      <app-article-show [client]="client"></app-article-show>
+    </div>
+  </div>
+  
+  <div class="row" *ngIf="client.electronicsPurchases">
+    <div class="col">
+      <app-electronic-show [client]="client"></app-electronic-show>
+    </div>
+  </div>
+
 </div>

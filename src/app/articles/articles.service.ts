@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ArticlePurchase } from '../articles/article-purchase.model';
-import { Article } from '../articles/article.model';
+import { ArticlePurchase } from './article-purchase.model';
+import { Article } from './article.model';
 import { Client } from '../clients/client.model';
 import { ClientsService } from '../clients/clients.service';
 
