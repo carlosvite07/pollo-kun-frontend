@@ -35,12 +35,25 @@ export class CandieShowComponent implements OnInit {
   }
 
   remove(index: number) {
-    let selectedCandie = this.client.candiesPurchases[index].candie;
-    let quantity = this.client.candiesPurchases[index].quantity;
+    const selectedCandie = this.client.candiesPurchases[index].candie;
+    const quantity = this.client.candiesPurchases[index].quantity;
+
+    const unitary = this.client.candiesPurchases[index].unitary;
     
     this.allCandies.forEach(candie => {
       if (candie.id === selectedCandie.id) {
-        this.candiesService.updateStock(candie.id, candie.stock + quantity);
+        let history = candie.history;
+        const updatedHistory = history.map(element => {
+          if(element.unitary === unitary){
+            return {
+              stock: element.stock + quantity,
+              unitary: unitary
+            }
+          }else{
+            return element
+          }
+        });
+        this.candiesService.updateHistory(candie.id,updatedHistory);
       }
     });
 

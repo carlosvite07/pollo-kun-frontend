@@ -7,4 +7,6 @@ export class CandiePurchase {
     date: Date;
     quantity: number;
     paid: boolean;
+    profit: number;
+    unitary: number;
 }

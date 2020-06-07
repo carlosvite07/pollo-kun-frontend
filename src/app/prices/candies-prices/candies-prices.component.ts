@@ -13,10 +13,14 @@ export class CandiesPricesComponent implements OnInit {
   id: string;
   name: string = '';
   price: number = 0;
-  stock: number = 0;
+  history: Array<object> = [];
+  stock: number;
+  unitary: number;
   errorName: boolean = false;
   errorPrice: boolean = false;
   errorStock: boolean = false;
+  errorUnitary: boolean = false;
+  errorHistory: Array<object> = [];
 
   constructor(private candieService: CandiesService) { }
 
@@ -35,7 +39,7 @@ export class CandiesPricesComponent implements OnInit {
     this.id = this.selectedCandie.id;
     this.name = this.selectedCandie.name;
     this.price = this.selectedCandie.price;
-    this.stock = this.selectedCandie.stock;
+    this.history = this.selectedCandie.history;
     this.validation();
   }
 
@@ -44,6 +48,7 @@ export class CandiesPricesComponent implements OnInit {
     this.name = '';
     this.price = 0;
     this.stock = 0;
+    this.unitary = 0;
   }
 
   onChangeName(): void {
@@ -58,13 +63,33 @@ export class CandiesPricesComponent implements OnInit {
     this.errorStock = this.stock < 0 ? true : false;
   }
 
+  onChangeUnitary(): void {
+    this.errorUnitary = this.unitary <= 0 ? true : false;
+  }
+  
+  addHistory(){
+    this.selectedCandie.history.push({
+      stock: 0,
+      unitary: 0
+    });
+  }
+
+  removeHistory(index){
+    this.selectedCandie.history.splice(index,1);
+  }
+
   create(): void {
+    const history = {
+      stock: this.stock,
+      unitary: this.unitary,
+    };
     if(this.validation()){
       let newCandie = {
         name: this.name,
         price: this.price,
-        stock: this.stock
+        history: [history]
       } as Candie;
+      console.log(newCandie);
       this.candieService.create(newCandie);
       this.clear();
     }
@@ -74,7 +99,6 @@ export class CandiesPricesComponent implements OnInit {
     if(this.validation()){
       this.selectedCandie.name = this.name;
       this.selectedCandie.price = this.price;
-      this.selectedCandie.stock = this.stock;
       this.candieService.update(this.selectedCandie);
       this.clear();
     }
@@ -88,9 +112,28 @@ export class CandiesPricesComponent implements OnInit {
   validation(): boolean{
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorPrice = this.price <= 0 ? true : false;
-    this.errorStock = this.stock < 0 ? true : false;
-    if (this.errorName || this.errorPrice || this.errorStock) {
+    if (this.errorName || this.errorPrice) {
       return false;
+    }
+    if(this.selectedCandie){
+      const errorArr = {
+        stock: false,
+        unitary: false
+      };
+      this.selectedCandie.history.forEach((element,index) => {
+        errorArr.stock = element.stock < 0;
+        errorArr.unitary = element.unitary <= 0;
+        this.errorHistory[index] = errorArr;
+        if(element.stock < 0 || element.unitary <= 0){
+          return false;
+        }
+      });
+    }else{
+      this.errorStock = this.stock < 0 ? true : false;
+      this.errorUnitary = this.unitary <= 0 ? true : false;
+      if(this.errorStock || this.errorUnitary){
+        return false;
+      }
     }
     return true;
   }

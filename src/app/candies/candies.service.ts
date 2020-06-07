@@ -4,6 +4,7 @@ import { CandiePurchase } from './candie-purchase.model';
 import { Candie } from './candie.model';
 import { Client } from '../clients/client.model';
 import { ClientsService } from '../clients/clients.service';
+import { History } from '../history.model'
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class CandiesService {
   }
 
   create(candieModel: Candie): any {
+    console.log(candieModel);
     return this.firestore.collection('candies').add(candieModel);
   }
 
@@ -29,6 +31,10 @@ export class CandiesService {
 
   updateStock(articleId: string, stock: number) {
     this.firestore.doc('candies/' + articleId).update({ stock: stock });
+  }
+
+  updateHistory(articleId: string, history: Array<History>) {
+    this.firestore.doc('candies/' + articleId).update({ history: history });
   }
 
   delete(candieModel: Candie) {

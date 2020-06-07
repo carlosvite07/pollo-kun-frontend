@@ -11,6 +11,7 @@ import { InitialService } from '../shared/initial.service';
 import { CandiesService } from '../candies/candies.service';
 import { WorksService } from '../works/works.service';
 import { ArticlesService } from '../articles/articles.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-summary',
@@ -69,13 +70,18 @@ export class SummaryComponent implements OnInit {
 
     this.candiesService.getAllCandies().subscribe(data => {
       this.allCandies = data.map(e => {
+        let stock = 0;
+        e.payload.doc.data()['history'].forEach(element => {
+          stock += element.stock;
+        })
         return {
           "Nombre": e.payload.doc.data()['name'],
           "Precio": e.payload.doc.data()['price'],
-          "Stock": e.payload.doc.data()['stock'],
+          "Stock": stock,
           "Vendidos": null,
           "Tiempo": null,
           "Total": null,
+          "Ganancia": null
         }
       });
     });
@@ -88,7 +94,8 @@ export class SummaryComponent implements OnInit {
           "Stock": null,
           "Vendidos": null,
           "Tiempo": null,
-          "Total": null
+          "Total": null,
+          "Ganancia": null
         }
       });
     });
@@ -101,7 +108,8 @@ export class SummaryComponent implements OnInit {
           "Stock": e.payload.doc.data()['stock'],
           "Vendidos": null,
           "Tiempo": null,
-          "Total": null
+          "Total": null,
+          "Ganancia": null
         }
       });
     });
@@ -266,7 +274,8 @@ export class SummaryComponent implements OnInit {
       "Precio": null,
       "Stock": null,
       "Tiempo": this.threeSixtyHours,
-      "Total": this.threeSixtyTotal
+      "Total": this.threeSixtyTotal,
+      "Ganancia": null
     });
 
     this.exportableData.push({
@@ -275,7 +284,8 @@ export class SummaryComponent implements OnInit {
       "Precio": null,
       "Stock": null,
       "Tiempo": this.oneHours,
-      "Total": this.oneTotal
+      "Total": this.oneTotal,
+      "Ganancia": null
     });
 
     this.exportableData.push({
@@ -284,7 +294,8 @@ export class SummaryComponent implements OnInit {
       "Precio": null,
       "Stock": null,
       "Tiempo": this.totalComputersHours,
-      "Total": this.computersTotal
+      "Total": this.computersTotal,
+      "Ganancia": null
     });
 
     this.exportableData.push({
@@ -311,10 +322,26 @@ export class SummaryComponent implements OnInit {
       this.exportableData.push(article)
     });
 
-    this.allCandiesPurchases.forEach(candie => {
+    let lastCandieIndex = 4;
+    this.allCandiesPurchases.forEach((candie, candieIndex) => {
       let index = this.exportableData.findIndex((element) => element["Nombre"] == candie.candie.name);
-      this.exportableData[index]["Vendidos"] += candie.quantity;
-      this.exportableData[index]["Total"] += candie.price;
+      if(index !== -1){       
+        lastCandieIndex = index + 1;
+        this.exportableData[index]["Vendidos"] += candie.quantity;
+        this.exportableData[index]["Total"] += candie.price;
+        this.exportableData[index]["Ganancia"] += candie.profit;
+      }else{
+        const candiObject = {
+          "Nombre": candie.candie.name,
+          "Precio": candie.candie.price,
+          "Stock": 0,
+          "Tiempo": null,
+          "Total": candie.price,
+          "Vendidos": candie.quantity,
+          "Ganancia": candie.profit
+        };
+        this.exportableData.splice(lastCandieIndex, 0, candiObject);
+      }
     });
 
     this.allWorksRecords.forEach(work => {
@@ -326,6 +353,7 @@ export class SummaryComponent implements OnInit {
       } else {
         this.exportableData[index]["Vendidos"] += work.quantity;
         this.exportableData[index]["Total"] += work.price;
+        this.exportableData[index]["Ganancia"] = null;
       }
     });
 
@@ -333,6 +361,7 @@ export class SummaryComponent implements OnInit {
       let index = this.exportableData.findIndex((element) => element["Nombre"] == article.article.name);
       this.exportableData[index]["Vendidos"] += article.quantity;
       this.exportableData[index]["Total"] += article.price;
+      this.exportableData[index]["Ganancia"] = null;
     });
 
     this.initialService.exportAsExcelFile(this.exportableData, 'sample');
