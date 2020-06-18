@@ -26,6 +26,14 @@ export class ClientsShowComponent implements OnInit {
         }
       });
     }
+    //Electronics
+    if (this.client.electronicsPurchases && this.client.electronicsPurchases.length > 0) {
+      this.client.electronicsPurchases.forEach(electronicPurchase => {
+        if (!electronicPurchase.paid) {
+          this.debt += electronicPurchase.price;
+        }
+      });
+    }
     //Consoles
     if (this.client.consolesRecords) {
       this.client.consolesRecords.forEach(consoleRecord => {

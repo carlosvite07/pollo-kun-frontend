@@ -262,7 +262,7 @@
 
     <div class="row text-center" *ngFor="let article of allArticlesPurchases">
       <div class="col">
-        {{article.name}}
+        {{article.article.name}}
       </div>
       <div class="col">
         {{article.quantity}}
@@ -304,7 +304,7 @@
 
     <div class="row text-center" *ngFor="let electronic of allElectronicsPurchases">
       <div class="col">
-        {{electronic.name}}
+        {{electronic.electronic.name}}
       </div>
       <div class="col">
         {{electronic.quantity}}

@@ -19,11 +19,11 @@
     </div>
     <div class="col-12 col-md text-center">
         <label><strong>Existencia</strong></label>
-        <input [ngModel]="selectedArticle.stock" type="number" class="form-control" disabled *ngIf="selectedArticle"/>
+        <input [ngModel]="stock" type="number" class="form-control" disabled *ngIf="selectedArticle"/>
         <input type="number" class="form-control" disabled *ngIf="!selectedArticle"/>
     </div>
     <div class="col-12 col-md text-center">
         <label><strong>Acciones</strong></label><br>
-        <button (click)="articlePurchase()" type="button" class="btn btn-sm btn-success">Registrar Compra</button>
+        <button (click)="articlePurchaseConfirm()" type="button" class="btn btn-sm btn-success">Registrar Compra</button>
     </div>
 </div>

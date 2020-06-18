@@ -4,7 +4,7 @@
       <select [(ngModel)]="selectedElectronic" class="custom-select" (change)="onChangeSelection($event)">
           <option *ngFor="let electronic of allElectronics" [ngValue]="electronic">{{electronic.name}}</option>
       </select>
-      <div *ngIf="errorElectronic" class="text-danger">Selecciona un dulce</div>
+      <div *ngIf="errorElectronic" class="text-danger">Selecciona un elctrónico</div>
   </div>
   <div class="col-12 col-md text-center">
       <label><strong>Precio</strong></label>

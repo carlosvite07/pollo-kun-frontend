@@ -66,7 +66,7 @@ export class SummaryComponent implements OnInit {
     private worksService: WorksService,
     private candiesService: CandiesService,
     private articlesService: ArticlesService,
-    private electronicsService: ElectronicsService,
+    private electronicsService: ElectronicsService
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getToday();
@@ -123,10 +123,14 @@ export class SummaryComponent implements OnInit {
 
     this.articlesService.getAllArticles().subscribe((data) => {
       this.allArticles = data.map((e) => {
+        let stock = 0;
+        e.payload.doc.data()["history"].forEach((element) => {
+          stock += element.stock;
+        });
         return {
           Nombre: e.payload.doc.data()["name"],
           Precio: e.payload.doc.data()["price"],
-          Stock: e.payload.doc.data()["stock"],
+          Stock: stock,
           Vendidos: 0,
           Tiempo: null,
           Total: null,
@@ -152,8 +156,6 @@ export class SummaryComponent implements OnInit {
         };
       });
     });
-
-    
   }
 
   onDateSelection(date: NgbDate) {
@@ -450,7 +452,7 @@ export class SummaryComponent implements OnInit {
     });
 
     let lastCandieIndex = 4;
-    this.allCandiesPurchases.forEach((candie, candieIndex) => {
+    this.allCandiesPurchases.forEach((candie) => {
       let index = this.exportableData.findIndex(
         (element) => element["Nombre"] == candie.candie.name
       );
@@ -474,7 +476,7 @@ export class SummaryComponent implements OnInit {
     });
 
     let lastElectronicIndex = 4;
-    this.allElectronicsPurchases.forEach((electronic, electronicIndex) => {
+    this.allElectronicsPurchases.forEach((electronic) => {
       let index = this.exportableData.findIndex(
         (element) => element["Nombre"] == electronic.electronic.name
       );
@@ -497,13 +499,28 @@ export class SummaryComponent implements OnInit {
       }
     });
 
+    let lastArticleIndex = 4;
     this.allArticlesPurchases.forEach((article) => {
       let index = this.exportableData.findIndex(
         (element) => element["Nombre"] == article.article.name
       );
-      this.exportableData[index]["Vendidos"] += article.quantity;
-      this.exportableData[index]["Total"] += article.price;
-      this.exportableData[index]["Ganancia"] = null;
+      if (index !== -1) {
+        lastArticleIndex = index + 1;
+        this.exportableData[index]["Vendidos"] += article.quantity;
+        this.exportableData[index]["Total"] += article.price;
+        this.exportableData[index]["Ganancia"] += article.profit;
+      } else {
+        const candiObject = {
+          Nombre: article.article.name,
+          Precio: article.article.price,
+          Stock: 0,
+          Tiempo: null,
+          Total: article.price,
+          Vendidos: article.quantity,
+          Ganancia: article.profit,
+        };
+        this.exportableData.splice(lastElectronicIndex, 0, candiObject);
+      }
     });
 
     this.initialService.exportAsExcelFile(this.exportableData, "sample");

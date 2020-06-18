@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ArticlesService } from '../articles.service';
-import { Article } from '../article.model';
-import { ArticlePurchase } from '../article-purchase.model';
-import { ClientsService } from '../../clients/clients.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { ArticlesService } from "../articles.service";
+import { Article } from "../article.model";
+import { ArticlePurchase } from "../article-purchase.model";
+import { ClientsService } from "../../clients/clients.service";
 
 @Component({
-  selector: 'app-article-create',
-  templateUrl: './article-create.component.html',
-  styleUrls: ['./article-create.component.scss']
+  selector: "app-article-create",
+  templateUrl: "./article-create.component.html",
+  styleUrls: ["./article-create.component.scss"],
 })
 export class ArticleCreateComponent implements OnInit {
   @Input() client;
@@ -17,56 +17,108 @@ export class ArticleCreateComponent implements OnInit {
   selectedQuantity: number = 1;
   errorArticle: boolean = false;
   errorQuantity: boolean = false;
+  stock: number = 0;
+  successPurchase = false;
 
   constructor(
     private articlesService: ArticlesService,
     private clientsService: ClientsService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.articlesService.getAllArticles().subscribe(data => {
-      this.allArticles = data.map(e => {
+    this.articlesService.getAllArticles().subscribe((data) => {
+      this.allArticles = data.map((e) => {
+        const articlesResp = e.payload.doc.data() as Article;
         return {
           id: e.payload.doc.id,
-          ...e.payload.doc.data()
+          name: articlesResp.name,
+          price: articlesResp.price,
+          history: articlesResp.history,
         } as Article;
       });
     });
   }
 
   onChangeSelection(): void {
+    this.stock = 0;
     this.selectedPrice = this.selectedArticle.price;
     this.errorArticle = false;
-    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
+    this.selectedArticle.history.forEach(
+      (element) => (this.stock += element.stock)
+    );
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
   }
 
   onChangeQuantity(): void {
-    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
   }
 
-  articlePurchase(): void {
-    this.errorArticle = (this.selectedArticle) ? false : true;
-    this.errorQuantity = this.selectedQuantity <= 0 || this.selectedArticle.stock < this.selectedQuantity;
+  articlePurchaseConfirm(): void {
+    this.errorArticle = this.selectedArticle ? false : true;
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
     if (this.errorArticle || this.errorQuantity) {
       return;
     }
-    let newPurchase = {
-      article: this.selectedArticle,
-      date: new Date(),
-      name: this.selectedArticle.name,
-      quantity: this.selectedQuantity,
-      price: this.selectedQuantity * this.selectedPrice,
-      paid: false
-    } as ArticlePurchase;
+
+    let quantityBuyed = this.selectedQuantity;
+    let history = this.selectedArticle.history;
+
     if (!this.client.articlesPurchases) {
       this.client.articlesPurchases = [];
     }
-    this.client.articlesPurchases.unshift(newPurchase);
-    this.clientsService.update(this.client);
-    this.articlesService.updateStock(this.selectedArticle.id,this.selectedArticle.stock-this.selectedQuantity);
+
+    this.selectedArticle.history.forEach((element, index) => {
+      if (element.stock < quantityBuyed) {
+        if (element.stock !== 0 && quantityBuyed !== 0) {
+          quantityBuyed -= element.stock;
+          this.createPurchase(
+            this.selectedPrice,
+            element.unitary,
+            element.stock,
+            this.selectedArticle
+          );
+          history[index].stock = 0;
+          this.articlesService.updateHistory(this.selectedArticle.id, history);
+        }
+      } else {
+        if (quantityBuyed !== 0) {
+          this.createPurchase(
+            this.selectedPrice,
+            element.unitary,
+            quantityBuyed,
+            this.selectedArticle
+          );
+          history[index].stock -= quantityBuyed;
+          quantityBuyed = 0;
+          this.articlesService.updateHistory(this.selectedArticle.id, history);
+        }
+      }
+    });
+
     this.selectedArticle = undefined;
-    this.selectedPrice = undefined;
     this.selectedQuantity = 1;
   }
 
+  createPurchase(
+    articlePrice: number,
+    unitary: number,
+    quantityBuyed: number,
+    article: Article
+  ): void {
+    const profit = (articlePrice - unitary) * quantityBuyed;
+    const newPurchase = {
+      date: new Date(),
+      article: article,
+      quantity: quantityBuyed,
+      price: quantityBuyed * articlePrice,
+      paid: false,
+      profit: parseFloat(profit.toFixed(2)),
+      unitary: unitary,
+    } as ArticlePurchase;
+    this.client.articlesPurchases.unshift(newPurchase);
+    this.clientsService.update(this.client);
+  }
 }
