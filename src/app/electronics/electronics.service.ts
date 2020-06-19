@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ElectronicPurchase } from "./electronic-purchase.model";
-import { Electronic } from "./electronic.model";
+import { ElectronicPurchase } from './electronic-purchase.model';
+import { Electronic } from './electronic.model';
 import { Client } from '../clients/client.model';
 import { ClientsService } from '../clients/clients.service';
-import { History } from "../history.model";
+import { History } from '../history.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ElectronicsService {
-
   constructor(
     private firestore: AngularFirestore,
     private clientsService: ClientsService
-  ){}
+  ) {}
 
   getAllElectronics(): any {
-    return this.firestore.collection('electronics', ref => ref.orderBy('name')).snapshotChanges();
+    return this.firestore
+      .collection('electronics', ref => ref.orderBy('name'))
+      .snapshotChanges();
   }
 
   create(electronicModel: Electronic): any {
@@ -25,15 +26,20 @@ export class ElectronicsService {
   }
 
   update(electronicModel: Electronic) {
-    this.firestore.doc('electronics/' + electronicModel.id).update(electronicModel);
+    this.firestore
+      .doc('electronics/' + electronicModel.id)
+      .update(electronicModel);
   }
 
+  //Deprecated
   updateStock(electronicId: string, stock: number) {
     this.firestore.doc('electronics/' + electronicId).update({ stock: stock });
   }
 
   updateHistory(electronicId: string, history: Array<History>) {
-    this.firestore.doc('electronics/' + electronicId).update({ history: history });
+    this.firestore
+      .doc('electronics/' + electronicId)
+      .update({ history: history });
   }
 
   delete(electronicModel: Electronic) {
@@ -41,7 +47,9 @@ export class ElectronicsService {
   }
 
   electronicPurchase(electronicPurchase: ElectronicPurchase): any {
-    return this.firestore.collection('electronicsPurchases').add(electronicPurchase);
+    return this.firestore
+      .collection('electronicsPurchases')
+      .add(electronicPurchase);
   }
 
   endAllElectronicsPurchases(client: Client) {
@@ -56,5 +64,4 @@ export class ElectronicsService {
       this.clientsService.update(client);
     }
   }
-
 }

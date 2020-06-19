@@ -3,34 +3,73 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_TYPE =
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InitialService {
-
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data']
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array'
+    });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
-  
+
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    FileSaver.saveAs(
+      data,
+      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+    );
   }
 
   consoles = [
-    { name: '1 XBOX 360', available: true, hourPrice: 10, type: '360', halfHourPrice: 7 },
-    { name: '2 XBOX ONE', available: true, hourPrice: 15, type: 'one', halfHourPrice: 10 },
-    { name: '3 XBOX 360', available: true, hourPrice: 10, type: '360', halfHourPrice: 7 },
-    { name: '4 XBOX ONE', available: true, hourPrice: 15, type: 'one', halfHourPrice: 10 },
-    { name: '5 XBOX ONE', available: true, hourPrice: 15, type: 'one', halfHourPrice: 10 },
+    {
+      name: '1 XBOX 360',
+      available: true,
+      hourPrice: 10,
+      type: '360',
+      halfHourPrice: 7
+    },
+    {
+      name: '2 XBOX ONE',
+      available: true,
+      hourPrice: 15,
+      type: 'one',
+      halfHourPrice: 10
+    },
+    {
+      name: '3 XBOX 360',
+      available: true,
+      hourPrice: 10,
+      type: '360',
+      halfHourPrice: 7
+    },
+    {
+      name: '4 XBOX ONE',
+      available: true,
+      hourPrice: 15,
+      type: 'one',
+      halfHourPrice: 10
+    },
+    {
+      name: '5 XBOX ONE',
+      available: true,
+      hourPrice: 15,
+      type: 'one',
+      halfHourPrice: 10
+    }
   ];
 
   candies = [
@@ -128,57 +167,57 @@ export class InitialService {
       name: 'Cacahuates',
       price: 4,
       stock: 0
-    },
+    }
   ];
 
   works = [
     {
       name: 'Copias',
-      price: 1,
+      price: 1
     },
     {
       name: 'Impresión B/N',
-      price: 1,
+      price: 1
     },
     {
       name: 'Impresión Poco Color',
-      price: 3,
+      price: 3
     },
     {
       name: 'Impresión Medio Color',
-      price: 5,
+      price: 5
     },
     {
       name: 'Impresión Mucho Color',
-      price: 10,
+      price: 10
     },
     {
       name: 'CURP B/N',
-      price: 5,
+      price: 5
     },
     {
       name: 'CURP A Color',
-      price: 8,
+      price: 8
     },
     {
       name: 'Reemplacamiento',
-      price: 50,
+      price: 50
     },
     {
       name: 'Llenar Hoja Formato',
-      price: 5,
+      price: 5
     },
     {
       name: 'Crear cuenta de Correo/FB/Twitter',
-      price: 3,
+      price: 3
     },
     {
       name: 'Carta de Recomendación',
-      price: 5,
+      price: 5
     },
     {
       name: 'Palomitas Blancas',
-      price: 3,
+      price: 3
     },
     {
       name: 'Otro',
@@ -275,24 +314,23 @@ export class InitialService {
       available: true,
       hourPrice: 8,
       halfHourPrice: 5,
-      fiveMinutesPrice: 3,
+      fiveMinutesPrice: 3
     },
     {
       name: '7 Computadora',
       available: true,
       hourPrice: 8,
       halfHourPrice: 5,
-      fiveMinutesPrice: 3,
+      fiveMinutesPrice: 3
     }
-  ]
+  ];
 
   createAll(): any {
-    // this.articles.forEach( value => this.firestore.collection('articles').add(value));  
-    // this.candies.forEach( value => this.firestore.collection('candies').add(value)); 
+    // this.articles.forEach( value => this.firestore.collection('articles').add(value));
+    // this.candies.forEach( value => this.firestore.collection('candies').add(value));
     // this.works.forEach( value => this.firestore.collection('works').add(value));
-    // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));  
-    // this.computers.forEach( value => this.firestore.collection('computers').add(value));  
+    // this.consoles.forEach( value => this.firestore.collection('consoles').add(value));
+    // this.computers.forEach( value => this.firestore.collection('computers').add(value));
     return true;
   }
-
 }

@@ -1,31 +1,51 @@
 <div *ngIf="client.worksRecords.length > 0">
-    <div class="row text-center">
-        <div class="col"><label><strong>Trabajo</strong></label></div>
-        <div class="col"><label><strong>Cantidad</strong></label></div>
-        <div class="col"><label><strong>Hora de compra</strong></label></div>
-        <div class="col"><label><strong>Precio</strong></label></div>
-        <div class="col-3"><label><strong>Acciones</strong></label></div>
-        <div class="col"><label><strong>¿Pagado?</strong></label></div>
+  <div class="row text-center">
+    <div class="col">
+      <label><strong>Trabajo</strong></label>
     </div>
-    
-    <div class="row mb-1 text-center" *ngFor="let workRecord of client.worksRecords; let i = index">
-        <div class="col">
-            <span>{{workRecord.name}}</span>
-        </div>
-        <div class="col">
-            <span>{{workRecord.quantity}}</span>
-        </div>
-        <div class="col">
-            {{workRecord.date | date:"h:mm a"}}<br>
-        </div>
-        <div class="col">
-            {{workRecord.price | currency}}
-        </div>
-        <div class="col-3">
-            <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">Quitar</button>
-        </div>
-        <div class="col">
-            <input type="checkbox" class="form-check-input" [ngModel]="workRecord.paid" (change)="changeCheckValue(i)">
-        </div>
+    <div class="col">
+      <label><strong>Cantidad</strong></label>
     </div>
+    <div class="col">
+      <label><strong>Hora de compra</strong></label>
+    </div>
+    <div class="col">
+      <label><strong>Precio</strong></label>
+    </div>
+    <div class="col-3">
+      <label><strong>Acciones</strong></label>
+    </div>
+    <div class="col">
+      <label><strong>¿Pagado?</strong></label>
+    </div>
+  </div>
+
+  <div
+    class="row mb-1 text-center"
+    *ngFor="let workRecord of client.worksRecords; let i = index"
+  >
+    <div class="col">
+      <span>{{ workRecord.name }}</span>
+    </div>
+    <div class="col">
+      <span>{{ workRecord.quantity }}</span>
+    </div>
+    <div class="col">{{ workRecord.date | date: 'h:mm a' }}<br /></div>
+    <div class="col">
+      {{ workRecord.price | currency }}
+    </div>
+    <div class="col-3">
+      <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">
+        Quitar
+      </button>
+    </div>
+    <div class="col">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModel]="workRecord.paid"
+        (change)="changeCheckValue(i)"
+      />
+    </div>
+  </div>
 </div>

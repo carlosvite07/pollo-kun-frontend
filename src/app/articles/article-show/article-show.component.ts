@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ClientsService } from "../../clients/clients.service";
-import { Article } from "../article.model";
-import { ArticlesService } from "../../articles/articles.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { ClientsService } from '../../clients/clients.service';
+import { Article } from '../article.model';
+import { ArticlesService } from '../../articles/articles.service';
 
 @Component({
-  selector: "app-article-show",
-  templateUrl: "./article-show.component.html",
-  styleUrls: ["./article-show.component.scss"],
+  selector: 'app-article-show',
+  templateUrl: './article-show.component.html',
+  styleUrls: ['./article-show.component.scss']
 })
 export class ArticleShowComponent implements OnInit {
   @Input() client;
@@ -19,14 +19,14 @@ export class ArticleShowComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.articlesService.getAllArticles().subscribe((data) => {
-      this.allArticles = data.map((e) => {
+    this.articlesService.getAllArticles().subscribe(data => {
+      this.allArticles = data.map(e => {
         const data = e.payload.doc.data as Article;
         return {
           id: e.payload.doc.id,
           name: data.name,
           price: data.price,
-          history: data.history,
+          history: data.history
         } as Article;
       });
     });
@@ -45,14 +45,14 @@ export class ArticleShowComponent implements OnInit {
 
     const unitary = this.client.articlesPurchases[index].unitary;
 
-    this.allArticles.forEach((article) => {
+    this.allArticles.forEach(article => {
       if (article.id === selectedArticle.id) {
         let history = article.history;
-        const updatedHistory = history.map((element) => {
+        const updatedHistory = history.map(element => {
           if (element.unitary === unitary) {
             return {
               stock: element.stock + quantity,
-              unitary: unitary,
+              unitary: unitary
             };
           } else {
             return element;

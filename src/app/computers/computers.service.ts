@@ -15,7 +15,7 @@ export class ComputersService {
   constructor(
     private firestore: AngularFirestore,
     private clientService: ClientsService
-  ) { }
+  ) {}
 
   //CRUD Computers
   create(computerModel: Computer): any {
@@ -23,7 +23,11 @@ export class ComputersService {
   }
 
   getComputers(): any {
-    return this.firestore.collection('computers', ref => ref.where('available', '==', true).orderBy('name')).snapshotChanges();
+    return this.firestore
+      .collection('computers', ref =>
+        ref.where('available', '==', true).orderBy('name')
+      )
+      .snapshotChanges();
   }
 
   update(computer: Computer) {
@@ -55,7 +59,11 @@ export class ComputersService {
     let object = {
       client: client,
       computerIndex: computerIndex,
-      computerPrice: this.getComputerRecordPrice(client.computersRecords[computerIndex].startDate,now,client.computersRecords[computerIndex].computer)
+      computerPrice: this.getComputerRecordPrice(
+        client.computersRecords[computerIndex].startDate,
+        now,
+        client.computersRecords[computerIndex].computer
+      )
     };
     this.computerRecordEnd.next(object);
   }
@@ -64,9 +72,15 @@ export class ComputersService {
     let now = new Date();
     client.computersRecords[computerIndex].finished = true;
     client.computersRecords[computerIndex].endDate = now;
-    client.computersRecords[computerIndex].price =
-      this.getComputerRecordPrice(client.computersRecords[computerIndex].startDate, now, client.computersRecords[computerIndex].computer);
-    let minutesAndHours = this.getMinutesAndHours(client.computersRecords[computerIndex].startDate, now);
+    client.computersRecords[computerIndex].price = this.getComputerRecordPrice(
+      client.computersRecords[computerIndex].startDate,
+      now,
+      client.computersRecords[computerIndex].computer
+    );
+    let minutesAndHours = this.getMinutesAndHours(
+      client.computersRecords[computerIndex].startDate,
+      now
+    );
     client.computersRecords[computerIndex].hours = minutesAndHours.hours;
     client.computersRecords[computerIndex].minutes = minutesAndHours.minutes;
     let computerId = client.computersRecords[computerIndex].computer.id;
@@ -85,11 +99,9 @@ export class ComputersService {
     if (minutesAndHours.minutes != 0) {
       if (minutesAndHours.minutes <= 5) {
         total += fiveMinutesPrice;
-      }
-      else if (minutesAndHours.minutes <= 30) {
+      } else if (minutesAndHours.minutes <= 30) {
         total += halfHourPrice;
-      }
-      else {
+      } else {
         total += hourPrice;
       }
     }
@@ -103,7 +115,8 @@ export class ComputersService {
   }
 
   getMinutesAndHours(start: Date, end: Date) {
-    let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
+    let difference: number =
+      (end.getTime() - start.getTime()) / (60 * 60 * 1000);
     let hours: number = Math.floor(difference);
     let minutes: number = difference - hours;
     return {
@@ -116,24 +129,28 @@ export class ComputersService {
     let now = new Date();
     let count = 0;
     client.computersRecords.forEach((computerRecord, index) => {
-      if(!client.computersRecords[index].finished){
+      if (!client.computersRecords[index].finished) {
         count++;
         client.computersRecords[index].finished = true;
         client.computersRecords[index].paid = true;
         client.computersRecords[index].endDate = now;
-        client.computersRecords[index].price =
-          this.getComputerRecordPrice(client.computersRecords[index].startDate, now, client.computersRecords[index].computer);
-        let minutesAndHours = this.getMinutesAndHours(client.computersRecords[index].startDate, now);
+        client.computersRecords[index].price = this.getComputerRecordPrice(
+          client.computersRecords[index].startDate,
+          now,
+          client.computersRecords[index].computer
+        );
+        let minutesAndHours = this.getMinutesAndHours(
+          client.computersRecords[index].startDate,
+          now
+        );
         client.computersRecords[index].hours = minutesAndHours.hours;
         client.computersRecords[index].minutes = minutesAndHours.minutes;
         let computerId = client.computersRecords[index].computer.id;
         this.updateAvailable(computerId);
       }
     });
-    if(count > 0){
+    if (count > 0) {
       this.clientService.update(client);
     }
   }
-
-
 }

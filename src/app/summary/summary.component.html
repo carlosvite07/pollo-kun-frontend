@@ -1,13 +1,23 @@
 <div class="row">
   <div class="col text-center">
-    <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="monthSelection" [dayTemplate]="t"
-      outsideDays="hidden">
+    <ngb-datepicker
+      #dp
+      (select)="onDateSelection($event)"
+      [displayMonths]="monthSelection"
+      [dayTemplate]="t"
+      outsideDays="hidden"
+    >
     </ngb-datepicker>
 
     <ng-template #t let-date let-focused="focused">
-      <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
-        [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
-        (mouseleave)="hoveredDate = null">
+      <span
+        class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
         {{ date.day }}
       </span>
     </ng-template>
@@ -17,14 +27,13 @@
 <div class="row">
   <div class="col-6">
     <strong>Número de meses a mostrar </strong>
-    <input type="number" [(ngModel)]="monthSelection" class="form-control">
+    <input type="number" [(ngModel)]="monthSelection" class="form-control" />
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Consolas</h3>
       </div>
@@ -43,24 +52,29 @@
 
     <div class="row text-center" *ngFor="let record of threeSixtyRecords">
       <div class="col">
-        {{record.console.name}}
+        {{ record.console.name }}
       </div>
       <div class="col">
-        {{record.hours}}
+        {{ record.hours }}
       </div>
       <div class="col">
-        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a d/M/yy"}}<br>
+        {{ record.startDate | date: 'h:mm a' }} -
+        {{ record.endDate | date: 'h:mm a d/M/yy' }}<br />
       </div>
       <div class="col">
-        {{record.price | currency}}
+        {{ record.price | currency }}
       </div>
     </div>
 
     <div class="row text-center">
       <div class="col"></div>
-      <div class="col"><strong>{{threeSixtyHours}}</strong></div>
+      <div class="col">
+        <strong>{{ threeSixtyHours }}</strong>
+      </div>
       <div class="col"></div>
-      <div class="col"><strong>{{threeSixtyTotal | currency}}</strong></div>
+      <div class="col">
+        <strong>{{ threeSixtyTotal | currency }}</strong>
+      </div>
     </div>
 
     <div class="row text-center green">
@@ -69,24 +83,29 @@
 
     <div class="row text-center" *ngFor="let record of oneRecords">
       <div class="col">
-        {{record.console.name}}
+        {{ record.console.name }}
       </div>
       <div class="col">
-        {{record.hours}}
+        {{ record.hours }}
       </div>
       <div class="col">
-        {{record.startDate | date:"h:mm a"}} - {{record.endDate | date:"h:mm a d/M/yy"}}<br>
+        {{ record.startDate | date: 'h:mm a' }} -
+        {{ record.endDate | date: 'h:mm a d/M/yy' }}<br />
       </div>
       <div class="col">
-        {{record.price | currency}}
+        {{ record.price | currency }}
       </div>
     </div>
 
     <div class="row text-center">
       <div class="col"></div>
-      <div class="col"><strong>{{oneHours}}</strong></div>
+      <div class="col">
+        <strong>{{ oneHours }}</strong>
+      </div>
       <div class="col"></div>
-      <div class="col"><strong>{{oneTotal | currency}}</strong></div>
+      <div class="col">
+        <strong>{{ oneTotal | currency }}</strong>
+      </div>
     </div>
 
     <div class="row text-center green">
@@ -95,18 +114,20 @@
 
     <div class="row text-center">
       <div class="col"><strong>Total de Horas</strong></div>
-      <div class="col"><strong>{{totalHours}}</strong></div>
+      <div class="col">
+        <strong>{{ totalHours }}</strong>
+      </div>
       <div class="col"><strong>SubTotal</strong></div>
-      <div class="col"><strong>{{recordsTotal | currency}}</strong></div>
+      <div class="col">
+        <strong>{{ recordsTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Computadoras</h3>
       </div>
@@ -121,34 +142,37 @@
 
     <div class="row text-center" *ngFor="let computer of allComputers">
       <div class="col">
-        {{computer.computer.name}}
+        {{ computer.computer.name }}
       </div>
       <div class="col">
-        <span *ngIf="computer.hours > 0">{{computer.hours}} Horas</span>
-        <span *ngIf="computer.minutes > 0">{{computer.minutes}} Minutos</span>
+        <span *ngIf="computer.hours > 0">{{ computer.hours }} Horas</span>
+        <span *ngIf="computer.minutes > 0">{{ computer.minutes }} Minutos</span>
       </div>
       <div class="col">
-        {{computer.startDate | date:"h:mm a"}} - {{computer.endDate | date:"h:mm a d/M/yy"}}<br>
+        {{ computer.startDate | date: 'h:mm a' }} -
+        {{ computer.endDate | date: 'h:mm a d/M/yy' }}<br />
       </div>
       <div class="col">
-        {{computer.price | currency}}
+        {{ computer.price | currency }}
       </div>
     </div>
 
     <div class="row text-center cyan">
       <div class="col">Total Horas</div>
-      <div class="col">{{totalComputersHours}} Horas {{totalComputersMinutes}} Minutos</div>
+      <div class="col">
+        {{ totalComputersHours }} Horas {{ totalComputersMinutes }} Minutos
+      </div>
       <div class="col"><strong>SubTotal</strong></div>
-      <div class="col"><strong>{{computersTotal | currency}}</strong></div>
+      <div class="col">
+        <strong>{{ computersTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Trabajos</h3>
       </div>
@@ -163,16 +187,14 @@
 
     <div class="row text-center" *ngFor="let work of allWorksRecords">
       <div class="col">
-        {{work.name}}
+        {{ work.name }}
       </div>
       <div class="col">
-        {{work.quantity}}
+        {{ work.quantity }}
       </div>
+      <div class="col">{{ work.date | date: 'h:mm a d/M/yy' }}<br /></div>
       <div class="col">
-        {{work.date | date:"h:mm a d/M/yy"}}<br>
-      </div>
-      <div class="col">
-        {{work.price | currency}}
+        {{ work.price | currency }}
       </div>
     </div>
 
@@ -180,15 +202,16 @@
       <div class="col"></div>
       <div class="col"></div>
       <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{worksTotal | currency}}</strong></div>
+      <div class="col cyan">
+        <strong>{{ worksTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Consolas, Computadoras, Trabajos</h3>
       </div>
@@ -198,15 +221,18 @@
       <div class="col"></div>
       <div class="col"></div>
       <div class="col cyan"><strong>Sub Total</strong></div>
-      <div class="col cyan"><strong>{{recordsTotal + computersTotal +  worksTotal | currency}}</strong></div>
+      <div class="col cyan">
+        <strong>{{
+          recordsTotal + computersTotal + worksTotal | currency
+        }}</strong>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Dulces</h3>
       </div>
@@ -221,16 +247,14 @@
 
     <div class="row text-center" *ngFor="let candie of allCandiesPurchases">
       <div class="col">
-        {{candie.candie.name}}
+        {{ candie.candie.name }}
       </div>
       <div class="col">
-        {{candie.quantity}}
+        {{ candie.quantity }}
       </div>
+      <div class="col">{{ candie.date | date: 'h:mm a d/M/yy' }}<br /></div>
       <div class="col">
-        {{candie.date | date:"h:mm a d/M/yy"}}<br>
-      </div>
-      <div class="col">
-        {{candie.price | currency}}
+        {{ candie.price | currency }}
       </div>
     </div>
 
@@ -238,16 +262,16 @@
       <div class="col"></div>
       <div class="col"></div>
       <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{candiesTotal | currency}}</strong></div>
+      <div class="col cyan">
+        <strong>{{ candiesTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Papelería</h3>
       </div>
@@ -262,16 +286,14 @@
 
     <div class="row text-center" *ngFor="let article of allArticlesPurchases">
       <div class="col">
-        {{article.article.name}}
+        {{ article.article.name }}
       </div>
       <div class="col">
-        {{article.quantity}}
+        {{ article.quantity }}
       </div>
+      <div class="col">{{ article.date | date: 'h:mm a d/M/yy' }}<br /></div>
       <div class="col">
-        {{article.date | date:"h:mm a d/M/yy"}}<br>
-      </div>
-      <div class="col">
-        {{article.price | currency}}
+        {{ article.price | currency }}
       </div>
     </div>
 
@@ -279,17 +301,16 @@
       <div class="col"></div>
       <div class="col"></div>
       <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{articlesTotal | currency}}</strong></div>
+      <div class="col cyan">
+        <strong>{{ articlesTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
-
 <div class="row mt-3">
   <div class="col">
-
-    <div class="row ">
+    <div class="row">
       <div class="col">
         <h3 class="p-1">Electrónicos</h3>
       </div>
@@ -302,18 +323,19 @@
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center" *ngFor="let electronic of allElectronicsPurchases">
+    <div
+      class="row text-center"
+      *ngFor="let electronic of allElectronicsPurchases"
+    >
       <div class="col">
-        {{electronic.electronic.name}}
+        {{ electronic.electronic.name }}
       </div>
       <div class="col">
-        {{electronic.quantity}}
+        {{ electronic.quantity }}
       </div>
+      <div class="col">{{ electronic.date | date: 'h:mm a d/M/yy' }}<br /></div>
       <div class="col">
-        {{electronic.date | date:"h:mm a d/M/yy"}}<br>
-      </div>
-      <div class="col">
-        {{electronic.price | currency}}
+        {{ electronic.price | currency }}
       </div>
     </div>
 
@@ -321,9 +343,10 @@
       <div class="col"></div>
       <div class="col"></div>
       <div class="col cyan"><strong>SubTotal</strong></div>
-      <div class="col cyan"><strong>{{electronicsTotal | currency}}</strong></div>
+      <div class="col cyan">
+        <strong>{{ electronicsTotal | currency }}</strong>
+      </div>
     </div>
-
   </div>
 </div>
 
@@ -334,12 +357,23 @@
     <h3>Total</h3>
   </div>
   <div class="col">
-    <h3>{{recordsTotal + candiesTotal + computersTotal + worksTotal + articlesTotal + electronicsTotal | currency}}</h3>
+    <h3>
+      {{
+        recordsTotal +
+          candiesTotal +
+          computersTotal +
+          worksTotal +
+          articlesTotal +
+          electronicsTotal | currency
+      }}
+    </h3>
   </div>
 </div>
 
 <div class="row m-3 text-right">
   <div class="col">
-    <button (click)="toExcel()" type="button" class="btn btn-success">Exportar Excel</button>
+    <button (click)="toExcel()" type="button" class="btn btn-success">
+      Exportar Excel
+    </button>
   </div>
 </div>

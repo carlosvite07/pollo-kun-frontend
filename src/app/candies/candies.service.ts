@@ -4,24 +4,24 @@ import { CandiePurchase } from './candie-purchase.model';
 import { Candie } from './candie.model';
 import { Client } from '../clients/client.model';
 import { ClientsService } from '../clients/clients.service';
-import { History } from '../history.model'
+import { History } from '../history.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandiesService {
-
   constructor(
     private firestore: AngularFirestore,
     private clientsService: ClientsService
-  ) { }
+  ) {}
 
   getAllCandies() {
-    return this.firestore.collection('candies', ref => ref.orderBy('name')).snapshotChanges();
+    return this.firestore
+      .collection('candies', ref => ref.orderBy('name'))
+      .snapshotChanges();
   }
 
   create(candieModel: Candie): any {
-    console.log(candieModel);
     return this.firestore.collection('candies').add(candieModel);
   }
 
@@ -29,6 +29,7 @@ export class CandiesService {
     this.firestore.doc('candies/' + candieModel.id).update(candieModel);
   }
 
+  //Deprecated
   updateStock(articleId: string, stock: number) {
     this.firestore.doc('candies/' + articleId).update({ stock: stock });
   }
@@ -57,5 +58,4 @@ export class CandiesService {
       this.clientsService.update(client);
     }
   }
-
 }

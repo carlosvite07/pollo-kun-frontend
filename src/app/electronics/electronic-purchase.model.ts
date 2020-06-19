@@ -1,4 +1,4 @@
-import { Electronic } from "./electronic.model";
+import { Electronic } from './electronic.model';
 
 export class ElectronicPurchase {
   electronic: Electronic;

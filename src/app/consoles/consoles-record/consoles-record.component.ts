@@ -21,7 +21,7 @@ export class ConsolesRecordComponent implements OnInit {
   errorConsole: Boolean = false;
   errorHour: Boolean = false;
 
-  constructor(private consolesService: ConsolesService) { }
+  constructor(private consolesService: ConsolesService) {}
 
   ngOnInit() {
     this.consolesService.getConsoles().subscribe(data => {
@@ -35,8 +35,8 @@ export class ConsolesRecordComponent implements OnInit {
   }
 
   makeARecord() {
-    this.errorConsole = (this.selectedConsole) ? false : true;
-    this.errorHour = (this.selectedHour) ? false : true;
+    this.errorConsole = this.selectedConsole ? false : true;
+    this.errorHour = this.selectedHour ? false : true;
     if (this.errorConsole || this.errorHour) {
       return;
     }
@@ -46,12 +46,16 @@ export class ConsolesRecordComponent implements OnInit {
       startDate: now,
       endDate: endDate,
       console: this.selectedConsole,
-      price: this.consolesService.getConsoleRecordPrice(now, endDate, this.selectedConsole),
+      price: this.consolesService.getConsoleRecordPrice(
+        now,
+        endDate,
+        this.selectedConsole
+      ),
       finished: false,
       hours: this.selectedHour.hoursValue,
-      paid: false,
+      paid: false
     } as ConsoleRecord;
-    if(!this.client.consolesRecords){
+    if (!this.client.consolesRecords) {
       this.client.consolesRecords = [];
     }
     this.client.consolesRecords.unshift(newRecord);
@@ -61,7 +65,8 @@ export class ConsolesRecordComponent implements OnInit {
   }
 
   getEndDate(now: Date): Date {
-    return new Date(now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000);
+    return new Date(
+      now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000
+    );
   }
-
 }

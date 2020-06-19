@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { ArticlesService } from "../../articles/articles.service";
-import { Article } from "../../articles/article.model";
+import { Component, OnInit } from '@angular/core';
+import { ArticlesService } from '../../articles/articles.service';
+import { Article } from '../../articles/article.model';
 
 @Component({
-  selector: "app-articles-prices",
-  templateUrl: "./articles-prices.component.html",
-  styleUrls: ["./articles-prices.component.scss"],
+  selector: 'app-articles-prices',
+  templateUrl: './articles-prices.component.html',
+  styleUrls: ['./articles-prices.component.scss']
 })
 export class ArticlesPricesComponent implements OnInit {
   allArticles: Article[] = [];
   selectedArticle: Article;
   id: string;
-  name: string = "";
+  name: string = '';
   price: number = 0;
   history: Array<object> = [];
   stock: number = 0;
@@ -25,14 +25,14 @@ export class ArticlesPricesComponent implements OnInit {
   constructor(private articlesService: ArticlesService) {}
 
   ngOnInit() {
-    this.articlesService.getAllArticles().subscribe((data) => {
-      this.allArticles = data.map((e) => {
+    this.articlesService.getAllArticles().subscribe(data => {
+      this.allArticles = data.map(e => {
         const data = e.payload.doc.data() as Article;
         return {
           id: e.payload.doc.id,
           name: data.name,
           price: data.price,
-          history: data.history,
+          history: data.history
         } as Article;
       });
     });
@@ -48,7 +48,7 @@ export class ArticlesPricesComponent implements OnInit {
 
   clear(): void {
     this.selectedArticle = undefined;
-    this.name = "";
+    this.name = '';
     this.price = 0;
     this.stock = 0;
     this.unitary = 0;
@@ -73,7 +73,7 @@ export class ArticlesPricesComponent implements OnInit {
   addHistory() {
     this.selectedArticle.history.push({
       stock: 0,
-      unitary: 0,
+      unitary: 0
     });
   }
 
@@ -84,13 +84,13 @@ export class ArticlesPricesComponent implements OnInit {
   create(): void {
     const history = {
       stock: this.stock,
-      unitary: this.unitary,
+      unitary: this.unitary
     };
     if (this.validation()) {
       let newArticle = {
         name: this.name,
         price: this.price,
-        history: [history],
+        history: [history]
       } as Article;
       this.articlesService.create(newArticle);
       this.clear();
@@ -120,7 +120,7 @@ export class ArticlesPricesComponent implements OnInit {
     if (this.selectedArticle) {
       const errorArr = {
         stock: false,
-        unitary: false,
+        unitary: false
       };
       this.selectedArticle.history.forEach((element, index) => {
         errorArr.stock = element.stock < 0;

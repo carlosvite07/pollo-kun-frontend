@@ -3,7 +3,7 @@
     <div class="col-12 col-md-4 text-center">
       <h4>
         <strong>
-          Cliente {{ client.counter + " " + client.alias }} (Debe
+          Cliente {{ client.counter + ' ' + client.alias }} (Debe
           {{ debt | currency }})
         </strong>
       </h4>
@@ -49,11 +49,10 @@
       <app-article-show [client]="client"></app-article-show>
     </div>
   </div>
-  
+
   <div class="row" *ngIf="client.electronicsPurchases">
     <div class="col">
       <app-electronic-show [client]="client"></app-electronic-show>
     </div>
   </div>
-
 </div>

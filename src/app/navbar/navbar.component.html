@@ -1,14 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button (click)="toggleNavbar()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse" id="navbarNavDropdown" ng-if="showNavbar" [ngClass]="{'collapse' : !showNavbar}">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <ul class="navbar-nav">
-                        <!-- <li [routerLinkActive]="['active']" class="nav-item">
+  <button
+    (click)="toggleNavbar()"
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div
+    class="navbar-collapse"
+    id="navbarNavDropdown"
+    ng-if="showNavbar"
+    [ngClass]="{ collapse: !showNavbar }"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <ul class="navbar-nav">
+            <!-- <li [routerLinkActive]="['active']" class="nav-item">
                             <a class="nav-link" routerLink="consolas"><strong>Consolas</strong></a>
                         </li>
                         <li [routerLinkActive]="['active']" class="nav-item">
@@ -20,18 +33,22 @@
                         <li [routerLinkActive]="['active']" class="nav-item">
                             <a class="nav-link" routerLink="papeleria"><strong>Papelería</strong></a>
                         </li> -->
-                        <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="clientes"><strong>Clientes</strong></a>
-                        </li>
-                        <!-- <li [routerLinkActive]="['active']" class="nav-item">
+            <li [routerLinkActive]="['active']" class="nav-item">
+              <a class="nav-link" routerLink="clientes"
+                ><strong>Clientes</strong></a
+              >
+            </li>
+            <!-- <li [routerLinkActive]="['active']" class="nav-item">
                             <a class="nav-link" routerLink="precios"><strong>Precios y Stock</strong></a>
                         </li> -->
-                        <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="resumen"><strong>Resumen</strong></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <li [routerLinkActive]="['active']" class="nav-item">
+              <a class="nav-link" routerLink="resumen"
+                ><strong>Resumen</strong></a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
 </nav>

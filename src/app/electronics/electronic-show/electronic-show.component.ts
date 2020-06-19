@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ClientsService } from "../../clients/clients.service";
-import { Electronic } from "../electronic.model";
-import { ElectronicsService } from "../electronics.service";
+import { ClientsService } from '../../clients/clients.service';
+import { Electronic } from '../electronic.model';
+import { ElectronicsService } from '../electronics.service';
 
 @Component({
   selector: 'app-electronic-show',
@@ -9,7 +9,6 @@ import { ElectronicsService } from "../electronics.service";
   styleUrls: ['./electronic-show.component.scss']
 })
 export class ElectronicShowComponent implements OnInit {
-
   @Input() client;
   allElectronics: Electronic[] = [];
   paid: boolean = false;
@@ -17,7 +16,7 @@ export class ElectronicShowComponent implements OnInit {
   constructor(
     private clientsService: ClientsService,
     private electronicsService: ElectronicsService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.electronicsService.getAllElectronics().subscribe(data => {
@@ -34,30 +33,32 @@ export class ElectronicShowComponent implements OnInit {
   }
 
   changeCheckValue(index: number) {
-    this.client.electronicsPurchases[index].paid = !this.client.electronicsPurchases[index].paid;
+    this.client.electronicsPurchases[index].paid = !this.client
+      .electronicsPurchases[index].paid;
     this.clientsService.update(this.client);
   }
 
   remove(index: number) {
-    const selectedElectronic = this.client.electronicsPurchases[index].electronic;
+    const selectedElectronic = this.client.electronicsPurchases[index]
+      .electronic;
     const quantity = this.client.electronicsPurchases[index].quantity;
 
     const unitary = this.client.electronicsPurchases[index].unitary;
-    
+
     this.allElectronics.forEach(electronic => {
       if (electronic.id === selectedElectronic.id) {
         let history = electronic.history;
         const updatedHistory = history.map(element => {
-          if(element.unitary === unitary){
+          if (element.unitary === unitary) {
             return {
               stock: element.stock + quantity,
               unitary: unitary
-            }
-          }else{
-            return element
+            };
+          } else {
+            return element;
           }
         });
-        this.electronicsService.updateHistory(electronic.id,updatedHistory);
+        this.electronicsService.updateHistory(electronic.id, updatedHistory);
       }
     });
 

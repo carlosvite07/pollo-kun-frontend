@@ -16,7 +16,7 @@ export class WorksPricesComponent implements OnInit {
   errorName: boolean = false;
   errorPrice: boolean = false;
 
-  constructor(private worksService: WorksService) { }
+  constructor(private worksService: WorksService) {}
 
   ngOnInit() {
     this.worksService.getWorks().subscribe(data => {
@@ -25,7 +25,7 @@ export class WorksPricesComponent implements OnInit {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Work;
-      })
+      });
     });
   }
 
@@ -51,10 +51,10 @@ export class WorksPricesComponent implements OnInit {
   }
 
   create(): void {
-    if(this.validation()){
+    if (this.validation()) {
       let newWork = {
         name: this.name,
-        price: this.price,
+        price: this.price
       } as Work;
       this.worksService.create(newWork);
       this.clear();
@@ -62,7 +62,7 @@ export class WorksPricesComponent implements OnInit {
   }
 
   update(): void {
-    if(this.validation()){
+    if (this.validation()) {
       this.selectedWork.name = this.name;
       this.selectedWork.price = this.price;
       this.worksService.update(this.selectedWork);
@@ -75,7 +75,7 @@ export class WorksPricesComponent implements OnInit {
     this.clear();
   }
 
-  validation(): boolean{
+  validation(): boolean {
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorPrice = this.price <= 0 ? true : false;
     if (this.errorName || this.errorPrice) {
@@ -83,5 +83,4 @@ export class WorksPricesComponent implements OnInit {
     }
     return true;
   }
-
 }

@@ -8,9 +8,8 @@ describe('ElectronicShowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ElectronicShowComponent ]
-    })
-    .compileComponents();
+      declarations: [ElectronicShowComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

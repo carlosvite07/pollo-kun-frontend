@@ -1,22 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { RecordComponent } from './consoles-show.component';
+import { ConsolesShowComponent } from './consoles-show.component';
 
-describe('RecordComponent', () => {
-  let component: RecordComponent;
-  let fixture: ComponentFixture<RecordComponent>;
+describe('ConsolesShowComponent', () => {
+  let component: ConsolesShowComponent;
+  let fixture: ComponentFixture<ConsolesShowComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecordComponent ],
+      declarations: [ConsolesShowComponent],
       providers: [AngularFirestore]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecordComponent);
+    fixture = TestBed.createComponent(ConsolesShowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -16,7 +16,7 @@ export class WorkShowComponent {
   constructor(
     private clientsService: ClientsService,
     private worksService: WorksService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.worksService.getWorks().subscribe(data => {
@@ -30,7 +30,8 @@ export class WorkShowComponent {
   }
 
   changeCheckValue(index: number) {
-    this.client.worksRecords[index].paid = !this.client.worksRecords[index].paid;
+    this.client.worksRecords[index].paid = !this.client.worksRecords[index]
+      .paid;
     this.clientsService.update(this.client);
   }
 
@@ -39,5 +40,4 @@ export class WorkShowComponent {
     this.client.worksRecords.splice(index, 1);
     this.clientsService.update(this.client);
   }
-
 }

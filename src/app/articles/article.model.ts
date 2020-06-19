@@ -1,4 +1,4 @@
-import { History } from "../history.model";
+import { History } from '../history.model';
 
 export class Article {
   id: string;

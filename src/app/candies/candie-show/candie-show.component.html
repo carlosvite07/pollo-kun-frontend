@@ -1,32 +1,51 @@
 <div *ngIf="client.candiesPurchases.length > 0">
-    <div class="row text-center">
-        <div class="col"><label><strong>Dulce</strong></label></div>
-        <div class="col"><label><strong>Cantidad</strong></label></div>
-        <div class="col"><label><strong>Hora de compra</strong></label></div>
-        <div class="col"><label><strong>Precio</strong></label></div>
-        <div class="col-3"><label><strong>Acciones</strong></label></div>
-        <div class="col"><label><strong>¿Pagado?</strong></label></div>
+  <div class="row text-center">
+    <div class="col">
+      <label><strong>Dulce</strong></label>
     </div>
+    <div class="col">
+      <label><strong>Cantidad</strong></label>
+    </div>
+    <div class="col">
+      <label><strong>Hora de compra</strong></label>
+    </div>
+    <div class="col">
+      <label><strong>Precio</strong></label>
+    </div>
+    <div class="col-3">
+      <label><strong>Acciones</strong></label>
+    </div>
+    <div class="col">
+      <label><strong>¿Pagado?</strong></label>
+    </div>
+  </div>
 
-    <div class="row mb-1 text-center" *ngFor="let candiePurchase of client.candiesPurchases; let i = index">
-        <div class="col">
-            <span>{{candiePurchase.candie.name}}</span>
-        </div>
-        <div class="col">
-            <span>{{candiePurchase.quantity}}</span>
-        </div>
-        <div class="col">
-            {{candiePurchase.date | date:"h:mm a"}}<br>
-        </div>
-        <div class="col">
-            {{candiePurchase.price | currency}}
-        </div>
-        <div class="col-3">
-            <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">Quitar</button>
-        </div>
-        <div class="col">
-            <input type="checkbox" class="form-check-input" [ngModel]="candiePurchase.paid"
-                (change)="changeCheckValue(i)">
-        </div>
+  <div
+    class="row mb-1 text-center"
+    *ngFor="let candiePurchase of client.candiesPurchases; let i = index"
+  >
+    <div class="col">
+      <span>{{ candiePurchase.candie.name }}</span>
     </div>
+    <div class="col">
+      <span>{{ candiePurchase.quantity }}</span>
+    </div>
+    <div class="col">{{ candiePurchase.date | date: 'h:mm a' }}<br /></div>
+    <div class="col">
+      {{ candiePurchase.price | currency }}
+    </div>
+    <div class="col-3">
+      <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">
+        Quitar
+      </button>
+    </div>
+    <div class="col">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModel]="candiePurchase.paid"
+        (change)="changeCheckValue(i)"
+      />
+    </div>
+  </div>
 </div>

@@ -8,9 +8,8 @@ describe('ComputerShowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ComputerShowComponent ]
-    })
-    .compileComponents();
+      declarations: [ComputerShowComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

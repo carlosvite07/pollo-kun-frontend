@@ -45,11 +45,10 @@ export class ModalsNotificationsComponent implements OnInit {
     private candiesService: CandiesService,
     private computersService: ComputersService,
     private worksService: WorksService,
-    private clientsService: ClientsService,
-  ) { }
+    private clientsService: ClientsService
+  ) {}
 
   ngOnInit() {
-
     this.consolesService.getConsoles().subscribe(data => {
       this.avaliableConsoles = data.map(e => {
         return {
@@ -59,33 +58,32 @@ export class ModalsNotificationsComponent implements OnInit {
       });
     });
 
-    this.consolesService.consoleRecordEnd$.subscribe(
-      consoleRecordEnd => {
-        this.resetAll();
-        this.isEndTime = true;
-        this.client = consoleRecordEnd.client;
-        this.consoleIndex = consoleRecordEnd.consoleIndex;
-        let consoleName = consoleRecordEnd.client.consolesRecords[this.consoleIndex].console.name;
-        let clientName = 'Cliente ' + consoleRecordEnd.client.counter;
-        this.title = `Terminar ${consoleName} - ${clientName}`;
-        this.body = `¿Quieres terminar el tiempo de la ${consoleName} - ${clientName}?`;
-        this.modalService.open(this.consoleModal, { centered: true });
-      }
-    );
+    this.consolesService.consoleRecordEnd$.subscribe(consoleRecordEnd => {
+      this.resetAll();
+      this.isEndTime = true;
+      this.client = consoleRecordEnd.client;
+      this.consoleIndex = consoleRecordEnd.consoleIndex;
+      let consoleName =
+        consoleRecordEnd.client.consolesRecords[this.consoleIndex].console.name;
+      let clientName = 'Cliente ' + consoleRecordEnd.client.counter;
+      this.title = `Terminar ${consoleName} - ${clientName}`;
+      this.body = `¿Quieres terminar el tiempo de la ${consoleName} - ${clientName}?`;
+      this.modalService.open(this.consoleModal, { centered: true });
+    });
 
-    this.consolesService.consoleRecordChange$.subscribe(
-      consoleRecordChange => {
-        this.resetAll();
-        this.isConsoleChange = true;
-        this.client = consoleRecordChange.client;
-        this.consoleIndex = consoleRecordChange.consoleIndex;
-        let consoleName = consoleRecordChange.client.consolesRecords[this.consoleIndex].console.name;
-        let clientName = 'Cliente ' + consoleRecordChange.client.counter;
-        this.title = `Cambiar la consola ${consoleName} - ${clientName}`;
-        this.body = `¿Por cuál consola desea cambiar la ${consoleName} del ${clientName}?`;
-        this.modalService.open(this.consoleModal, { centered: true });
-      }
-    );
+    this.consolesService.consoleRecordChange$.subscribe(consoleRecordChange => {
+      this.resetAll();
+      this.isConsoleChange = true;
+      this.client = consoleRecordChange.client;
+      this.consoleIndex = consoleRecordChange.consoleIndex;
+      let consoleName =
+        consoleRecordChange.client.consolesRecords[this.consoleIndex].console
+          .name;
+      let clientName = 'Cliente ' + consoleRecordChange.client.counter;
+      this.title = `Cambiar la consola ${consoleName} - ${clientName}`;
+      this.body = `¿Por cuál consola desea cambiar la ${consoleName} del ${clientName}?`;
+      this.modalService.open(this.consoleModal, { centered: true });
+    });
 
     this.consolesService.consoleRecordAddTime$.subscribe(
       consoleRecordAddTime => {
@@ -93,7 +91,9 @@ export class ModalsNotificationsComponent implements OnInit {
         this.isAddTime = true;
         this.client = consoleRecordAddTime.client;
         this.consoleIndex = consoleRecordAddTime.consoleIndex;
-        let consoleName = consoleRecordAddTime.client.consolesRecords[this.consoleIndex].console.name;
+        let consoleName =
+          consoleRecordAddTime.client.consolesRecords[this.consoleIndex].console
+            .name;
         let clientName = 'Cliente ' + consoleRecordAddTime.client.counter;
         this.title = `Agregar Tiempo del ${consoleName} - ${clientName}`;
         this.body = `¿Cuánto tiempo se va agregar a la ${consoleName} - ${clientName}?`;
@@ -107,7 +107,9 @@ export class ModalsNotificationsComponent implements OnInit {
         this.isLessTime = true;
         this.client = consoleRecordLessTime.client;
         this.consoleIndex = consoleRecordLessTime.consoleIndex;
-        let consoleName = consoleRecordLessTime.client.consolesRecords[this.consoleIndex].console.name;
+        let consoleName =
+          consoleRecordLessTime.client.consolesRecords[this.consoleIndex]
+            .console.name;
         let clientName = 'Cliente ' + consoleRecordLessTime.client.counter;
         this.title = `Reducir Tiempo del ${consoleName} - ${clientName}`;
         this.body = `¿Cuánto tiempo se va a reducir de la ${consoleName} - ${clientName}?`;
@@ -115,27 +117,25 @@ export class ModalsNotificationsComponent implements OnInit {
       }
     );
 
-    this.computersService.computerRecordEnd$.subscribe(
-      computerRecordEnd => {
-        this.resetAll();
-        this.client = computerRecordEnd.client;
-        this.computerIndex = computerRecordEnd.computerIndex;
-        let computerName = computerRecordEnd.client.computersRecords[this.computerIndex].computer.name;
-        let clientName = 'Cliente ' + computerRecordEnd.client.counter;
-        this.title = `Terminar ${computerName} - ${clientName}`;
-        this.body = `¿Quieres terminar el tiempo de la ${computerName} - ${clientName}? Se cobraran: ${computerRecordEnd.computerPrice} pesos`;
-        this.modalService.open(this.computerModal, { centered: true });
-      }
-    );
+    this.computersService.computerRecordEnd$.subscribe(computerRecordEnd => {
+      this.resetAll();
+      this.client = computerRecordEnd.client;
+      this.computerIndex = computerRecordEnd.computerIndex;
+      let computerName =
+        computerRecordEnd.client.computersRecords[this.computerIndex].computer
+          .name;
+      let clientName = 'Cliente ' + computerRecordEnd.client.counter;
+      this.title = `Terminar ${computerName} - ${clientName}`;
+      this.body = `¿Quieres terminar el tiempo de la ${computerName} - ${clientName}? Se cobraran: ${computerRecordEnd.computerPrice} pesos`;
+      this.modalService.open(this.computerModal, { centered: true });
+    });
 
-    this.clientsService.clientEnd$.subscribe(
-      client => {
-        this.resetAll();
-        this.client = client.client;
-        this.debt = client.debt;
-        this.modalService.open(this.endClientModal, { centered: true });
-      }
-    );
+    this.clientsService.clientEnd$.subscribe(client => {
+      this.resetAll();
+      this.client = client.client;
+      this.debt = client.debt;
+      this.modalService.open(this.endClientModal, { centered: true });
+    });
   }
 
   resetAll() {
@@ -166,7 +166,11 @@ export class ModalsNotificationsComponent implements OnInit {
       return;
     }
     this.modalService.dismissAll();
-    this.consolesService.changeConsoleRecord(this.client, this.consoleIndex, this.selectedConsole);
+    this.consolesService.changeConsoleRecord(
+      this.client,
+      this.consoleIndex,
+      this.selectedConsole
+    );
     this.selectedConsole = undefined;
   }
 
@@ -176,7 +180,11 @@ export class ModalsNotificationsComponent implements OnInit {
       return;
     }
     this.modalService.dismissAll();
-    this.consolesService.addTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
+    this.consolesService.addTimeConsoleRecord(
+      this.client,
+      this.consoleIndex,
+      this.selectedHour
+    );
     this.selectedHour = undefined;
   }
 
@@ -186,15 +194,23 @@ export class ModalsNotificationsComponent implements OnInit {
       return;
     }
     let now = new Date();
-    let updatedDate = 
-      new Date((this.client.consolesRecords[this.consoleIndex].endDate.getTime() - this.selectedHour.hoursValue * 60 * 60 * 1000));
-    if( updatedDate < now){
+    let updatedDate = new Date(
+      this.client.consolesRecords[this.consoleIndex].endDate.getTime() -
+        this.selectedHour.hoursValue * 60 * 60 * 1000
+    );
+    if (updatedDate < now) {
       this.errorLessHour = true;
-      setTimeout(() =>  { this.errorLessHour = false }, 5000);
+      setTimeout(() => {
+        this.errorLessHour = false;
+      }, 5000);
       return;
-    }else{
+    } else {
       this.modalService.dismissAll();
-      this.consolesService.lessTimeConsoleRecord(this.client, this.consoleIndex, this.selectedHour);
+      this.consolesService.lessTimeConsoleRecord(
+        this.client,
+        this.consoleIndex,
+        this.selectedHour
+      );
       this.selectedHour = undefined;
     }
   }
@@ -207,7 +223,10 @@ export class ModalsNotificationsComponent implements OnInit {
   endClient() {
     this.modalService.dismissAll();
     //Articles
-    if (this.client.articlesPurchases && this.client.articlesPurchases.length > 0) {
+    if (
+      this.client.articlesPurchases &&
+      this.client.articlesPurchases.length > 0
+    ) {
       this.articlesService.endAllArticlesPurchases(this.client);
     }
     //Consoles
@@ -215,11 +234,17 @@ export class ModalsNotificationsComponent implements OnInit {
       this.consolesService.endAllConsolesRecords(this.client);
     }
     //Candies
-    if (this.client.candiesPurchases && this.client.candiesPurchases.length > 0) {
+    if (
+      this.client.candiesPurchases &&
+      this.client.candiesPurchases.length > 0
+    ) {
       this.candiesService.endAllCandiesPurchases(this.client);
     }
     //Computers
-    if (this.client.computersRecords && this.client.computersRecords.length > 0) {
+    if (
+      this.client.computersRecords &&
+      this.client.computersRecords.length > 0
+    ) {
       this.computersService.endAllComputersRecords(this.client);
     }
     //Works
@@ -228,5 +253,4 @@ export class ModalsNotificationsComponent implements OnInit {
     }
     this.clientsService.endClient(this.client);
   }
-
 }

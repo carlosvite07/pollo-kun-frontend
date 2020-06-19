@@ -1,4 +1,4 @@
-export class History{
+export class History {
   stock: number;
   unitary: number;
 }

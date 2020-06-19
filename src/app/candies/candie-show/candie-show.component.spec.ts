@@ -8,9 +8,8 @@ describe('CandieShowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CandieShowComponent ]
-    })
-    .compileComponents();
+      declarations: [CandieShowComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

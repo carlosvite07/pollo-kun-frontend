@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ComputersService } from '../computers.service'
+import { ComputersService } from '../computers.service';
 import { Computer } from '../computer.model';
 import { ComputerRecord } from '../computer-record.model';
 
@@ -14,7 +14,7 @@ export class ComputerCreateComponent implements OnInit {
   selectedComputer: Computer = undefined;
   errorComputer: boolean = false;
 
-  constructor(private computersService: ComputersService) { }
+  constructor(private computersService: ComputersService) {}
 
   ngOnInit() {
     this.computersService.getComputers().subscribe(data => {
@@ -27,13 +27,13 @@ export class ComputerCreateComponent implements OnInit {
     });
   }
 
-  onChangeSelection(){
-    this.errorComputer = this.selectedComputer ? false : true; 
+  onChangeSelection() {
+    this.errorComputer = this.selectedComputer ? false : true;
   }
 
   makeARecord() {
-    this.errorComputer = this.selectedComputer ? false : true; 
-    if(this.errorComputer){
+    this.errorComputer = this.selectedComputer ? false : true;
+    if (this.errorComputer) {
       return;
     }
     let now = new Date();
@@ -41,14 +41,13 @@ export class ComputerCreateComponent implements OnInit {
       startDate: now,
       computer: this.selectedComputer,
       finished: false,
-      paid: false,
+      paid: false
     } as ComputerRecord;
-    if(!this.client.computersRecords){
+    if (!this.client.computersRecords) {
       this.client.computersRecords = [];
     }
     this.client.computersRecords.unshift(newComputerRecord);
     this.computersService.createRecord(this.selectedComputer.id, this.client);
     this.selectedComputer = undefined;
   }
-
 }

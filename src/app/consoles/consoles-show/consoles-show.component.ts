@@ -14,11 +14,10 @@ export class ConsolesShowComponent implements OnChanges {
 
   constructor(
     private consolesService: ConsolesService,
-    private clientsService:ClientsService
-  ) { }
+    private clientsService: ClientsService
+  ) {}
 
-  ngOnChanges() {
-  }
+  ngOnChanges() {}
 
   end(index: number): void {
     this.consolesService.confirmEndConsoleRecod(this.client, index);
@@ -33,7 +32,7 @@ export class ConsolesShowComponent implements OnChanges {
   }
 
   lessTime(index: number): void {
-    if(this.client.consolesRecords[index].hours < 1){
+    if (this.client.consolesRecords[index].hours < 1) {
       this.warningLessTime();
       return;
     }
@@ -41,13 +40,16 @@ export class ConsolesShowComponent implements OnChanges {
   }
 
   changeCheckValue(index: number) {
-    this.client.consolesRecords[index].paid = !this.client.consolesRecords[index].paid;
+    this.client.consolesRecords[index].paid = !this.client.consolesRecords[
+      index
+    ].paid;
     this.clientsService.update(this.client);
   }
 
-  warningLessTime(){
+  warningLessTime() {
     this.isWarningLessTime = true;
-    setTimeout(() => { this.isWarningLessTime = false }, 3000);
+    setTimeout(() => {
+      this.isWarningLessTime = false;
+    }, 3000);
   }
-
 }

@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Electronic } from "../electronic.model";
-import { ElectronicsService } from "../electronics.service";
-import { ElectronicPurchase } from "../electronic-purchase.model";
-import { ClientsService } from "../../clients/clients.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { Electronic } from '../electronic.model';
+import { ElectronicsService } from '../electronics.service';
+import { ElectronicPurchase } from '../electronic-purchase.model';
+import { ClientsService } from '../../clients/clients.service';
 
 @Component({
-  selector: "app-electronic-create",
-  templateUrl: "./electronic-create.component.html",
-  styleUrls: ["./electronic-create.component.scss"],
+  selector: 'app-electronic-create',
+  templateUrl: './electronic-create.component.html',
+  styleUrls: ['./electronic-create.component.scss']
 })
 export class ElectronicCreateComponent implements OnInit {
   @Input() client;
@@ -26,14 +26,14 @@ export class ElectronicCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.electronicsService.getAllElectronics().subscribe((data) => {
-      this.allElectronics = data.map((e) => {
+    this.electronicsService.getAllElectronics().subscribe(data => {
+      this.allElectronics = data.map(e => {
         const electronicResp = e.payload.doc.data() as Electronic;
         return {
           id: e.payload.doc.id,
           name: electronicResp.name,
           price: electronicResp.price,
-          history: electronicResp.history,
+          history: electronicResp.history
         } as Electronic;
       });
     });
@@ -44,7 +44,7 @@ export class ElectronicCreateComponent implements OnInit {
     this.selectedPrice = this.selectedElectronic.price;
     this.errorElectronic = false;
     this.selectedElectronic.history.forEach(
-      (element) => (this.stock += element.stock)
+      element => (this.stock += element.stock)
     );
     this.errorQuantity =
       this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
@@ -81,7 +81,10 @@ export class ElectronicCreateComponent implements OnInit {
             this.selectedElectronic
           );
           history[index].stock = 0;
-          this.electronicsService.updateHistory(this.selectedElectronic.id, history);
+          this.electronicsService.updateHistory(
+            this.selectedElectronic.id,
+            history
+          );
         }
       } else {
         if (quantityBuyed !== 0) {
@@ -93,7 +96,10 @@ export class ElectronicCreateComponent implements OnInit {
           );
           history[index].stock -= quantityBuyed;
           quantityBuyed = 0;
-          this.electronicsService.updateHistory(this.selectedElectronic.id, history);
+          this.electronicsService.updateHistory(
+            this.selectedElectronic.id,
+            history
+          );
         }
       }
     });
@@ -116,7 +122,7 @@ export class ElectronicCreateComponent implements OnInit {
       price: quantityBuyed * electronicPrice,
       paid: false,
       profit: parseFloat(profit.toFixed(2)),
-      unitary: unitary,
+      unitary: unitary
     } as ElectronicPurchase;
     this.client.electronicsPurchases.unshift(newPurchase);
     this.clientsService.update(this.client);

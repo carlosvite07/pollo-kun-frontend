@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { NgbDate, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
-import { SummaryService } from "./summary.service";
-import { ConsoleRecord } from "../consoles/shared/console-record.model";
-import { WorkRecord } from "../works/work-record.model";
-import { CandiePurchase } from "../candies/candie-purchase.model";
-import { ArticlePurchase } from "../articles/article-purchase.model";
-import { ElectronicPurchase } from "../electronics/electronic-purchase.model";
-import { Client } from "../clients/client.model";
-import { Computer } from "../computers/computer.model";
-import { InitialService } from "../shared/initial.service";
-import { WorksService } from "../works/works.service";
-import { CandiesService } from "../candies/candies.service";
-import { ArticlesService } from "../articles/articles.service";
-import { ElectronicsService } from "../electronics/electronics.service";
+import { Component, OnInit } from '@angular/core';
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { SummaryService } from './summary.service';
+import { ConsoleRecord } from '../consoles/shared/console-record.model';
+import { WorkRecord } from '../works/work-record.model';
+import { CandiePurchase } from '../candies/candie-purchase.model';
+import { ArticlePurchase } from '../articles/article-purchase.model';
+import { ElectronicPurchase } from '../electronics/electronic-purchase.model';
+import { Client } from '../clients/client.model';
+import { Computer } from '../computers/computer.model';
+import { InitialService } from '../shared/initial.service';
+import { WorksService } from '../works/works.service';
+import { CandiesService } from '../candies/candies.service';
+import { ArticlesService } from '../articles/articles.service';
+import { ElectronicsService } from '../electronics/electronics.service';
 
 @Component({
-  selector: "app-summary",
-  templateUrl: "./summary.component.html",
-  styleUrls: ["./summary.component.scss"],
+  selector: 'app-summary',
+  templateUrl: './summary.component.html',
+  styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
   hoveredDate: NgbDate;
@@ -89,70 +89,70 @@ export class SummaryComponent implements OnInit {
     );
     this.getSummaryByDate(start, end);
 
-    this.worksService.getWorks().subscribe((data) => {
-      this.allWorks = data.map((e) => {
+    this.worksService.getWorks().subscribe(data => {
+      this.allWorks = data.map(e => {
         return {
-          Nombre: e.payload.doc.data()["name"],
-          Precio: e.payload.doc.data()["price"],
+          Nombre: e.payload.doc.data()['name'],
+          Precio: e.payload.doc.data()['price'],
           Stock: null,
           Vendidos: null,
           Tiempo: null,
           Total: null,
-          Ganancia: null,
+          Ganancia: null
         };
       });
     });
 
-    this.candiesService.getAllCandies().subscribe((data) => {
-      this.allCandies = data.map((e) => {
+    this.candiesService.getAllCandies().subscribe(data => {
+      this.allCandies = data.map(e => {
         let stock = 0;
-        e.payload.doc.data()["history"].forEach((element) => {
+        e.payload.doc.data()['history'].forEach(element => {
           stock += element.stock;
         });
         return {
-          Nombre: e.payload.doc.data()["name"],
-          Precio: e.payload.doc.data()["price"],
+          Nombre: e.payload.doc.data()['name'],
+          Precio: e.payload.doc.data()['price'],
           Stock: stock,
           Vendidos: 0,
           Tiempo: null,
           Total: null,
-          Ganancia: null,
+          Ganancia: null
         };
       });
     });
 
-    this.articlesService.getAllArticles().subscribe((data) => {
-      this.allArticles = data.map((e) => {
+    this.articlesService.getAllArticles().subscribe(data => {
+      this.allArticles = data.map(e => {
         let stock = 0;
-        e.payload.doc.data()["history"].forEach((element) => {
+        e.payload.doc.data()['history'].forEach(element => {
           stock += element.stock;
         });
         return {
-          Nombre: e.payload.doc.data()["name"],
-          Precio: e.payload.doc.data()["price"],
+          Nombre: e.payload.doc.data()['name'],
+          Precio: e.payload.doc.data()['price'],
           Stock: stock,
           Vendidos: 0,
           Tiempo: null,
           Total: null,
-          Ganancia: null,
+          Ganancia: null
         };
       });
     });
 
-    this.electronicsService.getAllElectronics().subscribe((data) => {
-      this.allElectronics = data.map((e) => {
+    this.electronicsService.getAllElectronics().subscribe(data => {
+      this.allElectronics = data.map(e => {
         let stock = 0;
-        e.payload.doc.data()["history"].forEach((element) => {
+        e.payload.doc.data()['history'].forEach(element => {
           stock += element.stock;
         });
         return {
-          Nombre: e.payload.doc.data()["name"],
-          Precio: e.payload.doc.data()["price"],
+          Nombre: e.payload.doc.data()['name'],
+          Precio: e.payload.doc.data()['price'],
           Stock: stock,
           Vendidos: 0,
           Tiempo: null,
           Total: null,
-          Ganancia: null,
+          Ganancia: null
         };
       });
     });
@@ -229,7 +229,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getSummaryByDate(start: Date, end: Date): void {
-    this.summaryService.getClientsByRange(start, end).subscribe((clients) => {
+    this.summaryService.getClientsByRange(start, end).subscribe(clients => {
       let articlesPurchases = [];
       let consolesRecords = [];
       let candiesPurchases = [];
@@ -237,14 +237,14 @@ export class SummaryComponent implements OnInit {
       let worksRecords = [];
       let electronicsPurchases = [];
 
-      clients.forEach((client) => {
+      clients.forEach(client => {
         let currentClient = client.payload.doc.data() as Client;
         if (currentClient.finished) {
           if (
             currentClient.articlesPurchases &&
             currentClient.articlesPurchases.length > 0
           ) {
-            currentClient.articlesPurchases.forEach((el) => {
+            currentClient.articlesPurchases.forEach(el => {
               articlesPurchases.push(el);
             });
           }
@@ -252,12 +252,12 @@ export class SummaryComponent implements OnInit {
             currentClient.electronicsPurchases &&
             currentClient.electronicsPurchases.length > 0
           ) {
-            currentClient.electronicsPurchases.forEach((el) => {
+            currentClient.electronicsPurchases.forEach(el => {
               electronicsPurchases.push(el);
             });
           }
           if (currentClient.consolesRecords) {
-            currentClient.consolesRecords.forEach((el) => {
+            currentClient.consolesRecords.forEach(el => {
               consolesRecords.push(el);
             });
           }
@@ -265,7 +265,7 @@ export class SummaryComponent implements OnInit {
             currentClient.candiesPurchases &&
             currentClient.candiesPurchases.length > 0
           ) {
-            currentClient.candiesPurchases.forEach((el) => {
+            currentClient.candiesPurchases.forEach(el => {
               candiesPurchases.push(el);
             });
           }
@@ -273,12 +273,12 @@ export class SummaryComponent implements OnInit {
             currentClient.computersRecords &&
             currentClient.computersRecords.length > 0
           ) {
-            currentClient.computersRecords.forEach((el) => {
+            currentClient.computersRecords.forEach(el => {
               computersRecords.push(el);
             });
           }
           if (currentClient.worksRecords) {
-            currentClient.worksRecords.forEach((el) => {
+            currentClient.worksRecords.forEach(el => {
               worksRecords.push(el);
             });
           }
@@ -303,12 +303,12 @@ export class SummaryComponent implements OnInit {
     this.threeSixtyRecords = [];
     this.threeSixtyTotal = 0;
     this.threeSixtyHours = 0;
-    consolesRecords.forEach((record) => {
+    consolesRecords.forEach(record => {
       this.recordsTotal += record.price;
       record.startDate = record.startDate.toDate();
       record.endDate = record.endDate.toDate();
       this.totalHours += record.hours;
-      if (record.console.type === "one") {
+      if (record.console.type === 'one') {
         this.oneRecords.push(record as ConsoleRecord);
         this.oneTotal += record.price;
         this.oneHours += record.hours;
@@ -323,7 +323,7 @@ export class SummaryComponent implements OnInit {
   showComputersRecords(computersRecords) {
     this.computersTotal = 0;
     this.totalComputersMinutes = 0;
-    this.allComputers = computersRecords.map((computer) => {
+    this.allComputers = computersRecords.map(computer => {
       this.computersTotal += computer.price;
       computer.startDate = computer.startDate.toDate();
       computer.endDate = computer.endDate.toDate();
@@ -337,7 +337,7 @@ export class SummaryComponent implements OnInit {
 
   showCandiesPurchases(candiesPurchases) {
     this.candiesTotal = 0;
-    this.allCandiesPurchases = candiesPurchases.map((candie) => {
+    this.allCandiesPurchases = candiesPurchases.map(candie => {
       this.candiesTotal += candie.price;
       candie.date = candie.date.toDate();
       return candie as CandiePurchase;
@@ -346,7 +346,7 @@ export class SummaryComponent implements OnInit {
 
   showWorksRecords(worksRecords) {
     this.worksTotal = 0;
-    this.allWorksRecords = worksRecords.map((work) => {
+    this.allWorksRecords = worksRecords.map(work => {
       this.worksTotal += work.price;
       work.date = work.date.toDate();
       return work as WorkRecord;
@@ -355,7 +355,7 @@ export class SummaryComponent implements OnInit {
 
   showArticlesPurchases(articlesPurchases) {
     this.articlesTotal = 0;
-    this.allArticlesPurchases = articlesPurchases.map((article) => {
+    this.allArticlesPurchases = articlesPurchases.map(article => {
       this.articlesTotal += article.price;
       article.date = article.date.toDate();
       return article as ArticlePurchase;
@@ -364,7 +364,7 @@ export class SummaryComponent implements OnInit {
 
   showElectronicsPurchases(electronicsPurchases) {
     this.electronicsTotal = 0;
-    this.allElectronicsPurchases = electronicsPurchases.map((electronic) => {
+    this.allElectronicsPurchases = electronicsPurchases.map(electronic => {
       this.electronicsTotal += electronic.price;
       electronic.date = electronic.date.toDate();
       return electronic as ElectronicPurchase;
@@ -373,94 +373,94 @@ export class SummaryComponent implements OnInit {
 
   toExcel(): void {
     this.exportableData.push({
-      Nombre: "XBOX 360",
+      Nombre: 'XBOX 360',
       Vendidos: null,
       Precio: null,
       Stock: null,
       Tiempo: this.threeSixtyHours,
       Total: this.threeSixtyTotal,
-      Ganancia: null,
+      Ganancia: null
     });
 
     this.exportableData.push({
-      Nombre: "XBOX ONE",
+      Nombre: 'XBOX ONE',
       Vendidos: null,
       Precio: null,
       Stock: null,
       Tiempo: this.oneHours,
       Total: this.oneTotal,
-      Ganancia: null,
+      Ganancia: null
     });
 
     this.exportableData.push({
-      Nombre: "Computadoras",
+      Nombre: 'Computadoras',
       Vendidos: null,
       Precio: null,
       Stock: null,
       Tiempo: this.totalComputersHours,
       Total: this.computersTotal,
-      Ganancia: null,
+      Ganancia: null
     });
 
     this.exportableData.push({
-      Nombre: "Trabajos e impresiones",
+      Nombre: 'Trabajos e impresiones'
     });
 
-    this.allWorks.forEach((work) => {
+    this.allWorks.forEach(work => {
       this.exportableData.push(work);
     });
 
     this.exportableData.push({
-      Nombre: "Dulces",
+      Nombre: 'Dulces'
     });
 
-    this.allCandies.forEach((candie) => {
+    this.allCandies.forEach(candie => {
       this.exportableData.push(candie);
     });
 
     this.exportableData.push({
-      Nombre: "Papelería",
+      Nombre: 'Papelería'
     });
 
-    this.allArticles.forEach((article) => {
+    this.allArticles.forEach(article => {
       this.exportableData.push(article);
     });
 
     this.exportableData.push({
-      Nombre: "Electrónicos",
+      Nombre: 'Electrónicos'
     });
 
-    this.allElectronics.forEach((electronic) => {
+    this.allElectronics.forEach(electronic => {
       this.exportableData.push(electronic);
     });
 
-    this.allWorksRecords.forEach((work) => {
+    this.allWorksRecords.forEach(work => {
       let index = this.exportableData.findIndex(
-        (element) => element["Nombre"] == work.name
+        element => element['Nombre'] == work.name
       );
       if (index === -1) {
         let indexAnother = this.exportableData.findIndex(
-          (element) => element["Nombre"].substring(0, 4) === "Otro"
+          element => element['Nombre'].substring(0, 4) === 'Otro'
         );
-        this.exportableData[indexAnother]["Vendidos"] += work.quantity;
-        this.exportableData[indexAnother]["Total"] += work.price;
+        this.exportableData[indexAnother]['Vendidos'] += work.quantity;
+        this.exportableData[indexAnother]['Total'] += work.price;
       } else {
-        this.exportableData[index]["Vendidos"] += work.quantity;
-        this.exportableData[index]["Total"] += work.price;
-        this.exportableData[index]["Ganancia"] = null;
+        this.exportableData[index]['Vendidos'] += work.quantity;
+        this.exportableData[index]['Total'] += work.price;
+        this.exportableData[index]['Ganancia'] = null;
       }
     });
 
     let lastCandieIndex = 4;
-    this.allCandiesPurchases.forEach((candie) => {
+    this.allCandiesPurchases.forEach(candie => {
       let index = this.exportableData.findIndex(
-        (element) => element["Nombre"] == candie.candie.name
+        element => element['Nombre'] == candie.candie.name
       );
       if (index !== -1) {
         lastCandieIndex = index + 1;
-        this.exportableData[index]["Vendidos"] += candie.quantity;
-        this.exportableData[index]["Total"] += candie.price;
-        this.exportableData[index]["Ganancia"] += candie.profit;
+        this.exportableData[index]['Vendidos'] += candie.quantity;
+        this.exportableData[index]['Total'] += candie.price;
+        this.exportableData[index]['Ganancia'] += candie.profit;
       } else {
         const candieObject = {
           Nombre: candie.candie.name,
@@ -469,22 +469,22 @@ export class SummaryComponent implements OnInit {
           Tiempo: null,
           Total: candie.price,
           Vendidos: candie.quantity,
-          Ganancia: candie.profit,
+          Ganancia: candie.profit
         };
         this.exportableData.splice(lastCandieIndex, 0, candieObject);
       }
     });
 
     let lastElectronicIndex = 4;
-    this.allElectronicsPurchases.forEach((electronic) => {
+    this.allElectronicsPurchases.forEach(electronic => {
       let index = this.exportableData.findIndex(
-        (element) => element["Nombre"] == electronic.electronic.name
+        element => element['Nombre'] == electronic.electronic.name
       );
       if (index !== -1) {
         lastElectronicIndex = index + 1;
-        this.exportableData[index]["Vendidos"] += electronic.quantity;
-        this.exportableData[index]["Total"] += electronic.price;
-        this.exportableData[index]["Ganancia"] += electronic.profit;
+        this.exportableData[index]['Vendidos'] += electronic.quantity;
+        this.exportableData[index]['Total'] += electronic.price;
+        this.exportableData[index]['Ganancia'] += electronic.profit;
       } else {
         const candiObject = {
           Nombre: electronic.electronic.name,
@@ -493,22 +493,22 @@ export class SummaryComponent implements OnInit {
           Tiempo: null,
           Total: electronic.price,
           Vendidos: electronic.quantity,
-          Ganancia: electronic.profit,
+          Ganancia: electronic.profit
         };
         this.exportableData.splice(lastElectronicIndex, 0, candiObject);
       }
     });
 
     let lastArticleIndex = 4;
-    this.allArticlesPurchases.forEach((article) => {
+    this.allArticlesPurchases.forEach(article => {
       let index = this.exportableData.findIndex(
-        (element) => element["Nombre"] == article.article.name
+        element => element['Nombre'] == article.article.name
       );
       if (index !== -1) {
         lastArticleIndex = index + 1;
-        this.exportableData[index]["Vendidos"] += article.quantity;
-        this.exportableData[index]["Total"] += article.price;
-        this.exportableData[index]["Ganancia"] += article.profit;
+        this.exportableData[index]['Vendidos'] += article.quantity;
+        this.exportableData[index]['Total'] += article.price;
+        this.exportableData[index]['Ganancia'] += article.profit;
       } else {
         const candiObject = {
           Nombre: article.article.name,
@@ -517,13 +517,13 @@ export class SummaryComponent implements OnInit {
           Tiempo: null,
           Total: article.price,
           Vendidos: article.quantity,
-          Ganancia: article.profit,
+          Ganancia: article.profit
         };
         this.exportableData.splice(lastElectronicIndex, 0, candiObject);
       }
     });
 
-    this.initialService.exportAsExcelFile(this.exportableData, "sample");
+    this.initialService.exportAsExcelFile(this.exportableData, 'sample');
     this.exportableData = [];
   }
 }

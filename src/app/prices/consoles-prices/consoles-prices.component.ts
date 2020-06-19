@@ -20,7 +20,7 @@ export class ConsoleComponent implements OnInit {
   errorHalfHourPrice: boolean = false;
   errorType: boolean = false;
 
-  constructor(private recordService: ConsolesService) { }
+  constructor(private recordService: ConsolesService) {}
 
   ngOnInit() {
     this.recordService.getConsoles().subscribe(data => {
@@ -29,7 +29,7 @@ export class ConsoleComponent implements OnInit {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Console;
-      })
+      });
     });
   }
 
@@ -56,7 +56,7 @@ export class ConsoleComponent implements OnInit {
   onChangeHourPrice(): void {
     this.errorHourPrice = this.hourPrice <= 0 ? true : false;
   }
-  
+
   onChangeHalfHourPrice(): void {
     this.errorHalfHourPrice = this.halfHourPrice <= 0 ? true : false;
   }
@@ -64,11 +64,11 @@ export class ConsoleComponent implements OnInit {
   onChangeConsoleType(): void {
     this.errorType = this.type === undefined ? true : false;
   }
-  
+
   create(): void {
-    if(this.validation()){
+    if (this.validation()) {
       this.errorType = this.type === undefined ? true : false;
-      if(!this.errorType){
+      if (!this.errorType) {
         let newConsole = {
           name: this.name,
           hourPrice: this.hourPrice,
@@ -77,13 +77,13 @@ export class ConsoleComponent implements OnInit {
           type: this.type == 1 ? 'one' : '360'
         } as Console;
         this.recordService.create(newConsole);
-        this.clear()
+        this.clear();
       }
     }
   }
 
-  update(): void{
-    if(this.validation()){
+  update(): void {
+    if (this.validation()) {
       this.selectedConsole.name = this.name;
       this.selectedConsole.hourPrice = this.hourPrice;
       this.selectedConsole.halfHourPrice = this.halfHourPrice;
@@ -92,19 +92,18 @@ export class ConsoleComponent implements OnInit {
     }
   }
 
-  delete(): void{
+  delete(): void {
     this.recordService.delete(this.selectedConsole);
     this.clear();
   }
 
-  validation(): boolean{
+  validation(): boolean {
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorHourPrice = this.hourPrice <= 0 ? true : false;
     this.errorHalfHourPrice = this.halfHourPrice <= 0 ? true : false;
-    if(this.errorName || this.errorHourPrice || this.errorHalfHourPrice){
+    if (this.errorName || this.errorHourPrice || this.errorHalfHourPrice) {
       return false;
     }
     return true;
   }
-
 }

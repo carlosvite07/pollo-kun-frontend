@@ -13,18 +13,18 @@ export class ComputerShowComponent implements OnInit {
   constructor(
     private computersService: ComputersService,
     private clientsService: ClientsService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   end(index: number): void {
     this.computersService.confirmEndComputerRecod(this.client, index);
   }
 
   changeCheckValue(index: number) {
-    this.client.computersRecords[index].paid = !this.client.computersRecords[index].paid;
+    this.client.computersRecords[index].paid = !this.client.computersRecords[
+      index
+    ].paid;
     this.clientsService.update(this.client);
   }
-
 }

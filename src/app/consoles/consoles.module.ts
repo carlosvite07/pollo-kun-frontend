@@ -7,18 +7,8 @@ import { ConsolesRecordComponent } from './consoles-record/consoles-record.compo
 import { ConsolesShowComponent } from './consoles-show/consoles-show.component';
 
 @NgModule({
-  declarations: [
-    ConsolesRecordComponent,
-    ConsolesShowComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule
-  ],
-  exports: [
-    ConsolesRecordComponent,
-    ConsolesShowComponent
-  ]
+  declarations: [ConsolesRecordComponent, ConsolesShowComponent],
+  imports: [CommonModule, FormsModule, NgbModule],
+  exports: [ConsolesRecordComponent, ConsolesShowComponent]
 })
-export class ConsolesModule { }
+export class ConsolesModule {}

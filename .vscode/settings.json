@@ -1,4 +1,7 @@
 {
   "eslint.format.enable": true,
-  "prettier.eslintIntegration": true
+  "prettier.arrowParens": "avoid",
+  "prettier.trailingComma": "none",
+  "prettier.useEditorConfig": false,
+  "prettier.singleQuote": true
 }

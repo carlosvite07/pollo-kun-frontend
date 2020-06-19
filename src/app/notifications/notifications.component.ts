@@ -17,12 +17,12 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private clientsService: ClientsService,
     private consolesService: ConsolesService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.clientsService.activeClients$.subscribe(clients => {
       let now = new Date();
-      this.notifications = []
+      this.notifications = [];
       this.isConsoleRecordOnTime(clients, now);
       this.clients = clients;
     });
@@ -37,7 +37,9 @@ export class NotificationsComponent implements OnInit {
   }
 
   isConsoleRecordOnTime(clients: Client[], now: Date) {
-    let minutesLess = new Date(now.getTime() + this.minutesNotification * 60 * 1000);
+    let minutesLess = new Date(
+      now.getTime() + this.minutesNotification * 60 * 1000
+    );
     this.notifications = [];
     clients.forEach(client => {
       if (client.consolesRecords) {
@@ -50,25 +52,25 @@ export class NotificationsComponent implements OnInit {
               if (!consoleRecord.notification) {
                 let notification = {
                   body: `Faltan menos de ${this.minutesNotification} minutos para que termine la ${consoleRecord.console.name} del Cliente${client.counter}`,
-                  readed: false,
+                  readed: false
                 } as Notification;
-                this.clientsService.createNotification(client, consoleRecordIndex, notification);
-                this.notifications.push(
-                  {
-                    client: client,
-                    consoleRecordIndex: consoleRecordIndex,
-                    notification: notification,
-                  }
+                this.clientsService.createNotification(
+                  client,
+                  consoleRecordIndex,
+                  notification
                 );
+                this.notifications.push({
+                  client: client,
+                  consoleRecordIndex: consoleRecordIndex,
+                  notification: notification
+                });
               }
               if (!consoleRecord.notification.readed) {
-                this.notifications.push(
-                  {
-                    client: client,
-                    consoleRecordIndex: consoleRecordIndex,
-                    notification: consoleRecord.notification
-                  }
-                );
+                this.notifications.push({
+                  client: client,
+                  consoleRecordIndex: consoleRecordIndex,
+                  notification: consoleRecord.notification
+                });
               }
             }
           }
@@ -78,7 +80,9 @@ export class NotificationsComponent implements OnInit {
   }
 
   closeNotification(notification: any) {
-    this.clientsService.markAsReadedNotification(notification.client, notification.consoleRecordIndex);
+    this.clientsService.markAsReadedNotification(
+      notification.client,
+      notification.consoleRecordIndex
+    );
   }
-
 }

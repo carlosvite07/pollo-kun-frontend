@@ -14,11 +14,14 @@ export class ClientsService {
   private clientEnd = new Subject<any>();
   clientEnd$ = this.clientEnd.asObservable();
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   getOldClients(startDate: Date) {
-    return this.firestore.collection('clients',
-      ref => ref.where('finished', '==', false).where('startDate', '<', startDate)).snapshotChanges();
+    return this.firestore
+      .collection('clients', ref =>
+        ref.where('finished', '==', false).where('startDate', '<', startDate)
+      )
+      .snapshotChanges();
   }
 
   finishClient(client: Client) {
@@ -43,8 +46,11 @@ export class ClientsService {
   }
 
   getClients(startDate: Date): any {
-    return this.firestore.collection('clients',
-      ref => ref.where('startDate', '>=', startDate).orderBy('startDate', "desc")).snapshotChanges();
+    return this.firestore
+      .collection('clients', ref =>
+        ref.where('startDate', '>=', startDate).orderBy('startDate', 'desc')
+      )
+      .snapshotChanges();
   }
 
   update(clientModel: Client) {
@@ -66,7 +72,11 @@ export class ClientsService {
     this.firestore.doc(`consoles/${consoleId}`).update({ available: true });
   }
 
-  createNotification(client: Client, consoleRecordIndex: number, notification: Notification) {
+  createNotification(
+    client: Client,
+    consoleRecordIndex: number,
+    notification: Notification
+  ) {
     client.consolesRecords[consoleRecordIndex].notification = notification;
     this.update(client);
   }
@@ -83,23 +93,22 @@ export class ClientsService {
   }
 
   //Modal
-  confirmEndClient(client: Client,debt:number) {
+  confirmEndClient(client: Client, debt: number) {
     let object = {
       client: client,
       debt: debt
-    }
+    };
     this.clientEnd.next(object);
   }
 
-  setSelectedClient(clients: Client[], idSelectedClient:string){
+  setSelectedClient(clients: Client[], idSelectedClient: string) {
     clients.forEach(client => {
-      if(client.id === idSelectedClient){
+      if (client.id === idSelectedClient) {
         client.selected = true;
-      }else{
+      } else {
         client.selected = false;
       }
       this.update(client);
     });
   }
-
 }

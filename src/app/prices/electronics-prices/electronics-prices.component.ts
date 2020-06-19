@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { ElectronicsService } from "../../electronics/electronics.service";
-import { Electronic } from "../../electronics/electronic.model";
+import { Component, OnInit } from '@angular/core';
+import { ElectronicsService } from '../../electronics/electronics.service';
+import { Electronic } from '../../electronics/electronic.model';
 
 @Component({
-  selector: "app-electronics-prices",
-  templateUrl: "./electronics-prices.component.html",
-  styleUrls: ["./electronics-prices.component.scss"],
+  selector: 'app-electronics-prices',
+  templateUrl: './electronics-prices.component.html',
+  styleUrls: ['./electronics-prices.component.scss']
 })
 export class ElectronicsPricesComponent implements OnInit {
   allElectronics: Electronic[] = [];
   selectedElectronic: Electronic;
   id: string;
-  name: string = "";
+  name: string = '';
   price: number = 0;
   history: Array<object> = [];
   stock: number;
@@ -25,14 +25,14 @@ export class ElectronicsPricesComponent implements OnInit {
   constructor(private electronicService: ElectronicsService) {}
 
   ngOnInit() {
-    this.electronicService.getAllElectronics().subscribe((data) => {
-      this.allElectronics = data.map((e) => {
+    this.electronicService.getAllElectronics().subscribe(data => {
+      this.allElectronics = data.map(e => {
         const data = e.payload.doc.data() as Electronic;
         return {
           id: e.payload.doc.id,
           name: data.name,
           price: data.price,
-          history: data.history,
+          history: data.history
         } as Electronic;
       });
     });
@@ -48,7 +48,7 @@ export class ElectronicsPricesComponent implements OnInit {
 
   clear(): void {
     this.selectedElectronic = undefined;
-    this.name = "";
+    this.name = '';
     this.price = 0;
     this.stock = 0;
     this.unitary = 0;
@@ -73,7 +73,7 @@ export class ElectronicsPricesComponent implements OnInit {
   addHistory() {
     this.selectedElectronic.history.push({
       stock: 0,
-      unitary: 0,
+      unitary: 0
     });
   }
 
@@ -84,15 +84,14 @@ export class ElectronicsPricesComponent implements OnInit {
   create(): void {
     const history = {
       stock: this.stock,
-      unitary: this.unitary,
+      unitary: this.unitary
     };
     if (this.validation()) {
       let newElectronic = {
         name: this.name,
         price: this.price,
-        history: [history],
+        history: [history]
       } as Electronic;
-      console.log(newElectronic);
       this.electronicService.create(newElectronic);
       this.clear();
     }
@@ -121,7 +120,7 @@ export class ElectronicsPricesComponent implements OnInit {
     if (this.selectedElectronic) {
       const errorArr = {
         stock: false,
-        unitary: false,
+        unitary: false
       };
       this.selectedElectronic.history.forEach((element, index) => {
         errorArr.stock = element.stock < 0;

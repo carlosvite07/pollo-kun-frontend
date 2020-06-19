@@ -9,11 +9,11 @@ import { SummaryComponent } from './summary/summary.component';
 const routes: Routes = [
   { path: '', redirectTo: '/clientes', pathMatch: 'full' },
   { path: 'precios', component: PricesComponent },
-  { path: 'resumen', component: SummaryComponent },
+  { path: 'resumen', component: SummaryComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

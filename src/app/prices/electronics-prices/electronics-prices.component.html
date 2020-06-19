@@ -10,9 +10,11 @@
           class="custom-select"
           (change)="onChangeSelection($event)"
         >
-          <option *ngFor="let electronic of allElectronics" [ngValue]="electronic">{{
-            electronic.name
-          }}</option>
+          <option
+            *ngFor="let electronic of allElectronics"
+            [ngValue]="electronic"
+            >{{ electronic.name }}</option
+          >
         </select>
       </div>
       <div class="col">
@@ -111,7 +113,10 @@
             class="form-control"
             (ngModelChange)="onChangeStock($event)"
           />
-          <div *ngIf="selectedElectronic.history[i].stock < 0" class="text-danger">
+          <div
+            *ngIf="selectedElectronic.history[i].stock < 0"
+            class="text-danger"
+          >
             Stock Incorrecto
           </div>
         </div>

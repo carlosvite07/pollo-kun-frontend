@@ -6,13 +6,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent,
-        NavbarComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent, NavbarComponent]
     }).compileComponents();
   }));
 

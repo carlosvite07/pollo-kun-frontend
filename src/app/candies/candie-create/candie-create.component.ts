@@ -22,8 +22,8 @@ export class CandieCreateComponent implements OnInit {
 
   constructor(
     private candiesService: CandiesService,
-    private clientsService: ClientsService,
-  ) { }
+    private clientsService: ClientsService
+  ) {}
 
   ngOnInit() {
     this.candiesService.getAllCandies().subscribe(data => {
@@ -43,17 +43,22 @@ export class CandieCreateComponent implements OnInit {
     this.stock = 0;
     this.selectedPrice = this.selectedCandie.price;
     this.errorCandie = false;
-    this.selectedCandie.history.forEach(element => this.stock += element.stock);
-    this.errorQuantity = this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
+    this.selectedCandie.history.forEach(
+      element => (this.stock += element.stock)
+    );
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
   }
 
   onChangeQuantity(): void {
-    this.errorQuantity = this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
   }
 
   candiePurchaseConfirm(): void {
-    this.errorCandie = (this.selectedCandie) ? false : true;
-    this.errorQuantity = this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
+    this.errorCandie = this.selectedCandie ? false : true;
+    this.errorQuantity =
+      this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
     if (this.errorCandie || this.errorQuantity) {
       return;
     }
@@ -65,29 +70,44 @@ export class CandieCreateComponent implements OnInit {
       this.client.candiesPurchases = [];
     }
 
-    this.selectedCandie.history.forEach((element,index) => {
-      if(element.stock < quantityBuyed){
-        if(element.stock !== 0 && quantityBuyed !== 0){
+    this.selectedCandie.history.forEach((element, index) => {
+      if (element.stock < quantityBuyed) {
+        if (element.stock !== 0 && quantityBuyed !== 0) {
           quantityBuyed -= element.stock;
-          this.createPurchase(this.selectedPrice, element.unitary, element.stock, this.selectedCandie)
+          this.createPurchase(
+            this.selectedPrice,
+            element.unitary,
+            element.stock,
+            this.selectedCandie
+          );
           history[index].stock = 0;
           this.candiesService.updateHistory(this.selectedCandie.id, history);
         }
-      }else{
-        if(quantityBuyed !== 0){
-          this.createPurchase(this.selectedPrice, element.unitary, quantityBuyed, this.selectedCandie)
+      } else {
+        if (quantityBuyed !== 0) {
+          this.createPurchase(
+            this.selectedPrice,
+            element.unitary,
+            quantityBuyed,
+            this.selectedCandie
+          );
           history[index].stock -= quantityBuyed;
-          quantityBuyed = 0; 
-          this.candiesService.updateHistory(this.selectedCandie.id,history);
+          quantityBuyed = 0;
+          this.candiesService.updateHistory(this.selectedCandie.id, history);
         }
       }
     });
-    
+
     this.selectedCandie = undefined;
     this.selectedQuantity = 1;
   }
 
-  createPurchase(candiePrice: number, unitary: number, quantityBuyed:number, candie:Candie): void {
+  createPurchase(
+    candiePrice: number,
+    unitary: number,
+    quantityBuyed: number,
+    candie: Candie
+  ): void {
     const profit = (candiePrice - unitary) * quantityBuyed;
     const newPurchase = {
       date: new Date(),
@@ -101,5 +121,4 @@ export class CandieCreateComponent implements OnInit {
     this.client.candiesPurchases.unshift(newPurchase);
     this.clientsService.update(this.client);
   }
-
 }

@@ -1,4 +1,4 @@
-import { Article } from "../articles/article.model";
+import { Article } from '../articles/article.model';
 
 export class ArticlePurchase {
   article: Article;

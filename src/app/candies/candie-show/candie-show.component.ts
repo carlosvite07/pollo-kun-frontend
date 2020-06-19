@@ -16,7 +16,7 @@ export class CandieShowComponent implements OnInit {
   constructor(
     private clientsService: ClientsService,
     private candiesService: CandiesService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.candiesService.getAllCandies().subscribe(data => {
@@ -33,7 +33,9 @@ export class CandieShowComponent implements OnInit {
   }
 
   changeCheckValue(index: number) {
-    this.client.candiesPurchases[index].paid = !this.client.candiesPurchases[index].paid;
+    this.client.candiesPurchases[index].paid = !this.client.candiesPurchases[
+      index
+    ].paid;
     this.clientsService.update(this.client);
   }
 
@@ -42,26 +44,25 @@ export class CandieShowComponent implements OnInit {
     const quantity = this.client.candiesPurchases[index].quantity;
 
     const unitary = this.client.candiesPurchases[index].unitary;
-    
+
     this.allCandies.forEach(candie => {
       if (candie.id === selectedCandie.id) {
         let history = candie.history;
         const updatedHistory = history.map(element => {
-          if(element.unitary === unitary){
+          if (element.unitary === unitary) {
             return {
               stock: element.stock + quantity,
               unitary: unitary
-            }
-          }else{
-            return element
+            };
+          } else {
+            return element;
           }
         });
-        this.candiesService.updateHistory(candie.id,updatedHistory);
+        this.candiesService.updateHistory(candie.id, updatedHistory);
       }
     });
 
     this.client.candiesPurchases.splice(index, 1);
     this.clientsService.update(this.client);
   }
-
 }

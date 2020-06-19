@@ -1,5 +1,5 @@
 export class Notification {
-    id: string;
-    body: string;
-    readed: boolean;
+  id: string;
+  body: string;
+  readed: boolean;
 }

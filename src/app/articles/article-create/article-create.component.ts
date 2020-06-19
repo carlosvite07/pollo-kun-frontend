@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ArticlesService } from "../articles.service";
-import { Article } from "../article.model";
-import { ArticlePurchase } from "../article-purchase.model";
-import { ClientsService } from "../../clients/clients.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { ArticlesService } from '../articles.service';
+import { Article } from '../article.model';
+import { ArticlePurchase } from '../article-purchase.model';
+import { ClientsService } from '../../clients/clients.service';
 
 @Component({
-  selector: "app-article-create",
-  templateUrl: "./article-create.component.html",
-  styleUrls: ["./article-create.component.scss"],
+  selector: 'app-article-create',
+  templateUrl: './article-create.component.html',
+  styleUrls: ['./article-create.component.scss']
 })
 export class ArticleCreateComponent implements OnInit {
   @Input() client;
@@ -26,14 +26,14 @@ export class ArticleCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.articlesService.getAllArticles().subscribe((data) => {
-      this.allArticles = data.map((e) => {
+    this.articlesService.getAllArticles().subscribe(data => {
+      this.allArticles = data.map(e => {
         const articlesResp = e.payload.doc.data() as Article;
         return {
           id: e.payload.doc.id,
           name: articlesResp.name,
           price: articlesResp.price,
-          history: articlesResp.history,
+          history: articlesResp.history
         } as Article;
       });
     });
@@ -44,7 +44,7 @@ export class ArticleCreateComponent implements OnInit {
     this.selectedPrice = this.selectedArticle.price;
     this.errorArticle = false;
     this.selectedArticle.history.forEach(
-      (element) => (this.stock += element.stock)
+      element => (this.stock += element.stock)
     );
     this.errorQuantity =
       this.selectedQuantity <= 0 || this.stock < this.selectedQuantity;
@@ -116,7 +116,7 @@ export class ArticleCreateComponent implements OnInit {
       price: quantityBuyed * articlePrice,
       paid: false,
       profit: parseFloat(profit.toFixed(2)),
-      unitary: unitary,
+      unitary: unitary
     } as ArticlePurchase;
     this.client.articlesPurchases.unshift(newPurchase);
     this.clientsService.update(this.client);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CandiesService } from '../../candies/candies.service';
-import { Candie } from '../../candies/candie.model'
+import { Candie } from '../../candies/candie.model';
 
 @Component({
   selector: 'app-candies-prices',
@@ -22,7 +22,7 @@ export class CandiesPricesComponent implements OnInit {
   errorUnitary: boolean = false;
   errorHistory: Array<object> = [];
 
-  constructor(private candieService: CandiesService) { }
+  constructor(private candieService: CandiesService) {}
 
   ngOnInit() {
     this.candieService.getAllCandies().subscribe(data => {
@@ -34,7 +34,7 @@ export class CandiesPricesComponent implements OnInit {
           price: data.price,
           history: data.history
         } as Candie;
-      })
+      });
     });
   }
 
@@ -69,37 +69,36 @@ export class CandiesPricesComponent implements OnInit {
   onChangeUnitary(): void {
     this.errorUnitary = this.unitary <= 0 ? true : false;
   }
-  
-  addHistory(){
+
+  addHistory() {
     this.selectedCandie.history.push({
       stock: 0,
       unitary: 0
     });
   }
 
-  removeHistory(index){
-    this.selectedCandie.history.splice(index,1);
+  removeHistory(index) {
+    this.selectedCandie.history.splice(index, 1);
   }
 
   create(): void {
     const history = {
       stock: this.stock,
-      unitary: this.unitary,
+      unitary: this.unitary
     };
-    if(this.validation()){
+    if (this.validation()) {
       let newCandie = {
         name: this.name,
         price: this.price,
         history: [history]
       } as Candie;
-      console.log(newCandie);
       this.candieService.create(newCandie);
       this.clear();
     }
   }
 
   update(): void {
-    if(this.validation()){
+    if (this.validation()) {
       this.selectedCandie.name = this.name;
       this.selectedCandie.price = this.price;
       this.candieService.update(this.selectedCandie);
@@ -112,33 +111,32 @@ export class CandiesPricesComponent implements OnInit {
     this.clear();
   }
 
-  validation(): boolean{
+  validation(): boolean {
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorPrice = this.price <= 0 ? true : false;
     if (this.errorName || this.errorPrice) {
       return false;
     }
-    if(this.selectedCandie){
+    if (this.selectedCandie) {
       const errorArr = {
         stock: false,
         unitary: false
       };
-      this.selectedCandie.history.forEach((element,index) => {
+      this.selectedCandie.history.forEach((element, index) => {
         errorArr.stock = element.stock < 0;
         errorArr.unitary = element.unitary <= 0;
         this.errorHistory[index] = errorArr;
-        if(element.stock < 0 || element.unitary <= 0){
+        if (element.stock < 0 || element.unitary <= 0) {
           return false;
         }
       });
-    }else{
+    } else {
       this.errorStock = this.stock < 0 ? true : false;
       this.errorUnitary = this.unitary <= 0 ? true : false;
-      if(this.errorStock || this.errorUnitary){
+      if (this.errorStock || this.errorUnitary) {
         return false;
       }
     }
     return true;
   }
-
 }

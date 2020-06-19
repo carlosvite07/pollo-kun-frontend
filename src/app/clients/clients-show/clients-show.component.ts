@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
 
-
 @Component({
   selector: 'app-clients-show',
   templateUrl: './clients-show.component.html',
@@ -12,14 +11,15 @@ export class ClientsShowComponent implements OnInit {
   @Input() client;
   debt: number = 0;
   errorComputers: boolean = false;
-  constructor(
-    private clientsService: ClientsService
-  ) { }
+  constructor(private clientsService: ClientsService) {}
 
   ngOnInit() {
     this.debt = 0;
     //Articles
-    if (this.client.articlesPurchases && this.client.articlesPurchases.length > 0) {
+    if (
+      this.client.articlesPurchases &&
+      this.client.articlesPurchases.length > 0
+    ) {
       this.client.articlesPurchases.forEach(articlePurchase => {
         if (!articlePurchase.paid) {
           this.debt += articlePurchase.price;
@@ -27,7 +27,10 @@ export class ClientsShowComponent implements OnInit {
       });
     }
     //Electronics
-    if (this.client.electronicsPurchases && this.client.electronicsPurchases.length > 0) {
+    if (
+      this.client.electronicsPurchases &&
+      this.client.electronicsPurchases.length > 0
+    ) {
       this.client.electronicsPurchases.forEach(electronicPurchase => {
         if (!electronicPurchase.paid) {
           this.debt += electronicPurchase.price;
@@ -43,7 +46,10 @@ export class ClientsShowComponent implements OnInit {
       });
     }
     //Candies
-    if (this.client.candiesPurchases && this.client.candiesPurchases.length > 0) {
+    if (
+      this.client.candiesPurchases &&
+      this.client.candiesPurchases.length > 0
+    ) {
       this.client.candiesPurchases.forEach(candiePurchase => {
         if (!candiePurchase.paid) {
           this.debt += candiePurchase.price;
@@ -51,7 +57,10 @@ export class ClientsShowComponent implements OnInit {
       });
     }
     //Computers
-    if (this.client.computersRecords && this.client.computersRecords.length > 0) {
+    if (
+      this.client.computersRecords &&
+      this.client.computersRecords.length > 0
+    ) {
       this.client.computersRecords.forEach(computerRecord => {
         if (!computerRecord.paid && computerRecord.price) {
           this.debt += computerRecord.price;
@@ -70,7 +79,10 @@ export class ClientsShowComponent implements OnInit {
 
   endClient(): void {
     this.errorComputers = false;
-    if (this.client.computersRecords && this.client.computersRecords.length > 0) {
+    if (
+      this.client.computersRecords &&
+      this.client.computersRecords.length > 0
+    ) {
       this.client.computersRecords.forEach(computerRecord => {
         if (!computerRecord.finished) {
           this.errorComputers = true;
@@ -81,5 +93,4 @@ export class ClientsShowComponent implements OnInit {
       this.clientsService.confirmEndClient(this.client, this.debt);
     }
   }
-
 }

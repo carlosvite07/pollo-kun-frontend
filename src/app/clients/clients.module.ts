@@ -7,17 +7,14 @@ import { CandiesModule } from '../candies/candies.module';
 import { WorksModule } from '../works/works.module';
 import { ComputersModule } from '../computers/computers.module';
 import { ArticlesModule } from '../articles/articles.module';
-import { ElectronicsModule } from "../electronics/electronics.module";
+import { ElectronicsModule } from '../electronics/electronics.module';
 
 import { ClientsRoutingModule } from './clients-routing.module';
 import { ClientsComponent } from './clients-create/clients-create.component';
 import { ClientsShowComponent } from './clients-show/clients-show.component';
 
 @NgModule({
-  declarations: [
-    ClientsComponent,
-    ClientsShowComponent
-  ],
+  declarations: [ClientsComponent, ClientsShowComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -31,4 +28,4 @@ import { ClientsShowComponent } from './clients-show/clients-show.component';
     ElectronicsModule
   ]
 })
-export class ClientsModule { }
+export class ClientsModule {}

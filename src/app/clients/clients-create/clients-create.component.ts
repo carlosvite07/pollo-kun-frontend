@@ -26,8 +26,8 @@ export class ClientsComponent implements OnInit {
     private consolesService: ConsolesService,
     private computersService: ComputersService,
     private worksService: WorksService,
-    private electronicsService: ElectronicsService,
-    ) { }
+    private electronicsService: ElectronicsService
+  ) {}
 
   ngOnInit() {
     let now = new Date();
@@ -50,7 +50,10 @@ export class ClientsComponent implements OnInit {
         if (client.articlesPurchases && client.articlesPurchases.length > 0) {
           this.articlesService.endAllArticlesPurchases(client as Client);
         }
-        if (client.electronicsPurchases && client.electronicsPurchases.length > 0) {
+        if (
+          client.electronicsPurchases &&
+          client.electronicsPurchases.length > 0
+        ) {
           this.electronicsService.endAllElectronicsPurchases(client as Client);
         }
         if (client.candiesPurchases && client.candiesPurchases.length > 0) {
@@ -74,7 +77,7 @@ export class ClientsComponent implements OnInit {
           this.computersService.endAllComputersRecords(client as Client);
         }
         this.clientsService.finishClient(client as Client);
-      })
+      });
     });
 
     //Get Current Clients
@@ -91,8 +94,12 @@ export class ClientsComponent implements OnInit {
         } as Client;
         if (client.consolesRecords) {
           client.consolesRecords.map((consoleRecord, index) => {
-            consoleRecord.startDate = clientData.consolesRecords[index].startDate.toDate();
-            consoleRecord.endDate = clientData.consolesRecords[index].endDate.toDate();
+            consoleRecord.startDate = clientData.consolesRecords[
+              index
+            ].startDate.toDate();
+            consoleRecord.endDate = clientData.consolesRecords[
+              index
+            ].endDate.toDate();
           });
           client.consolesRecords.forEach((consoleRecord, consoleIndex) => {
             if (consoleRecord.endDate < now && !consoleRecord.finished) {
@@ -102,14 +109,20 @@ export class ClientsComponent implements OnInit {
         }
         if (client.candiesPurchases) {
           client.candiesPurchases.map((candieRecord, index) => {
-            candieRecord.date = clientData.candiesPurchases[index].date.toDate();
+            candieRecord.date = clientData.candiesPurchases[
+              index
+            ].date.toDate();
           });
         }
         if (client.computersRecords) {
           client.computersRecords.map((computerRecord, index) => {
-            computerRecord.startDate = clientData.computersRecords[index].startDate.toDate();
+            computerRecord.startDate = clientData.computersRecords[
+              index
+            ].startDate.toDate();
             if (computerRecord.endDate) {
-              computerRecord.endDate = clientData.computersRecords[index].endDate.toDate();
+              computerRecord.endDate = clientData.computersRecords[
+                index
+              ].endDate.toDate();
             }
           });
         }
@@ -120,12 +133,16 @@ export class ClientsComponent implements OnInit {
         }
         if (client.articlesPurchases) {
           client.articlesPurchases.map((articleRecord, index) => {
-            articleRecord.date = clientData.articlesPurchases[index].date.toDate();
+            articleRecord.date = clientData.articlesPurchases[
+              index
+            ].date.toDate();
           });
         }
         if (client.electronicsPurchases) {
           client.electronicsPurchases.map((electronicRecord, index) => {
-            electronicRecord.date = clientData.electronicsPurchases[index].date.toDate();
+            electronicRecord.date = clientData.electronicsPurchases[
+              index
+            ].date.toDate();
           });
         }
         if (!client.finished) {
@@ -137,7 +154,6 @@ export class ClientsComponent implements OnInit {
       });
       this.clientsService.setActiveClients(this.allClients);
     });
-
   }
 
   create(): void {
@@ -145,7 +161,7 @@ export class ClientsComponent implements OnInit {
       this.clientAlias = '';
     }
     let now = new Date();
-    this.clientsService.setSelectedClient(this.allClients,null);
+    this.clientsService.setSelectedClient(this.allClients, null);
     let newClient = {
       alias: this.clientAlias,
       counter: ++this.clientsCounter,
@@ -158,7 +174,9 @@ export class ClientsComponent implements OnInit {
   }
 
   onChangeClient(): void {
-    this.clientsService.setSelectedClient(this.allClients,this.selectedClient.id);
+    this.clientsService.setSelectedClient(
+      this.allClients,
+      this.selectedClient.id
+    );
   }
-
 }

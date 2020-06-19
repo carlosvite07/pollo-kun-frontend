@@ -7,10 +7,9 @@ import { InitialService } from './shared/initial.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  constructor(private intialService: InitialService) {}
 
-  constructor(private intialService : InitialService){}
-
-  ngOnInit(){
+  ngOnInit() {
     // this.intialService.createAll();
   }
 }

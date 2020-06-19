@@ -1,54 +1,108 @@
 <div class="row text-center">
-    <div class="col"><label><strong>Número de Consola</strong></label></div>
-    <div class="col"><label><strong>Número de Horas</strong></label></div>
-    <div class="col"><label><strong>Tiempo Inicio - Fin</strong></label></div>
-    <div class="col"><label><strong>Precio</strong></label></div>
-    <div class="col-3"><label><strong>Acciones</strong></label></div>
-    <div class="col"><label><strong>¿Pagado?</strong></label></div>
+  <div class="col">
+    <label><strong>Número de Consola</strong></label>
+  </div>
+  <div class="col">
+    <label><strong>Número de Horas</strong></label>
+  </div>
+  <div class="col">
+    <label><strong>Tiempo Inicio - Fin</strong></label>
+  </div>
+  <div class="col">
+    <label><strong>Precio</strong></label>
+  </div>
+  <div class="col-3">
+    <label><strong>Acciones</strong></label>
+  </div>
+  <div class="col">
+    <label><strong>¿Pagado?</strong></label>
+  </div>
 </div>
 
 <div class="row m-3" *ngIf="isWarningLessTime">
-    <div class="col text-danger text-center">
-        <strong>No se puede reducir un registro de 30 minutos</strong>
-    </div>
+  <div class="col text-danger text-center">
+    <strong>No se puede reducir un registro de 30 minutos</strong>
+  </div>
 </div>
 
-<div class="row text-center mb-1"
-    [ngClass]="{'gray-background': consoleRecord.finished, 'red-color': consoleRecord.notification && !consoleRecord.finished}"
-    *ngFor="let consoleRecord of client.consolesRecords; let i = index">
-    <div class="col" *ngIf="consoleRecord.notification && !consoleRecord.finished" placement="top"
-        [ngbTooltip]="consoleRecord.notification.body">
-        <div class="row">
-            <div class="col-3">
-                <i class="material-icons">warning</i>
-            </div>
-            <div class="col-9">
-                <span>{{consoleRecord.console.name}}</span>
-            </div>
-        </div>
+<div
+  class="row text-center mb-1"
+  [ngClass]="{
+    'gray-background': consoleRecord.finished,
+    'red-color': consoleRecord.notification && !consoleRecord.finished
+  }"
+  *ngFor="let consoleRecord of client.consolesRecords; let i = index"
+>
+  <div
+    class="col"
+    *ngIf="consoleRecord.notification && !consoleRecord.finished"
+    placement="top"
+    [ngbTooltip]="consoleRecord.notification.body"
+  >
+    <div class="row">
+      <div class="col-3">
+        <i class="material-icons">warning</i>
+      </div>
+      <div class="col-9">
+        <span>{{ consoleRecord.console.name }}</span>
+      </div>
     </div>
-    <div class="col" *ngIf="!consoleRecord.notification || consoleRecord.finished">
-        <span>{{consoleRecord.console.name}}</span>
-    </div>
-    <div class="col">
-        <span>{{consoleRecord.hours}}</span>
-    </div>
-    <div class="col">
-        {{consoleRecord.startDate | date:"h:mm a"}} - {{consoleRecord.endDate | date:"h:mm a"}}<br>
-    </div>
-    <div class="col">
-        {{consoleRecord.price | currency}}
-    </div>
-    <div class="col-3" *ngIf="!consoleRecord.finished">
-        <button (click)="addTime(i)" type="button" class="btn btn-sm btn-info mr-3 mb-2">Más Tiempo</button>
-        <button (click)="lessTime(i)" type="button" class="btn btn-sm btn-warning mr-3 mb-2">Menos Tiempo</button>
-        <button (click)="change(i)" type="button" class="btn btn-sm btn-secondary mr-3 mb-2">Cambiar</button>
-        <button (click)="end(i)" type="button" class="btn btn-sm btn-danger mr-3 mb-2">Terminar</button>
-    </div>
-    <div class="col-3" *ngIf="consoleRecord.finished">
-        <strong>Tiempo Terminado</strong>
-    </div>
-    <div class="col">
-        <input type="checkbox" class="form-check-input" [ngModel]="consoleRecord.paid" (change)="changeCheckValue(i)">
-    </div>
+  </div>
+  <div
+    class="col"
+    *ngIf="!consoleRecord.notification || consoleRecord.finished"
+  >
+    <span>{{ consoleRecord.console.name }}</span>
+  </div>
+  <div class="col">
+    <span>{{ consoleRecord.hours }}</span>
+  </div>
+  <div class="col">
+    {{ consoleRecord.startDate | date: 'h:mm a' }} -
+    {{ consoleRecord.endDate | date: 'h:mm a' }}<br />
+  </div>
+  <div class="col">
+    {{ consoleRecord.price | currency }}
+  </div>
+  <div class="col-3" *ngIf="!consoleRecord.finished">
+    <button
+      (click)="addTime(i)"
+      type="button"
+      class="btn btn-sm btn-info mr-3 mb-2"
+    >
+      Más Tiempo
+    </button>
+    <button
+      (click)="lessTime(i)"
+      type="button"
+      class="btn btn-sm btn-warning mr-3 mb-2"
+    >
+      Menos Tiempo
+    </button>
+    <button
+      (click)="change(i)"
+      type="button"
+      class="btn btn-sm btn-secondary mr-3 mb-2"
+    >
+      Cambiar
+    </button>
+    <button
+      (click)="end(i)"
+      type="button"
+      class="btn btn-sm btn-danger mr-3 mb-2"
+    >
+      Terminar
+    </button>
+  </div>
+  <div class="col-3" *ngIf="consoleRecord.finished">
+    <strong>Tiempo Terminado</strong>
+  </div>
+  <div class="col">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      [ngModel]="consoleRecord.paid"
+      (change)="changeCheckValue(i)"
+    />
+  </div>
 </div>

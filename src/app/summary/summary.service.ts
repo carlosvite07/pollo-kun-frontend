@@ -5,13 +5,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
   providedIn: 'root'
 })
 export class SummaryService {
-  monthSelection : number = 1;
+  monthSelection: number = 1;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
-  getClientsByRange(start:Date,end:Date){
-    return this.firestore.collection('clients', ref => ref.where('startDate','>=',start).where('startDate','<',end)).snapshotChanges();
+  getClientsByRange(start: Date, end: Date) {
+    return this.firestore
+      .collection('clients', ref =>
+        ref.where('startDate', '>=', start).where('startDate', '<', end)
+      )
+      .snapshotChanges();
   }
-  
 }
-

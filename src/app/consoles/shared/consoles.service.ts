@@ -25,7 +25,7 @@ export class ConsolesService {
   constructor(
     private firestore: AngularFirestore,
     private clientService: ClientsService
-  ) { }
+  ) {}
 
   //Console CRUD
   create(consoleModel: Console): any {
@@ -33,7 +33,11 @@ export class ConsolesService {
   }
 
   getConsoles(): any {
-    return this.firestore.collection('consoles', ref => ref.where('available', '==', true).orderBy('name')).snapshotChanges();
+    return this.firestore
+      .collection('consoles', ref =>
+        ref.where('available', '==', true).orderBy('name')
+      )
+      .snapshotChanges();
   }
 
   update(console: Console) {
@@ -61,7 +65,9 @@ export class ConsolesService {
 
   //TODO DELETE
   getConsolesRecords(): any {
-    return this.firestore.collection('records', ref => ref.where('finished', '==', false)).snapshotChanges();
+    return this.firestore
+      .collection('records', ref => ref.where('finished', '==', false))
+      .snapshotChanges();
   }
 
   //Console Modal
@@ -91,10 +97,16 @@ export class ConsolesService {
     this.consoleRecordChange.next(object);
   }
 
-  changeConsoleRecord(client: Client, consoleIndex: number, selectedConsole: Console) {
-    let newPrice =
-      this.getConsoleRecordPrice(client.consolesRecords[consoleIndex].startDate,
-        client.consolesRecords[consoleIndex].endDate, selectedConsole);
+  changeConsoleRecord(
+    client: Client,
+    consoleIndex: number,
+    selectedConsole: Console
+  ) {
+    let newPrice = this.getConsoleRecordPrice(
+      client.consolesRecords[consoleIndex].startDate,
+      client.consolesRecords[consoleIndex].endDate,
+      selectedConsole
+    );
     this.updateAvailable(client.consolesRecords[consoleIndex].console.id);
     this.updateUnavailable(selectedConsole.id);
     client.consolesRecords[consoleIndex].console = selectedConsole;
@@ -111,13 +123,22 @@ export class ConsolesService {
     this.consoleRecordAddTime.next(object);
   }
 
-  addTimeConsoleRecord(client: Client, consoleIndex: number, selectedHour: Hour) {
+  addTimeConsoleRecord(
+    client: Client,
+    consoleIndex: number,
+    selectedHour: Hour
+  ) {
     let currentConsole = client.consolesRecords[consoleIndex];
-    currentConsole.endDate =
-      new Date(currentConsole.endDate.getTime() + selectedHour.hoursValue * 60 * 60 * 1000);
+    currentConsole.endDate = new Date(
+      currentConsole.endDate.getTime() +
+        selectedHour.hoursValue * 60 * 60 * 1000
+    );
     currentConsole.hours += selectedHour.hoursValue;
-    currentConsole.price =
-      this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate, currentConsole.console);
+    currentConsole.price = this.getConsoleRecordPrice(
+      currentConsole.startDate,
+      currentConsole.endDate,
+      currentConsole.console
+    );
     client.consolesRecords[consoleIndex] = currentConsole;
     if (client.consolesRecords[consoleIndex].notification) {
       delete client.consolesRecords[consoleIndex].notification;
@@ -133,13 +154,22 @@ export class ConsolesService {
     this.consoleRecordLessTime.next(object);
   }
 
-  lessTimeConsoleRecord(client: Client, consoleIndex: number, selectedHour: Hour) {
+  lessTimeConsoleRecord(
+    client: Client,
+    consoleIndex: number,
+    selectedHour: Hour
+  ) {
     let currentConsole = client.consolesRecords[consoleIndex];
-    currentConsole.endDate =
-      new Date(currentConsole.endDate.getTime() - selectedHour.hoursValue * 60 * 60 * 1000);
+    currentConsole.endDate = new Date(
+      currentConsole.endDate.getTime() -
+        selectedHour.hoursValue * 60 * 60 * 1000
+    );
     currentConsole.hours -= selectedHour.hoursValue;
-    currentConsole.price =
-      this.getConsoleRecordPrice(currentConsole.startDate, currentConsole.endDate, currentConsole.console);
+    currentConsole.price = this.getConsoleRecordPrice(
+      currentConsole.startDate,
+      currentConsole.endDate,
+      currentConsole.console
+    );
     client.consolesRecords[consoleIndex] = currentConsole;
     if (client.consolesRecords[consoleIndex].notification) {
       delete client.consolesRecords[consoleIndex].notification;
@@ -148,8 +178,13 @@ export class ConsolesService {
   }
 
   //Utility
-  getConsoleRecordPrice(start: Date, end: Date, selectedConsole: Console): number {
-    let difference: number = (end.getTime() - start.getTime()) / (60 * 60 * 1000);
+  getConsoleRecordPrice(
+    start: Date,
+    end: Date,
+    selectedConsole: Console
+  ): number {
+    let difference: number =
+      (end.getTime() - start.getTime()) / (60 * 60 * 1000);
     let hours: number = Math.floor(difference);
     let minutes: number = difference - hours;
     let total: number = 0;
@@ -180,5 +215,4 @@ export class ConsolesService {
       this.clientService.update(client);
     }
   }
-
 }

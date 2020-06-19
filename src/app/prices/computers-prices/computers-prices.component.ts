@@ -20,7 +20,7 @@ export class ComputersPricesComponent implements OnInit {
   errorHalfHourPrice: boolean = false;
   errorFiveMinutesPrice: boolean = false;
 
-  constructor(private computersService: ComputersService) { }
+  constructor(private computersService: ComputersService) {}
 
   ngOnInit() {
     this.computersService.getComputers().subscribe(data => {
@@ -29,7 +29,7 @@ export class ComputersPricesComponent implements OnInit {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         } as Computer;
-      })
+      });
     });
   }
 
@@ -73,10 +73,10 @@ export class ComputersPricesComponent implements OnInit {
         available: true,
         hourPrice: this.hourPrice,
         halfHourPrice: this.halfHourPrice,
-        fiveMinutesPrice: this.fiveMinutesPrice,
+        fiveMinutesPrice: this.fiveMinutesPrice
       } as Computer;
       this.computersService.create(newComputer);
-      this.clear()
+      this.clear();
     }
   }
 
@@ -101,11 +101,14 @@ export class ComputersPricesComponent implements OnInit {
     this.errorHourPrice = this.hourPrice <= 0 ? true : false;
     this.errorHalfHourPrice = this.halfHourPrice <= 0 ? true : false;
     this.errorFiveMinutesPrice = this.fiveMinutesPrice <= 0 ? true : false;
-    if (this.errorName || this.errorHourPrice || this.errorHalfHourPrice || this.errorFiveMinutesPrice) {
+    if (
+      this.errorName ||
+      this.errorHourPrice ||
+      this.errorHalfHourPrice ||
+      this.errorFiveMinutesPrice
+    ) {
       return false;
     }
     return true;
   }
-
-
 }

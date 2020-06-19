@@ -24,8 +24,8 @@ export class WorkCreateComponent implements OnInit {
 
   constructor(
     private worksService: WorksService,
-    private clientsService: ClientsService,
-  ) { }
+    private clientsService: ClientsService
+  ) {}
 
   ngOnInit() {
     this.worksService.getWorks().subscribe(data => {
@@ -39,7 +39,7 @@ export class WorkCreateComponent implements OnInit {
   }
 
   onChangeSelection(): void {
-    this.unknowWork = this.selectedWork.name === "Otro";
+    this.unknowWork = this.selectedWork.name === 'Otro';
     this.selectedPrice = this.selectedWork.price || 0;
     this.errorWork = false;
   }
@@ -52,12 +52,12 @@ export class WorkCreateComponent implements OnInit {
     this.errorPrice = this.selectedPrice <= 0;
   }
 
-  onChangeSpecificWork(): void{
+  onChangeSpecificWork(): void {
     this.errorSpecificWork = this.specificWork.length < 5;
   }
 
   workRecord(): void {
-    this.errorWork = (this.selectedWork) ? false : true;
+    this.errorWork = this.selectedWork ? false : true;
     this.errorQuantity = this.selectedQuantity <= 0;
     if (this.errorWork || this.errorQuantity) {
       return;
@@ -69,13 +69,13 @@ export class WorkCreateComponent implements OnInit {
       price: this.selectedQuantity * this.selectedPrice,
       paid: false
     } as WorkRecord;
-    if(this.unknowWork){
+    if (this.unknowWork) {
       this.errorSpecificWork = !this.specificWork;
       this.errorPrice = this.selectedPrice <= 0;
-      if(this.errorSpecificWork || this.errorPrice){
+      if (this.errorSpecificWork || this.errorPrice) {
         return;
       }
-      newRecord.name += ' '+this.specificWork;
+      newRecord.name += ' ' + this.specificWork;
     }
     if (!this.client.worksRecords) {
       this.client.worksRecords = [];
@@ -87,5 +87,4 @@ export class WorkCreateComponent implements OnInit {
     this.specificWork = undefined;
     this.unknowWork = false;
   }
-
 }

@@ -9,14 +9,15 @@ import { ClientsService } from '../clients/clients.service';
   providedIn: 'root'
 })
 export class WorksService {
-
   constructor(
     private firestore: AngularFirestore,
     private clientsService: ClientsService
-  ) { }
+  ) {}
 
   getWorks(): any {
-    return this.firestore.collection('works', ref => ref.orderBy('name')).snapshotChanges();
+    return this.firestore
+      .collection('works', ref => ref.orderBy('name'))
+      .snapshotChanges();
   }
 
   create(workModel: Work): any {
@@ -47,5 +48,4 @@ export class WorksService {
       this.clientsService.update(client);
     }
   }
-
 }
