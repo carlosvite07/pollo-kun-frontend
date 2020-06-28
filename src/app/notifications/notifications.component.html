@@ -1,8 +1,25 @@
 <div class="row justify-content-center text-center">
   <div class="col-12 col-md-4" *ngFor="let notification of notifications">
-    <ngb-alert type="danger" (close)="closeNotification(notification)">
+    <ngb-alert
+      *ngIf="notification.notification.isConsole"
+      type="danger"
+      (close)="closeNotification(notification, true)"
+    >
       <strong>{{ notification.notification.body }}</strong>
-      <audio src="../../assets/audio/finishAlert.mp3" autoplay></audio>
+      <audio
+        src="../../assets/audio/xboxAlert.mp3"
+        autoplay
+      ></audio>
+    </ngb-alert>
+    <ngb-alert
+      *ngIf="!notification.notification.isConsole"
+      type="danger"
+      (close)="closeNotification(notification, false)"
+    >
+      <audio
+        src="../../assets/audio/computerAlert.mp3"
+        autoplay
+      ></audio>
     </ngb-alert>
   </div>
 </div>

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ComputersService } from '../computers.service';
 import { Computer } from '../computer.model';
 import { ComputerRecord } from '../computer-record.model';
+import { HOURS } from '../mock-hours';
+import { Hour } from '../hour.model';
 
 @Component({
   selector: 'app-computer-create',
@@ -13,6 +15,8 @@ export class ComputerCreateComponent implements OnInit {
   allComputers: Computer[];
   selectedComputer: Computer = undefined;
   errorComputer: boolean = false;
+  hours = HOURS;
+  selectedHour: Hour;
 
   constructor(private computersService: ComputersService) {}
 
@@ -43,11 +47,30 @@ export class ComputerCreateComponent implements OnInit {
       finished: false,
       paid: false
     } as ComputerRecord;
+    if (this.selectedHour !== undefined) {
+      const endDate = this.getEndDate(now);
+      newComputerRecord.endDate = endDate;
+      newComputerRecord.price = this.computersService.getComputerRecordPrice(
+        now,
+        endDate,
+        this.selectedComputer
+      );
+      const minutesAndHours = this.computersService.getMinutesAndHours(now,endDate);
+      newComputerRecord.hours = minutesAndHours.hours;
+      newComputerRecord.minutes = minutesAndHours.minutes;
+    }
     if (!this.client.computersRecords) {
       this.client.computersRecords = [];
     }
     this.client.computersRecords.unshift(newComputerRecord);
     this.computersService.createRecord(this.selectedComputer.id, this.client);
     this.selectedComputer = undefined;
+    this.selectedHour = undefined;
+  }
+
+  getEndDate(now: Date): Date {
+    return new Date(
+      now.getTime() + this.selectedHour.hoursValue * 60 * 60 * 1000
+    );
   }
 }

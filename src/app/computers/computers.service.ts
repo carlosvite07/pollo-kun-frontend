@@ -4,6 +4,7 @@ import { Computer } from './computer.model';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from '../clients/client.model';
 import { Subject } from 'rxjs';
+import { Hour } from './hour.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,12 @@ import { Subject } from 'rxjs';
 export class ComputersService {
   private computerRecordEnd = new Subject<any>();
   computerRecordEnd$ = this.computerRecordEnd.asObservable();
+
+  private computerRecordAddTime = new Subject<any>();
+  computerRecordAddTime$ = this.computerRecordAddTime.asObservable();
+
+  private computerRecordLessTime = new Subject<any>();
+  computerRecordLessTime$ = this.computerRecordLessTime.asObservable();
 
   constructor(
     private firestore: AngularFirestore,
@@ -55,13 +62,13 @@ export class ComputersService {
 
   //Computer Modal
   confirmEndComputerRecod(client: Client, computerIndex: number) {
-    let now = new Date();
-    let object = {
+    const endDate = client.computersRecords[computerIndex].endDate || new Date();
+    const object = {
       client: client,
       computerIndex: computerIndex,
       computerPrice: this.getComputerRecordPrice(
         client.computersRecords[computerIndex].startDate,
-        now,
+        endDate,
         client.computersRecords[computerIndex].computer
       )
     };
@@ -69,23 +76,101 @@ export class ComputersService {
   }
 
   endComputerRecord(client: Client, computerIndex: number) {
-    let now = new Date();
+    const now = new Date();
     client.computersRecords[computerIndex].finished = true;
-    client.computersRecords[computerIndex].endDate = now;
-    client.computersRecords[computerIndex].price = this.getComputerRecordPrice(
-      client.computersRecords[computerIndex].startDate,
-      now,
-      client.computersRecords[computerIndex].computer
-    );
-    let minutesAndHours = this.getMinutesAndHours(
-      client.computersRecords[computerIndex].startDate,
-      now
-    );
-    client.computersRecords[computerIndex].hours = minutesAndHours.hours;
-    client.computersRecords[computerIndex].minutes = minutesAndHours.minutes;
+    if (client.computersRecords[computerIndex].endDate === undefined) {
+      client.computersRecords[computerIndex].endDate = now;
+      client.computersRecords[
+        computerIndex
+      ].price = this.getComputerRecordPrice(
+        client.computersRecords[computerIndex].startDate,
+        now,
+        client.computersRecords[computerIndex].computer
+      );
+      const minutesAndHours = this.getMinutesAndHours(
+        client.computersRecords[computerIndex].startDate,
+        now
+      );
+      client.computersRecords[computerIndex].hours = minutesAndHours.hours;
+      client.computersRecords[computerIndex].minutes = minutesAndHours.minutes;
+    }
     let computerId = client.computersRecords[computerIndex].computer.id;
     this.updateAvailable(computerId);
     this.clientService.update(client);
+  }
+
+  confirmAddTimeComputerRecord(client: Client, computerIndex: number) {
+    let object = {
+      client: client,
+      computerIndex: computerIndex
+    };
+    this.computerRecordAddTime.next(object);
+  }
+
+  addTimeComputerRecord(
+    client: Client,
+    computerIndex: number,
+    selectedHour: Hour
+  ) {
+    const currentComputer = client.computersRecords[computerIndex];
+    const endDate = new Date(
+      currentComputer.endDate.getTime() +
+        selectedHour.hoursValue * 60 * 60 * 1000
+    );
+    currentComputer.endDate = endDate;
+    const minutesAndHours = this.getMinutesAndHours(
+      currentComputer.startDate,
+      endDate
+    );
+    currentComputer.hours = minutesAndHours.hours;
+    currentComputer.minutes = minutesAndHours.minutes;
+    currentComputer.price = this.getComputerRecordPrice(
+      currentComputer.startDate,
+      endDate,
+      currentComputer.computer
+    );
+    client.computersRecords[computerIndex] = currentComputer;
+    if (client.computersRecords[computerIndex].notification) {
+      delete client.computersRecords[computerIndex].notification;
+    }
+    this.clientService.set(client);
+  }
+
+  confirmLessTimeComputerRecord(client: Client, computerIndex: number) {
+    let object = {
+      client: client,
+      computerIndex: computerIndex
+    };
+    this.computerRecordLessTime.next(object);
+  }
+
+  lessTimeComputerRecord(
+    client: Client,
+    computerIndex: number,
+    selectedHour: Hour
+  ) {
+    const currentComputer = client.computersRecords[computerIndex];
+    const endDate = new Date(
+      currentComputer.endDate.getTime() -
+        selectedHour.hoursValue * 60 * 60 * 1000
+    );
+    currentComputer.endDate = endDate;
+    const minutesAndHours = this.getMinutesAndHours(
+      currentComputer.startDate,
+      endDate
+    );
+    currentComputer.hours = minutesAndHours.hours;
+    currentComputer.minutes = minutesAndHours.minutes;
+    currentComputer.price = this.getComputerRecordPrice(
+      currentComputer.startDate,
+      endDate,
+      currentComputer.computer
+    );
+    client.computersRecords[computerIndex] = currentComputer;
+    if (client.computersRecords[computerIndex].notification) {
+      delete client.computersRecords[computerIndex].notification;
+    }
+    this.clientService.set(client);
   }
 
   //Utility
@@ -94,11 +179,11 @@ export class ComputersService {
     let total: number = 0;
     let hourPrice = computer.hourPrice;
     let halfHourPrice = computer.halfHourPrice;
-    let fiveMinutesPrice = computer.fiveMinutesPrice;
+    let tenMinutesPrice = computer.tenMinutesPrice;
 
     if (minutesAndHours.minutes != 0) {
-      if (minutesAndHours.minutes <= 5) {
-        total += fiveMinutesPrice;
+      if (minutesAndHours.minutes <= 10) {
+        total += tenMinutesPrice;
       } else if (minutesAndHours.minutes <= 30) {
         total += halfHourPrice;
       } else {

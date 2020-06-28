@@ -9,6 +9,7 @@ import { ClientsService } from '../../clients/clients.service';
 })
 export class ComputerShowComponent implements OnInit {
   @Input() client;
+  isWarningLessTime = false;
 
   constructor(
     private computersService: ComputersService,
@@ -21,10 +22,29 @@ export class ComputerShowComponent implements OnInit {
     this.computersService.confirmEndComputerRecod(this.client, index);
   }
 
+  addTime(index: number): void {
+    this.computersService.confirmAddTimeComputerRecord(this.client, index);
+  }
+
+  lessTime(index: number): void {
+    if (this.client.computersRecords[index].hours < .5) {
+      this.warningLessTime();
+      return;
+    }
+    this.computersService.confirmLessTimeComputerRecord(this.client, index);
+  }
+
   changeCheckValue(index: number) {
     this.client.computersRecords[index].paid = !this.client.computersRecords[
       index
     ].paid;
     this.clientsService.update(this.client);
+  }
+
+  warningLessTime() {
+    this.isWarningLessTime = true;
+    setTimeout(() => {
+      this.isWarningLessTime = false;
+    }, 3000);
   }
 }

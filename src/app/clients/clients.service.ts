@@ -74,15 +74,36 @@ export class ClientsService {
 
   createNotification(
     client: Client,
-    consoleRecordIndex: number,
-    notification: Notification
+    consoleOrComputerRecordIndex: number,
+    notification: Notification,
+    isConsole: Boolean
   ) {
-    client.consolesRecords[consoleRecordIndex].notification = notification;
+    if (isConsole) {
+      client.consolesRecords[
+        consoleOrComputerRecordIndex
+      ].notification = notification;
+    } else {
+      client.computersRecords[
+        consoleOrComputerRecordIndex
+      ].notification = notification;
+    }
     this.update(client);
   }
 
-  markAsReadedNotification(client: Client, consoleRecordIndex: number) {
-    client.consolesRecords[consoleRecordIndex].notification.readed = true;
+  markAsReadedNotification(
+    client: Client,
+    consoleOrComputerRecordIndex: number,
+    isConsole: Boolean
+  ) {
+    if (isConsole) {
+      client.consolesRecords[
+        consoleOrComputerRecordIndex
+      ].notification.readed = true;
+    } else {
+      client.computersRecords[
+        consoleOrComputerRecordIndex
+      ].notification.readed = true;
+    }
     this.update(client);
   }
 

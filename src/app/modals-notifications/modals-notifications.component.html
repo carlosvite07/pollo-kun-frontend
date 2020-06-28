@@ -111,13 +111,58 @@
   </div>
   <div class="modal-body text-center">
     <strong>
-      <span class="text-danger">
+      <span [ngClass]="{ 'text-info': !isEndTime, 'text-danger': isEndTime }">
         {{ body }}
       </span>
     </strong>
+    <div *ngIf="isAddTime">
+      <select [(ngModel)]="selectedHourComputer" class="custom-select">
+        <option *ngFor="let hour of avaliableHoursComputer" [ngValue]="hour">{{
+          hour.name
+        }}</option>
+      </select>
+      <div *ngIf="errorHour" class="text-danger font-weight-bold">
+        Selecciona una hora
+      </div>
+    </div>
+    <div *ngIf="isLessTime">
+      <select [(ngModel)]="selectedHourComputer" class="custom-select">
+        <option *ngFor="let hour of avaliableHoursComputer" [ngValue]="hour">{{
+          hour.name
+        }}</option>
+      </select>
+      <div *ngIf="errorHour" class="text-danger font-weight-bold">
+        Selecciona una hora
+      </div>
+      <div *ngIf="errorLessHour" class="text-danger font-weight-bold">
+        No se puede reducir esa cantidad. Intenta reducir menos tiempo.
+      </div>
+    </div>
   </div>
+
   <div class="modal-footer">
-    <button type="button" class="btn btn-success" (click)="computerEndTime()">
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="computerEndTime()"
+      *ngIf="isEndTime"
+    >
+      Aceptar
+    </button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="computerAddTime()"
+      *ngIf="isAddTime"
+    >
+      Aceptar
+    </button>
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="computerLessTime()"
+      *ngIf="isLessTime"
+    >
       Aceptar
     </button>
     <button

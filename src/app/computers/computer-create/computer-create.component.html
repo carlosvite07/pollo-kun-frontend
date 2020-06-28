@@ -15,6 +15,14 @@
     </div>
   </div>
   <div class="col-12 col-md text-center">
+    <label><strong>Tiempo</strong></label>
+    <select [(ngModel)]="selectedHour" class="custom-select">
+      <option *ngFor="let hour of hours" [ngValue]="hour">{{
+        hour.name
+      }}</option>
+    </select>
+  </div>
+  <div class="col-12 col-md text-center">
     <label><strong>Acciones</strong></label
     ><br />
     <button (click)="makeARecord()" type="button" class="btn btn-success">

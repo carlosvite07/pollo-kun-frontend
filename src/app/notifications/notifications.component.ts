@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from '../clients/client.model';
 import { ConsolesService } from '../consoles/shared/consoles.service';
+import { ComputersService } from '../computers/computers.service';
 import { Notification } from '../notifications/notification.model';
 import { timer } from 'rxjs';
 
@@ -11,19 +12,20 @@ import { timer } from 'rxjs';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
-  minutesNotification: number = 2;
+  minutesNotification: number = 30;
   notifications: any[] = [];
   clients;
   constructor(
     private clientsService: ClientsService,
-    private consolesService: ConsolesService
+    private consolesService: ConsolesService,
+    private computersService: ComputersService
   ) {}
 
   ngOnInit() {
     this.clientsService.activeClients$.subscribe(clients => {
       let now = new Date();
       this.notifications = [];
-      this.isConsoleRecordOnTime(clients, now);
+      this.isClientRecordsOnTime(clients, now);
       this.clients = clients;
     });
 
@@ -31,12 +33,12 @@ export class NotificationsComponent implements OnInit {
     source.subscribe(() => {
       let now = new Date();
       if (this.clients) {
-        this.isConsoleRecordOnTime(this.clients, now);
+        this.isClientRecordsOnTime(this.clients, now);
       }
     });
   }
 
-  isConsoleRecordOnTime(clients: Client[], now: Date) {
+  isClientRecordsOnTime(clients: Client[], now: Date) {
     let minutesLess = new Date(
       now.getTime() + this.minutesNotification * 60 * 1000
     );
@@ -52,12 +54,14 @@ export class NotificationsComponent implements OnInit {
               if (!consoleRecord.notification) {
                 let notification = {
                   body: `Faltan menos de ${this.minutesNotification} minutos para que termine la ${consoleRecord.console.name} del Cliente${client.counter}`,
-                  readed: false
+                  readed: false,
+                  isConsole: true
                 } as Notification;
                 this.clientsService.createNotification(
                   client,
                   consoleRecordIndex,
-                  notification
+                  notification,
+                  true
                 );
                 this.notifications.push({
                   client: client,
@@ -76,13 +80,58 @@ export class NotificationsComponent implements OnInit {
           }
         });
       }
+      if (client.computersRecords) {
+        client.computersRecords.forEach(
+          (computerRecord, computerRecordIndex) => {
+            if (!computerRecord.finished) {
+              if (computerRecord.endDate < now) {
+                this.computersService.endComputerRecord(
+                  client,
+                  computerRecordIndex
+                );
+              }
+              if (computerRecord.endDate < minutesLess) {
+                if (!computerRecord.notification) {
+                  let notification = {
+                    body: `Faltan menos de ${this.minutesNotification} minutos para que termine la ${computerRecord.computer.name} del Cliente${client.counter}`,
+                    readed: false,
+                    isConsole: false
+                  } as Notification;
+                  this.clientsService.createNotification(
+                    client,
+                    computerRecordIndex,
+                    notification,
+                    false
+                  );
+                  this.notifications.push({
+                    client: client,
+                    computerRecordIndex: computerRecordIndex,
+                    notification: notification
+                  });
+                }
+                if (!computerRecord.notification.readed) {
+                  this.notifications.push({
+                    client: client,
+                    computerRecordIndex: computerRecordIndex,
+                    notification: computerRecord.notification
+                  });
+                }
+              }
+            }
+          }
+        );
+      }
     });
   }
 
-  closeNotification(notification: any) {
+  closeNotification(notification: any, isConsole: Boolean) {
+    const index = isConsole
+    ? notification.consoleRecordIndex
+    : notification.computerRecordIndex;
     this.clientsService.markAsReadedNotification(
       notification.client,
-      notification.consoleRecordIndex
+      index,
+      isConsole
     );
   }
 }

@@ -4,5 +4,5 @@ export class Computer {
   available: boolean;
   hourPrice: number;
   halfHourPrice: number;
-  fiveMinutesPrice: number;
+  tenMinutesPrice: number;
 }
