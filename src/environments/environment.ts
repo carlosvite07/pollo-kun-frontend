@@ -16,15 +16,30 @@
 // };
 
 // Production
+// export const environment = {
+//   production: false,
+//   firebase: {
+//     apiKey: "AIzaSyDOfNFhiBegPNMHldBij5O_kyyVRUlpkFA",
+//     authDomain: "pollo-kun.firebaseapp.com",
+//     databaseURL: "https://pollo-kun.firebaseio.com",
+//     projectId: "pollo-kun",
+//     storageBucket: "pollo-kun.appspot.com",
+//     messagingSenderId: "381404084132"
+//   }
+// };
+
+//New Production
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyDOfNFhiBegPNMHldBij5O_kyyVRUlpkFA",
-    authDomain: "pollo-kun.firebaseapp.com",
-    databaseURL: "https://pollo-kun.firebaseio.com",
-    projectId: "pollo-kun",
-    storageBucket: "pollo-kun.appspot.com",
-    messagingSenderId: "381404084132"
+    apiKey: 'AIzaSyAbZLRD7URPJdUmvM_0FKAtb1gV7u-u3jc',
+    authDomain: 'new-pollo-kun.firebaseapp.com',
+    databaseURL: 'https://new-pollo-kun.firebaseio.com',
+    projectId: 'new-pollo-kun',
+    storageBucket: 'new-pollo-kun.appspot.com',
+    messagingSenderId: '956934307491',
+    appId: '1:956934307491:web:8d1f801a0042fdf9c5c916',
+    measurementId: 'G-JBRHK5498X'
   }
 };
 
