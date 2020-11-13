@@ -18,35 +18,37 @@
     [ngClass]="{ collapse: !showNavbar }"
   >
     <div class="container">
-      <div class="row">
-        <div class="col-12">
+      <div class="row col-12">
+        <div class="col-xs-12 col-md-4">
           <ul class="navbar-nav">
-            <!-- <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="consolas"><strong>Consolas</strong></a>
-                        </li>
-                        <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="dulces"><strong>Dulces</strong></a>
-                        </li>
-                        <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="trabajos"><strong>Trabajos e impresiones</strong></a>
-                        </li>
-                        <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="papeleria"><strong>Papelería</strong></a>
-                        </li> -->
             <li [routerLinkActive]="['active']" class="nav-item">
               <a class="nav-link" routerLink="clientes"
                 ><strong>Clientes</strong></a
               >
             </li>
-            <!-- <li [routerLinkActive]="['active']" class="nav-item">
-                            <a class="nav-link" routerLink="precios"><strong>Precios y Stock</strong></a>
-                        </li> -->
             <li [routerLinkActive]="['active']" class="nav-item">
               <a class="nav-link" routerLink="resumen"
                 ><strong>Resumen</strong></a
               >
             </li>
           </ul>
+        </div>
+        <div class="col-xs-12 col-md-8 d-md-flex justify-content-end">
+          <ngb-alert
+            *ngIf="showEmergencySended"
+            class="mr-3"
+            [dismissible]="false"
+            type="info"
+          >
+            <span>Manten la calma, se ha enviado el mensaje de emergencía</span>
+          </ngb-alert>
+          <button
+            (click)="emergency()"
+            type="button"
+            class="mt-4 mt-md-0 btn btn-danger btn-sm"
+          >
+            Emergencía
+          </button>
         </div>
       </div>
     </div>
