@@ -21,7 +21,7 @@ export class ArticleShowComponent implements OnInit {
   ngOnInit() {
     this.articlesService.getAllArticles().subscribe(data => {
       this.allArticles = data.map(e => {
-        const data = e.payload.doc.data as Article;
+        const data = e.payload.doc.data() as Article;
         return {
           id: e.payload.doc.id,
           name: data.name,

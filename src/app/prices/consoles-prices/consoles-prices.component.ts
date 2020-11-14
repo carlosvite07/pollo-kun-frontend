@@ -69,12 +69,22 @@ export class ConsoleComponent implements OnInit {
     if (this.validation()) {
       this.errorType = this.type === undefined ? true : false;
       if (!this.errorType) {
+        let type;
+        if (this.type == 1) {
+          type = 'series';
+        }
+        if (this.type == 2) {
+          type = 'one';
+        }
+        if (this.type == 3) {
+          type = '360';
+        }
         let newConsole = {
           name: this.name,
           hourPrice: this.hourPrice,
           halfHourPrice: this.halfHourPrice,
           available: true,
-          type: this.type == 1 ? 'one' : '360'
+          type
         } as Console;
         this.recordService.create(newConsole);
         this.clear();

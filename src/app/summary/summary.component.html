@@ -109,6 +109,37 @@
     </div>
 
     <div class="row text-center green">
+      <div class="col">Registros de XBOX SERIES S</div>
+    </div>
+
+    <div class="row text-center" *ngFor="let record of oneRecords">
+      <div class="col">
+        {{ record.console.name }}
+      </div>
+      <div class="col">
+        {{ record.hours }}
+      </div>
+      <div class="col">
+        {{ record.startDate | date: 'h:mm a' }} -
+        {{ record.endDate | date: 'h:mm a d/M/yy' }}<br />
+      </div>
+      <div class="col">
+        {{ record.price | currency }}
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col">
+        <strong>{{ seriesHours }}</strong>
+      </div>
+      <div class="col"></div>
+      <div class="col">
+        <strong>{{ seriesTotal | currency }}</strong>
+      </div>
+    </div>
+
+    <div class="row text-center green">
       <div class="col">Total de consolas</div>
     </div>
 

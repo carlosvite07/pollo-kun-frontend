@@ -67,8 +67,9 @@
           (change)="onChangeConsoleType($event)"
         >
           <option disabled [ngValue]="undefined">Selecciona una opción</option>
-          <option [ngValue]="1">XBOX ONE</option>
-          <option [ngValue]="2">XBOX 360</option>
+          <option [ngValue]="1">XBOX SERIES S</option>
+          <option [ngValue]="2">XBOX ONE</option>
+          <option [ngValue]="3">XBOX 360</option>
         </select>
         <div *ngIf="errorType" class="text-danger">Selecciona un tipo</div>
       </div>

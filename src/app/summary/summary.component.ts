@@ -31,6 +31,9 @@ export class SummaryComponent implements OnInit {
   oneRecords: ConsoleRecord[] = [];
   oneTotal: number = 0;
   oneHours: number = 0;
+  seriesRecords: ConsoleRecord[] = [];
+  seriesTotal: number = 0;
+  seriesHours: number = 0;
   threeSixtyRecords: ConsoleRecord[] = [];
   threeSixtyTotal: number = 0;
   threeSixtyHours: number = 0;
@@ -300,6 +303,9 @@ export class SummaryComponent implements OnInit {
     this.oneRecords = [];
     this.oneTotal = 0;
     this.oneHours = 0;
+    this.seriesRecords = [];
+    this.seriesTotal = 0;
+    this.seriesHours = 0;
     this.threeSixtyRecords = [];
     this.threeSixtyTotal = 0;
     this.threeSixtyHours = 0;
@@ -308,11 +314,17 @@ export class SummaryComponent implements OnInit {
       record.startDate = record.startDate.toDate();
       record.endDate = record.endDate.toDate();
       this.totalHours += record.hours;
+      if (record.console.type === 'series') {
+        this.seriesRecords.push(record as ConsoleRecord);
+        this.seriesTotal += record.price;
+        this.seriesHours += record.hours;
+      }
       if (record.console.type === 'one') {
         this.oneRecords.push(record as ConsoleRecord);
         this.oneTotal += record.price;
         this.oneHours += record.hours;
-      } else {
+      }
+      if (record.console.type === '360') {
         this.threeSixtyRecords.push(record as ConsoleRecord);
         this.threeSixtyTotal += record.price;
         this.threeSixtyHours += record.hours;
@@ -389,6 +401,16 @@ export class SummaryComponent implements OnInit {
       Stock: null,
       Tiempo: this.oneHours,
       Total: this.oneTotal,
+      Ganancia: null
+    });
+
+    this.exportableData.push({
+      Nombre: 'XBOX SERIES S',
+      Vendidos: null,
+      Precio: null,
+      Stock: null,
+      Tiempo: this.seriesHours,
+      Total: this.seriesTotal,
       Ganancia: null
     });
 
