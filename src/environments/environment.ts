@@ -15,6 +15,19 @@
 //   }
 // };
 
+//Papelería la goma
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyAP80cGlLHnvqXV0WByNZ7bnplqXqoatI8',
+    authDomain: 'papelerialagoma-prod.firebaseapp.com',
+    projectId: 'papelerialagoma-prod',
+    storageBucket: 'papelerialagoma-prod.appspot.com',
+    messagingSenderId: '864070137661',
+    appId: '1:864070137661:web:fd360247911595e95f3754'
+  }
+};
+
 // Production
 // export const environment = {
 //   production: false,
@@ -29,19 +42,19 @@
 // };
 
 //New Production
-export const environment = {
-  production: false,
-  firebase: {
-    apiKey: 'AIzaSyAbZLRD7URPJdUmvM_0FKAtb1gV7u-u3jc',
-    authDomain: 'new-pollo-kun.firebaseapp.com',
-    databaseURL: 'https://new-pollo-kun.firebaseio.com',
-    projectId: 'new-pollo-kun',
-    storageBucket: 'new-pollo-kun.appspot.com',
-    messagingSenderId: '956934307491',
-    appId: '1:956934307491:web:8d1f801a0042fdf9c5c916',
-    measurementId: 'G-JBRHK5498X'
-  }
-};
+// export const environment = {
+//   production: false,
+//   firebase: {
+//     apiKey: 'AIzaSyAbZLRD7URPJdUmvM_0FKAtb1gV7u-u3jc',
+//     authDomain: 'new-pollo-kun.firebaseapp.com',
+//     databaseURL: 'https://new-pollo-kun.firebaseio.com',
+//     projectId: 'new-pollo-kun',
+//     storageBucket: 'new-pollo-kun.appspot.com',
+//     messagingSenderId: '956934307491',
+//     appId: '1:956934307491:web:8d1f801a0042fdf9c5c916',
+//     measurementId: 'G-JBRHK5498X'
+//   }
+// };
 
 /*
  * For easier debugging in development mode, you can import the following file
