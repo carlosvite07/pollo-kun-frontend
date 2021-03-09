@@ -14,7 +14,7 @@ export class ComputersPricesComponent implements OnInit {
   name: string = '';
   hourPrice: number = 0;
   halfHourPrice: number = 0;
-  tenMinutesPrice: number = 0;
+  fiftenMinutesPrice: number = 0;
   errorName: boolean = false;
   errorHourPrice: boolean = false;
   errorHalfHourPrice: boolean = false;
@@ -38,7 +38,7 @@ export class ComputersPricesComponent implements OnInit {
     this.name = this.selectedComputer.name;
     this.hourPrice = this.selectedComputer.hourPrice;
     this.halfHourPrice = this.selectedComputer.halfHourPrice;
-    this.tenMinutesPrice = this.selectedComputer.tenMinutesPrice;
+    this.fiftenMinutesPrice = this.selectedComputer.fiftenMinutesPrice;
     this.validation();
   }
 
@@ -47,7 +47,7 @@ export class ComputersPricesComponent implements OnInit {
     this.name = '';
     this.hourPrice = 0;
     this.halfHourPrice = 0;
-    this.tenMinutesPrice = 0;
+    this.fiftenMinutesPrice = 0;
   }
 
   onChangeName(): void {
@@ -63,7 +63,7 @@ export class ComputersPricesComponent implements OnInit {
   }
 
   onChangeTenMinutesPrice(): void {
-    this.errorTenMinutesPrice = this.tenMinutesPrice <= 0 ? true : false;
+    this.errorTenMinutesPrice = this.fiftenMinutesPrice <= 0 ? true : false;
   }
 
   create(): void {
@@ -73,7 +73,7 @@ export class ComputersPricesComponent implements OnInit {
         available: true,
         hourPrice: this.hourPrice,
         halfHourPrice: this.halfHourPrice,
-        tenMinutesPrice: this.tenMinutesPrice
+        fiftenMinutesPrice: this.fiftenMinutesPrice
       } as Computer;
       this.computersService.create(newComputer);
       this.clear();
@@ -85,7 +85,7 @@ export class ComputersPricesComponent implements OnInit {
       this.selectedComputer.name = this.name;
       this.selectedComputer.hourPrice = this.hourPrice;
       this.selectedComputer.halfHourPrice = this.halfHourPrice;
-      this.selectedComputer.tenMinutesPrice = this.tenMinutesPrice;
+      this.selectedComputer.fiftenMinutesPrice = this.fiftenMinutesPrice;
       this.computersService.update(this.selectedComputer);
       this.clear();
     }
@@ -100,7 +100,7 @@ export class ComputersPricesComponent implements OnInit {
     this.errorName = this.name.length <= 0 ? true : false;
     this.errorHourPrice = this.hourPrice <= 0 ? true : false;
     this.errorHalfHourPrice = this.halfHourPrice <= 0 ? true : false;
-    this.errorTenMinutesPrice = this.tenMinutesPrice <= 0 ? true : false;
+    this.errorTenMinutesPrice = this.fiftenMinutesPrice <= 0 ? true : false;
     if (
       this.errorName ||
       this.errorHourPrice ||

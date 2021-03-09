@@ -179,11 +179,11 @@ export class ComputersService {
     let total: number = 0;
     let hourPrice = computer.hourPrice;
     let halfHourPrice = computer.halfHourPrice;
-    let tenMinutesPrice = computer.tenMinutesPrice;
+    let fiftenMinutesPrice = computer.fiftenMinutesPrice;
 
     if (minutesAndHours.minutes != 0) {
-      if (minutesAndHours.minutes <= 10) {
-        total += tenMinutesPrice;
+      if (minutesAndHours.minutes <= 15) {
+        total += fiftenMinutesPrice;
       } else if (minutesAndHours.minutes <= 30) {
         total += halfHourPrice;
       } else {

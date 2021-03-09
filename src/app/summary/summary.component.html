@@ -46,9 +46,9 @@
       <div class="col"><strong>Precio</strong></div>
     </div>
 
-    <div class="row text-center green">
+    <!-- <div class="row text-center green">
       <div class="col">Registros de XBOX 360</div>
-    </div>
+    </div> 
 
     <div class="row text-center" *ngFor="let record of threeSixtyRecords">
       <div class="col">
@@ -64,7 +64,7 @@
       <div class="col">
         {{ record.price | currency }}
       </div>
-    </div>
+    </div> -->
 
     <div class="row text-center">
       <div class="col"></div>
@@ -376,6 +376,25 @@
       <div class="col cyan"><strong>SubTotal</strong></div>
       <div class="col cyan">
         <strong>{{ electronicsTotal | currency }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <h3 class="p-1">Papelería y Electrónicos</h3>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col cyan"><strong>Sub Total</strong></div>
+      <div class="col cyan">
+        <strong>{{ articlesTotal + electronicsTotal | currency }}</strong>
       </div>
     </div>
   </div>

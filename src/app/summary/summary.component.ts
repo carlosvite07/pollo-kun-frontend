@@ -34,9 +34,9 @@ export class SummaryComponent implements OnInit {
   seriesRecords: ConsoleRecord[] = [];
   seriesTotal: number = 0;
   seriesHours: number = 0;
-  threeSixtyRecords: ConsoleRecord[] = [];
-  threeSixtyTotal: number = 0;
-  threeSixtyHours: number = 0;
+  // threeSixtyRecords: ConsoleRecord[] = [];
+  // threeSixtyTotal: number = 0;
+  // threeSixtyHours: number = 0;
 
   allComputers: Computer[] = [];
   computersTotal: number = 0;
@@ -306,9 +306,9 @@ export class SummaryComponent implements OnInit {
     this.seriesRecords = [];
     this.seriesTotal = 0;
     this.seriesHours = 0;
-    this.threeSixtyRecords = [];
-    this.threeSixtyTotal = 0;
-    this.threeSixtyHours = 0;
+    // this.threeSixtyRecords = [];
+    // this.threeSixtyTotal = 0;
+    // this.threeSixtyHours = 0;
     consolesRecords.forEach(record => {
       this.recordsTotal += record.price;
       record.startDate = record.startDate.toDate();
@@ -324,11 +324,11 @@ export class SummaryComponent implements OnInit {
         this.oneTotal += record.price;
         this.oneHours += record.hours;
       }
-      if (record.console.type === '360') {
-        this.threeSixtyRecords.push(record as ConsoleRecord);
-        this.threeSixtyTotal += record.price;
-        this.threeSixtyHours += record.hours;
-      }
+      // if (record.console.type === '360') {
+        // this.threeSixtyRecords.push(record as ConsoleRecord);
+        // this.threeSixtyTotal += record.price;
+        // this.threeSixtyHours += record.hours;
+      // }
     });
   }
 
@@ -384,15 +384,15 @@ export class SummaryComponent implements OnInit {
   }
 
   toExcel(): void {
-    this.exportableData.push({
-      Nombre: 'XBOX 360',
-      Vendidos: null,
-      Precio: null,
-      Stock: null,
-      Tiempo: this.threeSixtyHours,
-      Total: this.threeSixtyTotal,
-      Ganancia: null
-    });
+    // this.exportableData.push({
+    //   Nombre: 'XBOX 360',
+    //   Vendidos: null,
+    //   Precio: null,
+    //   Stock: null,
+    //   Tiempo: this.threeSixtyHours,
+    //   Total: this.threeSixtyTotal,
+    //   Ganancia: null
+    // });
 
     this.exportableData.push({
       Nombre: 'XBOX ONE',
