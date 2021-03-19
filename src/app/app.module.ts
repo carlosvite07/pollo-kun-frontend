@@ -16,6 +16,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { PricesComponent } from './prices/prices.component';
 
 import { ClientsModule } from './clients/clients.module';
+import { ComboModule } from './combo/combo.module';
 import { ConsolesModule } from './consoles/consoles.module';
 import { ConsoleComponent } from './prices/consoles-prices/consoles-prices.component';
 import { CandiesPricesComponent } from './prices/candies-prices/candies-prices.component';
@@ -25,6 +26,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ModalsNotificationsComponent } from './modals-notifications/modals-notifications.component';
 import { ComputersPricesComponent } from './prices/computers-prices/computers-prices.component';
 import { ElectronicsPricesComponent } from './prices/electronics-prices/electronics-prices.component';
+import { ComboModalComponent } from './combo-modal/combo-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,13 +41,15 @@ import { ElectronicsPricesComponent } from './prices/electronics-prices/electron
     NotificationsComponent,
     ModalsNotificationsComponent,
     ComputersPricesComponent,
-    ElectronicsPricesComponent
+    ElectronicsPricesComponent,
+    ComboModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     NgbModule,
+    ComboModule,
     ConsolesModule,
     ClientsModule,
     AngularFireModule.initializeApp(

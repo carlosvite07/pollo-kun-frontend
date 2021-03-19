@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComboModule } from '../combo/combo.module';
 import { ConsolesModule } from '../consoles/consoles.module';
 import { CandiesModule } from '../candies/candies.module';
 import { WorksModule } from '../works/works.module';
@@ -20,6 +21,7 @@ import { ClientsShowComponent } from './clients-show/clients-show.component';
     CommonModule,
     ClientsRoutingModule,
     NgbModule,
+    ComboModule,
     ConsolesModule,
     CandiesModule,
     ComputersModule,

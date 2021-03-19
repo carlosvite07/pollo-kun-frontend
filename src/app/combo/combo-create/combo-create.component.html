@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-12 col-md text-center">
+    <label><strong>Combo</strong></label>
+    <select class="custom-select" (change)="onChangeSelection($event)">
+      <option value="1">Combo 1</option>
+    </select>
+    <div *ngIf="errorCombo" class="text-danger">Selecciona un combo</div>
+  </div>
+  <div class="col-12 col-md text-center">
+    <label><strong>Acciones</strong></label
+    ><br />
+    <button (click)="showComboModal()" type="button" class="btn btn-success">
+      Registrar Combo
+    </button>
+  </div>
+</div>

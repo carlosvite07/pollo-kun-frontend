@@ -8,7 +8,7 @@ import { ClientsService } from '../clients.service';
   styleUrls: ['./clients-show.component.scss']
 })
 export class ClientsShowComponent implements OnInit {
-  @Input() client;
+  @Input() client: Client;
   debt: number = 0;
   errorComputers: boolean = false;
   constructor(private clientsService: ClientsService) {}
