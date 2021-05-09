@@ -56,7 +56,13 @@ export class SummaryComponent implements OnInit {
   electronicsTotal: number = 0;
 
   monthSelection: number = 1;
-  exportableData = [];
+  exportableData = {
+    xboxsComputers: [],
+    works: [],
+    candie: [],
+    article: [],
+    electronic: []
+  };
   allWorks = [];
   allCandies = [];
   allArticles = [];
@@ -76,14 +82,14 @@ export class SummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    let start = new Date(
+    const start = new Date(
       this.fromDate.year,
       this.fromDate.month - 1,
       this.fromDate.day,
       0,
       0
     );
-    let end = new Date(
+    const end = new Date(
       this.fromDate.year,
       this.fromDate.month - 1,
       this.fromDate.day + 1,
@@ -97,11 +103,8 @@ export class SummaryComponent implements OnInit {
         return {
           Nombre: e.payload.doc.data()['name'],
           Precio: e.payload.doc.data()['price'],
-          Stock: null,
           Vendidos: null,
-          Tiempo: null,
-          Total: null,
-          Ganancia: null
+          Total: null
         };
       });
     });
@@ -115,9 +118,9 @@ export class SummaryComponent implements OnInit {
         return {
           Nombre: e.payload.doc.data()['name'],
           Precio: e.payload.doc.data()['price'],
+          Unitario: e.payload.doc.data()['history'][0].unitary,
           Stock: stock,
-          Vendidos: 0,
-          Tiempo: null,
+          Vendidos: null,
           Total: null,
           Ganancia: null
         };
@@ -133,9 +136,9 @@ export class SummaryComponent implements OnInit {
         return {
           Nombre: e.payload.doc.data()['name'],
           Precio: e.payload.doc.data()['price'],
+          Unitario: e.payload.doc.data()['history'][0].unitary,
           Stock: stock,
-          Vendidos: 0,
-          Tiempo: null,
+          Vendidos: null,
           Total: null,
           Ganancia: null
         };
@@ -151,9 +154,9 @@ export class SummaryComponent implements OnInit {
         return {
           Nombre: e.payload.doc.data()['name'],
           Precio: e.payload.doc.data()['price'],
+          Unitario: e.payload.doc.data()['history'][0].unitary,
           Stock: stock,
-          Vendidos: 0,
-          Tiempo: null,
+          Vendidos: null,
           Total: null,
           Ganancia: null
         };
@@ -162,8 +165,8 @@ export class SummaryComponent implements OnInit {
   }
 
   onDateSelection(date: NgbDate) {
-    let start;
-    let end;
+    let start: Date;
+    let end: Date;
 
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -325,9 +328,9 @@ export class SummaryComponent implements OnInit {
         this.oneHours += record.hours;
       }
       // if (record.console.type === '360') {
-        // this.threeSixtyRecords.push(record as ConsoleRecord);
-        // this.threeSixtyTotal += record.price;
-        // this.threeSixtyHours += record.hours;
+      // this.threeSixtyRecords.push(record as ConsoleRecord);
+      // this.threeSixtyTotal += record.price;
+      // this.threeSixtyHours += record.hours;
       // }
     });
   }
@@ -394,158 +397,150 @@ export class SummaryComponent implements OnInit {
     //   Ganancia: null
     // });
 
-    this.exportableData.push({
+    this.exportableData.xboxsComputers.push({
       Nombre: 'XBOX ONE',
-      Vendidos: null,
-      Precio: null,
-      Stock: null,
       Tiempo: this.oneHours,
-      Total: this.oneTotal,
-      Ganancia: null
+      Total: this.oneTotal
     });
 
-    this.exportableData.push({
+    this.exportableData.xboxsComputers.push({
       Nombre: 'XBOX SERIES S',
-      Vendidos: null,
-      Precio: null,
-      Stock: null,
       Tiempo: this.seriesHours,
-      Total: this.seriesTotal,
-      Ganancia: null
+      Total: this.seriesTotal
     });
 
-    this.exportableData.push({
+    this.exportableData.xboxsComputers.push({
       Nombre: 'Computadoras',
-      Vendidos: null,
-      Precio: null,
-      Stock: null,
       Tiempo: this.totalComputersHours,
-      Total: this.computersTotal,
-      Ganancia: null
+      Total: this.computersTotal
     });
 
-    this.exportableData.push({
-      Nombre: 'Trabajos e impresiones'
+    this.exportableData.xboxsComputers.push({
+      Nombre: null,
+      Tiempo: null,
+      Total: null
+    });
+
+    this.exportableData.xboxsComputers.push({
+      Nombre: null,
+      Tiempo: "TOTAL",
+      Total: this.oneTotal + this.seriesTotal + this.computersTotal
     });
 
     this.allWorks.forEach(work => {
-      this.exportableData.push(work);
-    });
-
-    this.exportableData.push({
-      Nombre: 'Dulces'
+      this.exportableData.works.push(work);
     });
 
     this.allCandies.forEach(candie => {
-      this.exportableData.push(candie);
-    });
-
-    this.exportableData.push({
-      Nombre: 'Papelería'
+      this.exportableData.candie.push(candie);
     });
 
     this.allArticles.forEach(article => {
-      this.exportableData.push(article);
-    });
-
-    this.exportableData.push({
-      Nombre: 'Electrónicos'
+      this.exportableData.article.push(article);
     });
 
     this.allElectronics.forEach(electronic => {
-      this.exportableData.push(electronic);
+      this.exportableData.electronic.push(electronic);
     });
 
+    let totalWorks = 0;
     this.allWorksRecords.forEach(work => {
-      let index = this.exportableData.findIndex(
+      let index = this.exportableData.works.findIndex(
         element => element['Nombre'] == work.name
       );
       if (index === -1) {
-        let indexAnother = this.exportableData.findIndex(
+        let indexAnother = this.exportableData.works.findIndex(
           element => element['Nombre'].substring(0, 4) === 'Otro'
         );
-        this.exportableData[indexAnother]['Vendidos'] += work.quantity;
-        this.exportableData[indexAnother]['Total'] += work.price;
+        this.exportableData.works[indexAnother]['Vendidos'] += work.quantity;
+        this.exportableData.works[indexAnother]['Total'] += work.price;
+        totalWorks += work.price;
       } else {
-        this.exportableData[index]['Vendidos'] += work.quantity;
-        this.exportableData[index]['Total'] += work.price;
-        this.exportableData[index]['Ganancia'] = null;
+        this.exportableData.works[index]['Vendidos'] += work.quantity;
+        this.exportableData.works[index]['Total'] += work.price;
+        totalWorks += work.price;
       }
     });
 
-    let lastCandieIndex = 4;
-    this.allCandiesPurchases.forEach(candie => {
-      let index = this.exportableData.findIndex(
-        element => element['Nombre'] == candie.candie.name
-      );
-      if (index !== -1) {
-        lastCandieIndex = index + 1;
-        this.exportableData[index]['Vendidos'] += candie.quantity;
-        this.exportableData[index]['Total'] += candie.price;
-        this.exportableData[index]['Ganancia'] += candie.profit;
-      } else {
-        const candieObject = {
-          Nombre: candie.candie.name,
-          Precio: candie.candie.price,
-          Stock: 0,
-          Tiempo: null,
-          Total: candie.price,
-          Vendidos: candie.quantity,
-          Ganancia: candie.profit
-        };
-        this.exportableData.splice(lastCandieIndex, 0, candieObject);
-      }
+    this.exportableData.works.push({
+      Nombre: null,
+      Precio: null,
+      Vendidos: null,
+      Total: null
     });
 
-    let lastElectronicIndex = 4;
-    this.allElectronicsPurchases.forEach(electronic => {
-      let index = this.exportableData.findIndex(
-        element => element['Nombre'] == electronic.electronic.name
-      );
-      if (index !== -1) {
-        lastElectronicIndex = index + 1;
-        this.exportableData[index]['Vendidos'] += electronic.quantity;
-        this.exportableData[index]['Total'] += electronic.price;
-        this.exportableData[index]['Ganancia'] += electronic.profit;
-      } else {
-        const candiObject = {
-          Nombre: electronic.electronic.name,
-          Precio: electronic.electronic.price,
-          Stock: 0,
-          Tiempo: null,
-          Total: electronic.price,
-          Vendidos: electronic.quantity,
-          Ganancia: electronic.profit
-        };
-        this.exportableData.splice(lastElectronicIndex, 0, candiObject);
-      }
+    this.exportableData.works.push({
+      Nombre: null,
+      Precio: null,
+      Vendidos: "TOTAL",
+      Total: totalWorks
     });
 
-    let lastArticleIndex = 4;
-    this.allArticlesPurchases.forEach(article => {
-      let index = this.exportableData.findIndex(
-        element => element['Nombre'] == article.article.name
-      );
-      if (index !== -1) {
-        lastArticleIndex = index + 1;
-        this.exportableData[index]['Vendidos'] += article.quantity;
-        this.exportableData[index]['Total'] += article.price;
-        this.exportableData[index]['Ganancia'] += article.profit;
-      } else {
-        const candiObject = {
-          Nombre: article.article.name,
-          Precio: article.article.price,
-          Stock: 0,
-          Tiempo: null,
-          Total: article.price,
-          Vendidos: article.quantity,
-          Ganancia: article.profit
-        };
-        this.exportableData.splice(lastElectronicIndex, 0, candiObject);
-      }
-    });
+    this.buildExportExcelObject(this.allCandiesPurchases, 'candie');
+    this.buildExportExcelObject(this.allArticlesPurchases, 'article');
+    this.buildExportExcelObject(this.allElectronicsPurchases, 'electronic');
 
-    this.initialService.exportAsExcelFile(this.exportableData, 'sample');
-    this.exportableData = [];
+    this.initialService.exportAsExcelFile(
+      this.exportableData,
+      this.fromDate,
+      this.toDate
+    );
+    this.exportableData = {
+      xboxsComputers: [],
+      works: [],
+      candie: [],
+      article: [],
+      electronic: []
+    };
   }
+
+  private buildExportExcelObject = (purchases, keyName: string) => {
+    let lastIndex = 4;
+    let totalMoney = 0;
+    let totalProfit = 0;
+    purchases.forEach(purchase => {
+      let index = this.exportableData[keyName].findIndex(
+        element => element['Nombre'] == purchase[keyName].name
+      );
+      if (index !== -1) {
+        lastIndex = index + 1;
+        this.exportableData[keyName][index]['Vendidos'] += purchase.quantity;
+        this.exportableData[keyName][index]['Total'] += purchase.price;
+        this.exportableData[keyName][index]['Ganancia'] += purchase.profit;
+        totalMoney += purchase.price;
+        totalProfit += purchase.profit;
+      } else {
+        const exportObject = {
+          Nombre: purchase[keyName].name,
+          Precio: purchase[keyName].price,
+          Unitario: purchase[keyName].history[0].unitary,
+          Stock: null,
+          Total: purchase.price,
+          Vendidos: purchase.quantity,
+          Ganancia: purchase.profit
+        };
+        totalMoney += purchase.price;
+        totalProfit += purchase.profit;
+        this.exportableData[keyName].splice(lastIndex, 0, exportObject);
+      }
+    });
+    this.exportableData[keyName].push({
+      Nombre: null,
+      Precio: null,
+      Unitario: null,
+      Stock: null,
+      Vendidos: null,
+      Total: null,
+      Ganancia: null
+    });
+    this.exportableData[keyName].push({
+      Nombre: null,
+      Precio: null,
+      Unitario: null,
+      Stock: null,
+      Vendidos: 'TOTAL',
+      Total: totalMoney,
+      Ganancia: totalProfit
+    });
+  };
 }
