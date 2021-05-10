@@ -305,6 +305,144 @@ export class SummaryComponent implements OnInit {
     let start: Date;
     let end: Date;
 
+    this.workingHours = {
+      '7:00 - 8:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '8:00 - 9:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '9:00 - 10:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '10:00 - 11:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '11:00 - 12:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '12:00 - 13:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '13:00 - 14:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '14:00 - 15:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '15:00 - 16:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '16:00 - 17:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '17:00 - 18:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '18:00 - 19:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '19:00 - 20:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '20:00 - 21:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      },
+      '21:00 - 22:00': {
+        Domingo: 0,
+        Lunes: 0,
+        Martes: 0,
+        Miércoles: 0,
+        Jueves: 0,
+        Viernes: 0,
+        Sábado: 0
+      }
+    };
+
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
@@ -505,7 +643,7 @@ export class SummaryComponent implements OnInit {
       this.candiesTotal += candie.price;
       const candieDate = candie.date.toDate();
       candie.date = candieDate;
-      this.addToWorkingHours(candie.profit, candieDate);
+      this.addToWorkingHours(candie.price, candieDate);
       return candie as CandiePurchase;
     });
   }
@@ -527,7 +665,7 @@ export class SummaryComponent implements OnInit {
       this.articlesTotal += article.price;
       const articleDate = article.date.toDate();
       article.date = articleDate;
-      this.addToWorkingHours(article.profit, articleDate);
+      this.addToWorkingHours(article.price, articleDate);
       return article as ArticlePurchase;
     });
   }
@@ -538,7 +676,7 @@ export class SummaryComponent implements OnInit {
       this.electronicsTotal += electronic.price;
       const electronicDate = electronic.date.toDate();
       electronic.date = electronicDate;
-      this.addToWorkingHours(electronic.profit, electronicDate);
+      this.addToWorkingHours(electronic.price, electronicDate);
       return electronic as ElectronicPurchase;
     });
   }
@@ -553,8 +691,6 @@ export class SummaryComponent implements OnInit {
     const startMinutes = startDate.getMinutes();
     const dayOfTheWeek = startDate.getDay();
     if (endDate === null) {
-      if (startHour === 13) {
-      }
       this.switchDay(dayOfTheWeek, startHour, price);
     } else {
       const endHour = endDate.getHours();
