@@ -17,4 +17,14 @@ export class ComboService {
     };
     this.comboShowModal.next(object);
   }
+
+    //Console Modal
+    // confirmEndConsoleRecod(client: Client, consoleIndex: number) {
+    //   let object = {
+    //     client: client,
+    //     consoleIndex: consoleIndex
+    //   };
+    //   this.consoleRecordEnd.next(object);
+    // }
+  
 }

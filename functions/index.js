@@ -4,12 +4,11 @@ admin.initializeApp();
 
 const twilio = require('twilio');
 
-const twilioNumber = '+12028664457';
+const accountSid = functions.config().twilio.sid;
+const authToken = functions.config().twilio.token;
+const twilioNumber = functions.config().twilio.phone;
 
-const client = new twilio(
-  'AC998ae5494e59a09dc1b987e06b452fd5',
-  '965849dd209c2f2f47ff1b9568cc6f1b'
-);
+const client = new twilio(accountSid, authToken);
 
 exports.sendSMS = functions.firestore
   .document('emergencies/{emergencyId}')

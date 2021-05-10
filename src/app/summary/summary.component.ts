@@ -453,7 +453,12 @@ export class SummaryComponent implements OnInit {
       this.recordsTotal += record.price;
       record.startDate = record.startDate.toDate();
       record.endDate = record.endDate.toDate();
-      this.addToWorkingHours(record.startDate, record.endDate);
+      this.addToWorkingHours(
+        record.price,
+        record.startDate,
+        record.endDate,
+        record.hours * 60
+      );
       this.totalHours += record.hours;
       if (record.console.type === 'series') {
         this.seriesRecords.push(record as ConsoleRecord);
@@ -480,7 +485,12 @@ export class SummaryComponent implements OnInit {
       this.computersTotal += computer.price;
       computer.startDate = computer.startDate.toDate();
       computer.endDate = computer.endDate.toDate();
-      this.addToWorkingHours(computer.startDate, computer.endDate);
+      this.addToWorkingHours(
+        computer.price,
+        computer.startDate,
+        computer.endDate,
+        computer.hours * 60 + computer.minutes
+      );
       this.totalComputersMinutes += computer.hours * 60;
       this.totalComputersMinutes += computer.minutes;
       return computer as CandiePurchase;
@@ -495,7 +505,7 @@ export class SummaryComponent implements OnInit {
       this.candiesTotal += candie.price;
       const candieDate = candie.date.toDate();
       candie.date = candieDate;
-      this.addToWorkingHours(candieDate);
+      this.addToWorkingHours(candie.profit, candieDate);
       return candie as CandiePurchase;
     });
   }
@@ -506,7 +516,7 @@ export class SummaryComponent implements OnInit {
       this.worksTotal += work.price;
       const workDate = work.date.toDate();
       work.date = workDate;
-      this.addToWorkingHours(workDate);
+      this.addToWorkingHours(work.price, workDate);
       return work as WorkRecord;
     });
   }
@@ -517,7 +527,7 @@ export class SummaryComponent implements OnInit {
       this.articlesTotal += article.price;
       const articleDate = article.date.toDate();
       article.date = articleDate;
-      this.addToWorkingHours(articleDate);
+      this.addToWorkingHours(article.profit, articleDate);
       return article as ArticlePurchase;
     });
   }
@@ -528,30 +538,58 @@ export class SummaryComponent implements OnInit {
       this.electronicsTotal += electronic.price;
       const electronicDate = electronic.date.toDate();
       electronic.date = electronicDate;
-      this.addToWorkingHours(electronicDate);
+      this.addToWorkingHours(electronic.profit, electronicDate);
       return electronic as ElectronicPurchase;
     });
   }
 
-  private addToWorkingHours = (startDate: Date, endDate: Date = null) => {
+  private addToWorkingHours = (
+    price: number,
+    startDate: Date,
+    endDate: Date = null,
+    totalMinutes = null
+  ) => {
     const startHour = startDate.getHours();
     const startMinutes = startDate.getMinutes();
     const dayOfTheWeek = startDate.getDay();
     if (endDate === null) {
-      this.switchDay(dayOfTheWeek, startHour, 1);
+      if (startHour === 13) {
+      }
+      this.switchDay(dayOfTheWeek, startHour, price);
     } else {
       const endHour = endDate.getHours();
       const endMinutes = endDate.getMinutes();
       if (startHour === endHour) {
-        this.switchDay(dayOfTheWeek, startHour, endMinutes);
+        this.switchDay(dayOfTheWeek, startHour, price);
       } else {
-        this.switchDay(dayOfTheWeek, startHour, 60 - startMinutes);
+        this.switchDay(
+          dayOfTheWeek,
+          startHour,
+          this.getProporcionalProfit(price, 60 - startMinutes, totalMinutes)
+        );
         for (let index = 0; index < endHour - 1 - startHour; index++) {
-          this.switchDay(dayOfTheWeek, startHour + index + 1, 60);
+          this.switchDay(
+            dayOfTheWeek,
+            startHour + index + 1,
+            this.getProporcionalProfit(price, 60, totalMinutes)
+          );
         }
-        this.switchDay(dayOfTheWeek, endHour, endMinutes);
+        this.switchDay(
+          dayOfTheWeek,
+          endHour,
+          this.getProporcionalProfit(price, endMinutes, totalMinutes)
+        );
       }
     }
+  };
+
+  private getProporcionalProfit = (
+    price,
+    minutes: number,
+    totalMinutes: number
+  ) => {
+    const proporcional = (minutes * 100) / totalMinutes;
+    return proporcional * 0.01 * price;
   };
 
   private switchDay = (day: number, hour: number, minutes: number) => {

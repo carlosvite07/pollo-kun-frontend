@@ -3,17 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Testing
-export const environment = {
-  production: false,
-  firebase: {
-    apiKey: 'AIzaSyBK2GmcSNowhxCbme5Ddmdw4FjaOCzJ59I',
-    authDomain: 'pollo-kun-test.firebaseapp.com',
-    databaseURL: 'https://pollo-kun-test.firebaseio.com',
-    projectId: 'pollo-kun-test',
-    storageBucket: 'pollo-kun-test.appspot.com',
-    messagingSenderId: '1090388466392'
-  }
-};
+// export const environment = {
+//   production: false,
+//   firebase: {
+//     apiKey: 'AIzaSyBK2GmcSNowhxCbme5Ddmdw4FjaOCzJ59I',
+//     authDomain: 'pollo-kun-test.firebaseapp.com',
+//     databaseURL: 'https://pollo-kun-test.firebaseio.com',
+//     projectId: 'pollo-kun-test',
+//     storageBucket: 'pollo-kun-test.appspot.com',
+//     messagingSenderId: '1090388466392'
+//   }
+// };
 
 // Production
 // export const environment = {
@@ -29,19 +29,19 @@ export const environment = {
 // };
 
 //New Production
-// export const environment = {
-//   production: false,
-//   firebase: {
-//     apiKey: 'AIzaSyAbZLRD7URPJdUmvM_0FKAtb1gV7u-u3jc',
-//     authDomain: 'new-pollo-kun.firebaseapp.com',
-//     databaseURL: 'https://new-pollo-kun.firebaseio.com',
-//     projectId: 'new-pollo-kun',
-//     storageBucket: 'new-pollo-kun.appspot.com',
-//     messagingSenderId: '956934307491',
-//     appId: '1:956934307491:web:8d1f801a0042fdf9c5c916',
-//     measurementId: 'G-JBRHK5498X'
-//   }
-// };
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyAbZLRD7URPJdUmvM_0FKAtb1gV7u-u3jc',
+    authDomain: 'new-pollo-kun.firebaseapp.com',
+    databaseURL: 'https://new-pollo-kun.firebaseio.com',
+    projectId: 'new-pollo-kun',
+    storageBucket: 'new-pollo-kun.appspot.com',
+    messagingSenderId: '956934307491',
+    appId: '1:956934307491:web:8d1f801a0042fdf9c5c916',
+    measurementId: 'G-JBRHK5498X'
+  }
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
