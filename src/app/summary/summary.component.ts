@@ -67,6 +67,143 @@ export class SummaryComponent implements OnInit {
   allCandies = [];
   allArticles = [];
   allElectronics = [];
+  workingHours = {
+    '7:00 - 8:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '8:00 - 9:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '9:00 - 10:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '10:00 - 11:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '11:00 - 12:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '12:00 - 13:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '13:00 - 14:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '14:00 - 15:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '15:00 - 16:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '16:00 - 17:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '17:00 - 18:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '18:00 - 19:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '19:00 - 20:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '20:00 - 21:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    },
+    '21:00 - 22:00': {
+      Domingo: 0,
+      Lunes: 0,
+      Martes: 0,
+      Miércoles: 0,
+      Jueves: 0,
+      Viernes: 0,
+      Sábado: 0
+    }
+  };
 
   constructor(
     calendar: NgbCalendar,
@@ -291,12 +428,12 @@ export class SummaryComponent implements OnInit {
         }
       });
 
-      this.showArticlesPurchases(articlesPurchases);
-      this.showElectronicsPurchases(electronicsPurchases);
       this.showConsolesRecords(consolesRecords);
       this.showComputersRecords(computersRecords);
-      this.showCandiesPurchases(candiesPurchases);
       this.showWorksRecords(worksRecords);
+      this.showCandiesPurchases(candiesPurchases);
+      this.showArticlesPurchases(articlesPurchases);
+      this.showElectronicsPurchases(electronicsPurchases);
     });
   }
 
@@ -316,6 +453,7 @@ export class SummaryComponent implements OnInit {
       this.recordsTotal += record.price;
       record.startDate = record.startDate.toDate();
       record.endDate = record.endDate.toDate();
+      this.addToWorkingHours(record.startDate, record.endDate);
       this.totalHours += record.hours;
       if (record.console.type === 'series') {
         this.seriesRecords.push(record as ConsoleRecord);
@@ -342,6 +480,7 @@ export class SummaryComponent implements OnInit {
       this.computersTotal += computer.price;
       computer.startDate = computer.startDate.toDate();
       computer.endDate = computer.endDate.toDate();
+      this.addToWorkingHours(computer.startDate, computer.endDate);
       this.totalComputersMinutes += computer.hours * 60;
       this.totalComputersMinutes += computer.minutes;
       return computer as CandiePurchase;
@@ -354,7 +493,9 @@ export class SummaryComponent implements OnInit {
     this.candiesTotal = 0;
     this.allCandiesPurchases = candiesPurchases.map(candie => {
       this.candiesTotal += candie.price;
-      candie.date = candie.date.toDate();
+      const candieDate = candie.date.toDate();
+      candie.date = candieDate;
+      this.addToWorkingHours(candieDate);
       return candie as CandiePurchase;
     });
   }
@@ -363,7 +504,9 @@ export class SummaryComponent implements OnInit {
     this.worksTotal = 0;
     this.allWorksRecords = worksRecords.map(work => {
       this.worksTotal += work.price;
-      work.date = work.date.toDate();
+      const workDate = work.date.toDate();
+      work.date = workDate;
+      this.addToWorkingHours(workDate);
       return work as WorkRecord;
     });
   }
@@ -372,7 +515,9 @@ export class SummaryComponent implements OnInit {
     this.articlesTotal = 0;
     this.allArticlesPurchases = articlesPurchases.map(article => {
       this.articlesTotal += article.price;
-      article.date = article.date.toDate();
+      const articleDate = article.date.toDate();
+      article.date = articleDate;
+      this.addToWorkingHours(articleDate);
       return article as ArticlePurchase;
     });
   }
@@ -381,117 +526,257 @@ export class SummaryComponent implements OnInit {
     this.electronicsTotal = 0;
     this.allElectronicsPurchases = electronicsPurchases.map(electronic => {
       this.electronicsTotal += electronic.price;
-      electronic.date = electronic.date.toDate();
+      const electronicDate = electronic.date.toDate();
+      electronic.date = electronicDate;
+      this.addToWorkingHours(electronicDate);
       return electronic as ElectronicPurchase;
     });
   }
 
-  toExcel(): void {
-    // this.exportableData.push({
-    //   Nombre: 'XBOX 360',
-    //   Vendidos: null,
-    //   Precio: null,
-    //   Stock: null,
-    //   Tiempo: this.threeSixtyHours,
-    //   Total: this.threeSixtyTotal,
-    //   Ganancia: null
-    // });
-
-    this.exportableData.xboxsComputers.push({
-      Nombre: 'XBOX ONE',
-      Tiempo: this.oneHours,
-      Total: this.oneTotal
-    });
-
-    this.exportableData.xboxsComputers.push({
-      Nombre: 'XBOX SERIES S',
-      Tiempo: this.seriesHours,
-      Total: this.seriesTotal
-    });
-
-    this.exportableData.xboxsComputers.push({
-      Nombre: 'Computadoras',
-      Tiempo: this.totalComputersHours,
-      Total: this.computersTotal
-    });
-
-    this.exportableData.xboxsComputers.push({
-      Nombre: null,
-      Tiempo: null,
-      Total: null
-    });
-
-    this.exportableData.xboxsComputers.push({
-      Nombre: null,
-      Tiempo: "TOTAL",
-      Total: this.oneTotal + this.seriesTotal + this.computersTotal
-    });
-
-    this.allWorks.forEach(work => {
-      this.exportableData.works.push(work);
-    });
-
-    this.allCandies.forEach(candie => {
-      this.exportableData.candie.push(candie);
-    });
-
-    this.allArticles.forEach(article => {
-      this.exportableData.article.push(article);
-    });
-
-    this.allElectronics.forEach(electronic => {
-      this.exportableData.electronic.push(electronic);
-    });
-
-    let totalWorks = 0;
-    this.allWorksRecords.forEach(work => {
-      let index = this.exportableData.works.findIndex(
-        element => element['Nombre'] == work.name
-      );
-      if (index === -1) {
-        let indexAnother = this.exportableData.works.findIndex(
-          element => element['Nombre'].substring(0, 4) === 'Otro'
-        );
-        this.exportableData.works[indexAnother]['Vendidos'] += work.quantity;
-        this.exportableData.works[indexAnother]['Total'] += work.price;
-        totalWorks += work.price;
+  private addToWorkingHours = (startDate: Date, endDate: Date = null) => {
+    const startHour = startDate.getHours();
+    const startMinutes = startDate.getMinutes();
+    const dayOfTheWeek = startDate.getDay();
+    if (endDate === null) {
+      this.switchDay(dayOfTheWeek, startHour, 1);
+    } else {
+      const endHour = endDate.getHours();
+      const endMinutes = endDate.getMinutes();
+      if (startHour === endHour) {
+        this.switchDay(dayOfTheWeek, startHour, endMinutes);
       } else {
-        this.exportableData.works[index]['Vendidos'] += work.quantity;
-        this.exportableData.works[index]['Total'] += work.price;
-        totalWorks += work.price;
+        this.switchDay(dayOfTheWeek, startHour, 60 - startMinutes);
+        for (let index = 0; index < endHour - 1 - startHour; index++) {
+          this.switchDay(dayOfTheWeek, startHour + index + 1, 60);
+        }
+        this.switchDay(dayOfTheWeek, endHour, endMinutes);
       }
-    });
+    }
+  };
 
-    this.exportableData.works.push({
-      Nombre: null,
-      Precio: null,
-      Vendidos: null,
-      Total: null
-    });
+  private switchDay = (day: number, hour: number, minutes: number) => {
+    const days = [
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado'
+    ];
 
-    this.exportableData.works.push({
-      Nombre: null,
-      Precio: null,
-      Vendidos: "TOTAL",
-      Total: totalWorks
-    });
+    switch (days[day]) {
+      case 'Domingo':
+        this.switchHour('Domingo', hour, minutes);
+        break;
+      case 'Lunes':
+        this.switchHour('Lunes', hour, minutes);
+        break;
+      case 'Martes':
+        this.switchHour('Martes', hour, minutes);
+        break;
+      case 'Miércoles':
+        this.switchHour('Miércoles', hour, minutes);
+        break;
+      case 'Jueves':
+        this.switchHour('Jueves', hour, minutes);
+        break;
+      case 'Viernes':
+        this.switchHour('Viernes', hour, minutes);
+        break;
+      case 'Sábado':
+        this.switchHour('Sábado', hour, minutes);
+        break;
 
-    this.buildExportExcelObject(this.allCandiesPurchases, 'candie');
-    this.buildExportExcelObject(this.allArticlesPurchases, 'article');
-    this.buildExportExcelObject(this.allElectronicsPurchases, 'electronic');
+      default:
+        break;
+    }
+  };
 
-    this.initialService.exportAsExcelFile(
-      this.exportableData,
-      this.fromDate,
-      this.toDate
-    );
-    this.exportableData = {
-      xboxsComputers: [],
-      works: [],
-      candie: [],
-      article: [],
-      electronic: []
-    };
+  private switchHour = (day: string, hour: number, minutes: number) => {
+    switch (hour) {
+      case 7:
+        this.workingHours['7:00 - 8:00'][day] += minutes;
+        break;
+      case 8:
+        this.workingHours['8:00 - 9:00'][day] += minutes;
+        break;
+      case 9:
+        this.workingHours['9:00 - 10:00'][day] += minutes;
+        break;
+      case 10:
+        this.workingHours['10:00 - 11:00'][day] += minutes;
+        break;
+      case 11:
+        this.workingHours['11:00 - 12:00'][day] += minutes;
+        break;
+      case 12:
+        this.workingHours['12:00 - 13:00'][day] += minutes;
+        break;
+      case 13:
+        this.workingHours['13:00 - 14:00'][day] += minutes;
+        break;
+      case 14:
+        this.workingHours['14:00 - 15:00'][day] += minutes;
+        break;
+      case 15:
+        this.workingHours['15:00 - 16:00'][day] += minutes;
+        break;
+      case 16:
+        this.workingHours['16:00 - 17:00'][day] += minutes;
+        break;
+      case 17:
+        this.workingHours['17:00 - 18:00'][day] += minutes;
+        break;
+      case 18:
+        this.workingHours['18:00 - 19:00'][day] += minutes;
+        break;
+      case 19:
+        this.workingHours['19:00 - 20:00'][day] += minutes;
+        break;
+      case 20:
+        this.workingHours['20:00 - 21:00'][day] += minutes;
+        break;
+      case 21:
+        this.workingHours['21:00 - 22:00'][day] += minutes;
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  toExcel(isHoursReport: boolean = false): void {
+    if (isHoursReport) {
+      const exportableHours = {
+        hours: []
+      };
+      for (const property in this.workingHours) {
+        exportableHours.hours.push({
+          Hora: property,
+          Lunes: this.workingHours[property]['Lunes'],
+          Martes: this.workingHours[property]['Martes'],
+          Miércoles: this.workingHours[property]['Miércoles'],
+          Jueves: this.workingHours[property]['Jueves'],
+          Viernes: this.workingHours[property]['Viernes'],
+          Sábado: this.workingHours[property]['Sábado'],
+          Domingo: this.workingHours[property]['Domingo']
+        });
+      }
+      this.initialService.exportAsExcelFile(
+        exportableHours,
+        this.fromDate,
+        this.toDate,
+        true
+      );
+    } else {
+      // this.exportableData.push({
+      //   Nombre: 'XBOX 360',
+      //   Vendidos: null,
+      //   Precio: null,
+      //   Stock: null,
+      //   Tiempo: this.threeSixtyHours,
+      //   Total: this.threeSixtyTotal,
+      //   Ganancia: null
+      // });
+
+      this.exportableData.xboxsComputers.push({
+        Nombre: 'XBOX ONE',
+        Tiempo: this.oneHours,
+        Total: this.oneTotal
+      });
+
+      this.exportableData.xboxsComputers.push({
+        Nombre: 'XBOX SERIES S',
+        Tiempo: this.seriesHours,
+        Total: this.seriesTotal
+      });
+
+      this.exportableData.xboxsComputers.push({
+        Nombre: 'Computadoras',
+        Tiempo: this.totalComputersHours,
+        Total: this.computersTotal
+      });
+
+      this.exportableData.xboxsComputers.push({
+        Nombre: null,
+        Tiempo: null,
+        Total: null
+      });
+
+      this.exportableData.xboxsComputers.push({
+        Nombre: null,
+        Tiempo: 'TOTAL',
+        Total: this.oneTotal + this.seriesTotal + this.computersTotal
+      });
+
+      this.allWorks.forEach(work => {
+        this.exportableData.works.push(work);
+      });
+
+      this.allCandies.forEach(candie => {
+        this.exportableData.candie.push(candie);
+      });
+
+      this.allArticles.forEach(article => {
+        this.exportableData.article.push(article);
+      });
+
+      this.allElectronics.forEach(electronic => {
+        this.exportableData.electronic.push(electronic);
+      });
+
+      let totalWorks = 0;
+      this.allWorksRecords.forEach(work => {
+        let index = this.exportableData.works.findIndex(
+          element => element['Nombre'] == work.name
+        );
+        if (index === -1) {
+          let indexAnother = this.exportableData.works.findIndex(
+            element => element['Nombre'].substring(0, 4) === 'Otro'
+          );
+          this.exportableData.works[indexAnother]['Vendidos'] += work.quantity;
+          this.exportableData.works[indexAnother]['Total'] += work.price;
+          totalWorks += work.price;
+        } else {
+          this.exportableData.works[index]['Vendidos'] += work.quantity;
+          this.exportableData.works[index]['Total'] += work.price;
+          totalWorks += work.price;
+        }
+      });
+
+      this.exportableData.works.push({
+        Nombre: null,
+        Precio: null,
+        Vendidos: null,
+        Total: null
+      });
+
+      this.exportableData.works.push({
+        Nombre: null,
+        Precio: null,
+        Vendidos: 'TOTAL',
+        Total: totalWorks
+      });
+
+      this.buildExportExcelObject(this.allCandiesPurchases, 'candie');
+      this.buildExportExcelObject(this.allArticlesPurchases, 'article');
+      this.buildExportExcelObject(this.allElectronicsPurchases, 'electronic');
+
+      this.initialService.exportAsExcelFile(
+        this.exportableData,
+        this.fromDate,
+        this.toDate,
+        false
+      );
+      this.exportableData = {
+        xboxsComputers: [],
+        works: [],
+        candie: [],
+        article: [],
+        electronic: []
+      };
+    }
   }
 
   private buildExportExcelObject = (purchases, keyName: string) => {
