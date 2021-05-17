@@ -7,12 +7,12 @@ import { CandiePurchase } from '../candies/candie-purchase.model';
 import { ArticlePurchase } from '../articles/article-purchase.model';
 import { ElectronicPurchase } from '../electronics/electronic-purchase.model';
 import { Client } from '../clients/client.model';
-import { Computer } from '../computers/computer.model';
 import { InitialService } from '../shared/initial.service';
 import { WorksService } from '../works/works.service';
 import { CandiesService } from '../candies/candies.service';
 import { ArticlesService } from '../articles/articles.service';
 import { ElectronicsService } from '../electronics/electronics.service';
+import { ComputerRecord } from '../computers/computer-record.model';
 
 @Component({
   selector: 'app-summary',
@@ -38,7 +38,7 @@ export class SummaryComponent implements OnInit {
   // threeSixtyTotal: number = 0;
   // threeSixtyHours: number = 0;
 
-  allComputers: Computer[] = [];
+  allComputers: ComputerRecord[] = [];
   computersTotal: number = 0;
   totalComputersHours: number = 0;
   totalComputersMinutes: number = 0;
@@ -67,143 +67,6 @@ export class SummaryComponent implements OnInit {
   allCandies = [];
   allArticles = [];
   allElectronics = [];
-  workingHours = {
-    '7:00 - 8:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '8:00 - 9:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '9:00 - 10:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '10:00 - 11:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '11:00 - 12:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '12:00 - 13:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '13:00 - 14:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '14:00 - 15:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '15:00 - 16:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '16:00 - 17:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '17:00 - 18:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '18:00 - 19:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '19:00 - 20:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '20:00 - 21:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    },
-    '21:00 - 22:00': {
-      Domingo: 0,
-      Lunes: 0,
-      Martes: 0,
-      Miércoles: 0,
-      Jueves: 0,
-      Viernes: 0,
-      Sábado: 0
-    }
-  };
 
   constructor(
     calendar: NgbCalendar,
@@ -304,144 +167,6 @@ export class SummaryComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     let start: Date;
     let end: Date;
-
-    this.workingHours = {
-      '7:00 - 8:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '8:00 - 9:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '9:00 - 10:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '10:00 - 11:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '11:00 - 12:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '12:00 - 13:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '13:00 - 14:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '14:00 - 15:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '15:00 - 16:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '16:00 - 17:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '17:00 - 18:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '18:00 - 19:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '19:00 - 20:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '20:00 - 21:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      },
-      '21:00 - 22:00': {
-        Domingo: 0,
-        Lunes: 0,
-        Martes: 0,
-        Miércoles: 0,
-        Jueves: 0,
-        Viernes: 0,
-        Sábado: 0
-      }
-    };
 
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
@@ -591,12 +316,6 @@ export class SummaryComponent implements OnInit {
       this.recordsTotal += record.price;
       record.startDate = record.startDate.toDate();
       record.endDate = record.endDate.toDate();
-      this.addToWorkingHours(
-        record.price,
-        record.startDate,
-        record.endDate,
-        record.hours * 60
-      );
       this.totalHours += record.hours;
       if (record.console.type === 'series') {
         this.seriesRecords.push(record as ConsoleRecord);
@@ -623,15 +342,9 @@ export class SummaryComponent implements OnInit {
       this.computersTotal += computer.price;
       computer.startDate = computer.startDate.toDate();
       computer.endDate = computer.endDate.toDate();
-      this.addToWorkingHours(
-        computer.price,
-        computer.startDate,
-        computer.endDate,
-        computer.hours * 60 + computer.minutes
-      );
       this.totalComputersMinutes += computer.hours * 60;
       this.totalComputersMinutes += computer.minutes;
-      return computer as CandiePurchase;
+      return computer as ComputerRecord;
     });
     this.totalComputersHours = Math.floor(this.totalComputersMinutes / 60);
     this.totalComputersMinutes -= this.totalComputersHours * 60;
@@ -643,7 +356,6 @@ export class SummaryComponent implements OnInit {
       this.candiesTotal += candie.price;
       const candieDate = candie.date.toDate();
       candie.date = candieDate;
-      this.addToWorkingHours(candie.price, candieDate);
       return candie as CandiePurchase;
     });
   }
@@ -654,7 +366,6 @@ export class SummaryComponent implements OnInit {
       this.worksTotal += work.price;
       const workDate = work.date.toDate();
       work.date = workDate;
-      this.addToWorkingHours(work.price, workDate);
       return work as WorkRecord;
     });
   }
@@ -665,7 +376,6 @@ export class SummaryComponent implements OnInit {
       this.articlesTotal += article.price;
       const articleDate = article.date.toDate();
       article.date = articleDate;
-      this.addToWorkingHours(article.price, articleDate);
       return article as ArticlePurchase;
     });
   }
@@ -676,43 +386,48 @@ export class SummaryComponent implements OnInit {
       this.electronicsTotal += electronic.price;
       const electronicDate = electronic.date.toDate();
       electronic.date = electronicDate;
-      this.addToWorkingHours(electronic.price, electronicDate);
       return electronic as ElectronicPurchase;
     });
   }
 
   private addToWorkingHours = (
+    hourObject: any,
     price: number,
     startDate: Date,
-    endDate: Date = null,
-    totalMinutes = null
+    endDate: Date = null
   ) => {
     const startHour = startDate.getHours();
     const startMinutes = startDate.getMinutes();
     const dayOfTheWeek = startDate.getDay();
-    if (endDate === null) {
-      this.switchDay(dayOfTheWeek, startHour, price);
+    if (endDate === null || endDate === undefined) {
+      this.switchDay(dayOfTheWeek, startHour, hourObject, price);
     } else {
       const endHour = endDate.getHours();
       const endMinutes = endDate.getMinutes();
       if (startHour === endHour) {
-        this.switchDay(dayOfTheWeek, startHour, price);
+        this.switchDay(dayOfTheWeek, startHour, hourObject, price);
       } else {
+        const diffMs = endDate.getTime() - startDate.getTime();
+        const totalMinutes = Math.round(diffMs / 60 / 1000);
+
         this.switchDay(
           dayOfTheWeek,
           startHour,
+          hourObject,
           this.getProporcionalProfit(price, 60 - startMinutes, totalMinutes)
         );
         for (let index = 0; index < endHour - 1 - startHour; index++) {
           this.switchDay(
             dayOfTheWeek,
             startHour + index + 1,
+            hourObject,
             this.getProporcionalProfit(price, 60, totalMinutes)
           );
         }
         this.switchDay(
           dayOfTheWeek,
           endHour,
+          hourObject,
           this.getProporcionalProfit(price, endMinutes, totalMinutes)
         );
       }
@@ -728,7 +443,12 @@ export class SummaryComponent implements OnInit {
     return proporcional * 0.01 * price;
   };
 
-  private switchDay = (day: number, hour: number, minutes: number) => {
+  private switchDay = (
+    day: number,
+    hour: number,
+    hoursObject: any,
+    minutes: number
+  ) => {
     const days = [
       'Domingo',
       'Lunes',
@@ -741,25 +461,25 @@ export class SummaryComponent implements OnInit {
 
     switch (days[day]) {
       case 'Domingo':
-        this.switchHour('Domingo', hour, minutes);
+        this.switchHour('Domingo', hour, hoursObject, minutes);
         break;
       case 'Lunes':
-        this.switchHour('Lunes', hour, minutes);
+        this.switchHour('Lunes', hour, hoursObject, minutes);
         break;
       case 'Martes':
-        this.switchHour('Martes', hour, minutes);
+        this.switchHour('Martes', hour, hoursObject, minutes);
         break;
       case 'Miércoles':
-        this.switchHour('Miércoles', hour, minutes);
+        this.switchHour('Miércoles', hour, hoursObject, minutes);
         break;
       case 'Jueves':
-        this.switchHour('Jueves', hour, minutes);
+        this.switchHour('Jueves', hour, hoursObject, minutes);
         break;
       case 'Viernes':
-        this.switchHour('Viernes', hour, minutes);
+        this.switchHour('Viernes', hour, hoursObject, minutes);
         break;
       case 'Sábado':
-        this.switchHour('Sábado', hour, minutes);
+        this.switchHour('Sábado', hour, hoursObject, minutes);
         break;
 
       default:
@@ -767,52 +487,57 @@ export class SummaryComponent implements OnInit {
     }
   };
 
-  private switchHour = (day: string, hour: number, minutes: number) => {
+  private switchHour = (
+    day: string,
+    hour: number,
+    hoursObject: any,
+    minutes: number
+  ) => {
     switch (hour) {
       case 7:
-        this.workingHours['7:00 - 8:00'][day] += minutes;
+        hoursObject['7:00 - 8:00'][day] += minutes;
         break;
       case 8:
-        this.workingHours['8:00 - 9:00'][day] += minutes;
+        hoursObject['8:00 - 9:00'][day] += minutes;
         break;
       case 9:
-        this.workingHours['9:00 - 10:00'][day] += minutes;
+        hoursObject['9:00 - 10:00'][day] += minutes;
         break;
       case 10:
-        this.workingHours['10:00 - 11:00'][day] += minutes;
+        hoursObject['10:00 - 11:00'][day] += minutes;
         break;
       case 11:
-        this.workingHours['11:00 - 12:00'][day] += minutes;
+        hoursObject['11:00 - 12:00'][day] += minutes;
         break;
       case 12:
-        this.workingHours['12:00 - 13:00'][day] += minutes;
+        hoursObject['12:00 - 13:00'][day] += minutes;
         break;
       case 13:
-        this.workingHours['13:00 - 14:00'][day] += minutes;
+        hoursObject['13:00 - 14:00'][day] += minutes;
         break;
       case 14:
-        this.workingHours['14:00 - 15:00'][day] += minutes;
+        hoursObject['14:00 - 15:00'][day] += minutes;
         break;
       case 15:
-        this.workingHours['15:00 - 16:00'][day] += minutes;
+        hoursObject['15:00 - 16:00'][day] += minutes;
         break;
       case 16:
-        this.workingHours['16:00 - 17:00'][day] += minutes;
+        hoursObject['16:00 - 17:00'][day] += minutes;
         break;
       case 17:
-        this.workingHours['17:00 - 18:00'][day] += minutes;
+        hoursObject['17:00 - 18:00'][day] += minutes;
         break;
       case 18:
-        this.workingHours['18:00 - 19:00'][day] += minutes;
+        hoursObject['18:00 - 19:00'][day] += minutes;
         break;
       case 19:
-        this.workingHours['19:00 - 20:00'][day] += minutes;
+        hoursObject['19:00 - 20:00'][day] += minutes;
         break;
       case 20:
-        this.workingHours['20:00 - 21:00'][day] += minutes;
+        hoursObject['20:00 - 21:00'][day] += minutes;
         break;
       case 21:
-        this.workingHours['21:00 - 22:00'][day] += minutes;
+        hoursObject['21:00 - 22:00'][day] += minutes;
         break;
 
       default:
@@ -822,19 +547,194 @@ export class SummaryComponent implements OnInit {
 
   toExcel(isHoursReport: boolean = false): void {
     if (isHoursReport) {
+      const workingHours = {
+        '7:00 - 8:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '8:00 - 9:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '9:00 - 10:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '10:00 - 11:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '11:00 - 12:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '12:00 - 13:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '13:00 - 14:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '14:00 - 15:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '15:00 - 16:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '16:00 - 17:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '17:00 - 18:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '18:00 - 19:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '19:00 - 20:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '20:00 - 21:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        },
+        '21:00 - 22:00': {
+          Domingo: 0,
+          Lunes: 0,
+          Martes: 0,
+          Miércoles: 0,
+          Jueves: 0,
+          Viernes: 0,
+          Sábado: 0
+        }
+      };
+
+      this.oneRecords.forEach(record =>
+        this.addToWorkingHours(
+          workingHours,
+          record.price,
+          record.startDate,
+          record.endDate
+        )
+      );
+      this.seriesRecords.forEach(record =>
+        this.addToWorkingHours(
+          workingHours,
+          record.price,
+          record.startDate,
+          record.endDate
+        )
+      );
+      this.allComputers.forEach(record =>
+        this.addToWorkingHours(
+          workingHours,
+          record.price,
+          record.startDate,
+          record.endDate
+        )
+      );
+      this.allWorksRecords.forEach(record =>
+        this.addToWorkingHours(workingHours, record.price, record.date)
+      );
+      this.allCandiesPurchases.forEach(record =>
+        this.addToWorkingHours(workingHours, record.price, record.date)
+      );
+      this.allArticlesPurchases.forEach(record =>
+        this.addToWorkingHours(workingHours, record.price, record.date)
+      );
+      this.allElectronicsPurchases.forEach(record =>
+        this.addToWorkingHours(workingHours, record.price, record.date)
+      );
+
       const exportableHours = {
         hours: []
       };
-      for (const property in this.workingHours) {
+      for (const property in workingHours) {
         exportableHours.hours.push({
           Hora: property,
-          Lunes: this.workingHours[property]['Lunes'],
-          Martes: this.workingHours[property]['Martes'],
-          Miércoles: this.workingHours[property]['Miércoles'],
-          Jueves: this.workingHours[property]['Jueves'],
-          Viernes: this.workingHours[property]['Viernes'],
-          Sábado: this.workingHours[property]['Sábado'],
-          Domingo: this.workingHours[property]['Domingo']
+          Lunes: workingHours[property]['Lunes'],
+          Martes: workingHours[property]['Martes'],
+          Miércoles: workingHours[property]['Miércoles'],
+          Jueves: workingHours[property]['Jueves'],
+          Viernes: workingHours[property]['Viernes'],
+          Sábado: workingHours[property]['Sábado'],
+          Domingo: workingHours[property]['Domingo']
         });
       }
       this.initialService.exportAsExcelFile(
