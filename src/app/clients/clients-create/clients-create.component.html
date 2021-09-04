@@ -18,12 +18,16 @@
   <div class="row justify-content-center mb-3" *ngIf="allClients.length > 0">
     <div class="col-12 order-2 order-lg-1 col-lg">
       <ngb-tabset *ngIf="selectedClient">
-        
         <ngb-tab title="Consolas">
           <ng-template ngbTabContent>
             <app-consoles-record
               [client]="selectedClient"
             ></app-consoles-record>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Combos">
+          <ng-template ngbTabContent>
+            <app-combo-create [client]="selectedClient"></app-combo-create>
           </ng-template>
         </ngb-tab>
         <ngb-tab title="Computadora">

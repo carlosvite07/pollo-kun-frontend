@@ -1,16 +1,53 @@
 <div class="row">
   <div class="col-12 col-md text-center">
-    <label><strong>Combo</strong></label>
-    <select class="custom-select" (change)="onChangeSelection($event)">
-      <option value="1">Combo 1</option>
+    <label><strong>Consola-Computadora</strong></label>
+
+    <select [(ngModel)]="selectedConsoleOrComputer" class="custom-select">
+      <option
+        *ngFor="let console of allConsolesAndComputers"
+        [ngValue]="console"
+      >
+        {{ console.name }}
+      </option>
     </select>
-    <div *ngIf="errorCombo" class="text-danger">Selecciona un combo</div>
+    <div *ngIf="errorConsoleOrComputer" class="text-danger">
+      Selecciona una consola o computadora
+    </div>
+  </div>
+  <div class="col-12 col-md text-center">
+    <label><strong>Producto 1</strong></label>
+    <select
+      [(ngModel)]="selectedFirstProduct"
+      class="custom-select"
+      (change)="onSelectFirstProduct($event)"
+    >
+      <option *ngFor="let candie of firstProducts" [ngValue]="candie">
+        {{ candie.name }}
+      </option>
+    </select>
+    <div *ngIf="errorFirstProduct" class="text-danger">Selecciona un producto</div>
+  </div>
+  <div class="col-12 col-md text-center">
+    <label><strong>Producto 2</strong></label>
+    <select
+      [(ngModel)]="selectedSecondProduct"
+      [disabled]="secondProductDisabled"
+      class="custom-select"
+    >
+      <option *ngFor="let candie of secondProducts" [ngValue]="candie">
+        {{ candie.name }}
+      </option>
+    </select>
   </div>
   <div class="col-12 col-md text-center">
     <label><strong>Acciones</strong></label
     ><br />
-    <button (click)="showComboModal()" type="button" class="btn btn-success">
+    <button (click)="createCombo()" type="button" class="btn btn-success">
       Registrar Combo
     </button>
   </div>
 </div>
+
+<!-- <select class="custom-select" (change)="onChangeSelection($event)">
+      <option value="1">Combo 1</option>
+    </select> -->

@@ -40,9 +40,8 @@ export class ConsolesShowComponent implements OnChanges {
   }
 
   changeCheckValue(index: number) {
-    this.client.consolesRecords[index].paid = !this.client.consolesRecords[
-      index
-    ].paid;
+    this.client.consolesRecords[index].paid =
+      !this.client.consolesRecords[index].paid;
     this.clientsService.update(this.client);
   }
 

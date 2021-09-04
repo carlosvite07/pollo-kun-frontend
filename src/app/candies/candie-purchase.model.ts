@@ -9,4 +9,5 @@ export class CandiePurchase {
   paid: boolean;
   profit: number;
   unitary: number;
+  combo: boolean;
 }

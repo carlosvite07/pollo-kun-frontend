@@ -12,4 +12,5 @@ export class ComputerRecord {
   minutes: number;
   notification: Notification;
   paid: boolean;
+  combo: boolean;
 }

@@ -80,7 +80,7 @@
 
     <div class="col-3" *ngIf="!computerRecord.finished">
       <button
-        *ngIf="computerRecord.endDate"
+        *ngIf="computerRecord.endDate && !computerRecord.combo"
         (click)="addTime(i)"
         type="button"
         class="btn btn-sm btn-info mr-3 mb-2"
@@ -88,7 +88,7 @@
         Más Tiempo
       </button>
       <button
-        *ngIf="computerRecord.endDate"
+        *ngIf="computerRecord.endDate && !computerRecord.combo"
         (click)="lessTime(i)"
         type="button"
         class="btn btn-sm btn-warning mr-3 mb-2"

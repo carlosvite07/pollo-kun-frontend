@@ -35,7 +35,12 @@
       {{ candiePurchase.price | currency }}
     </div>
     <div class="col-3">
-      <button (click)="remove(i)" type="button" class="btn btn-sm btn-danger">
+      <button
+        (click)="remove(i)"
+        type="button"
+        class="btn btn-sm btn-danger"
+        *ngIf="!candiePurchase.combo"
+      >
         Quitar
       </button>
     </div>

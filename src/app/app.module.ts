@@ -26,7 +26,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ModalsNotificationsComponent } from './modals-notifications/modals-notifications.component';
 import { ComputersPricesComponent } from './prices/computers-prices/computers-prices.component';
 import { ElectronicsPricesComponent } from './prices/electronics-prices/electronics-prices.component';
-import { ComboModalComponent } from './combo-modal/combo-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,8 +40,7 @@ import { ComboModalComponent } from './combo-modal/combo-modal.component';
     NotificationsComponent,
     ModalsNotificationsComponent,
     ComputersPricesComponent,
-    ElectronicsPricesComponent,
-    ComboModalComponent
+    ElectronicsPricesComponent
   ],
   imports: [
     BrowserModule,
