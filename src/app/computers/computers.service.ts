@@ -194,7 +194,7 @@ export class ComputersService {
       total += minutesAndHours.hours * hourPrice;
     }
     if (total === 0) {
-      total = 3;
+      total = 5;
     }
     return total;
   }
